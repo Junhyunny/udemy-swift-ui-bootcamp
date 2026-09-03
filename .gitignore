@@ -1,0 +1,35 @@
+# macOS
+.DS_Store
+
+# Xcode - per-user settings
+xcuserdata/
+*.xcuserstate
+*.xcuserdatad
+*.xccheckout
+*.xcscmblueprint
+
+# Xcode - build products and generated data
+DerivedData/
+build/
+*.hmap
+*.ipa
+*.dSYM
+*.dSYM.zip
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Packages/
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Dependency-manager build products
+Carthage/Build/
+
+# Fastlane generated reports
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
