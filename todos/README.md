@@ -13,6 +13,7 @@
 - [ ] [`ForEach`의 `id`와 `\.self` key path](./foreach-id-and-identity-keypath.md)
 - [ ] [`LazyVStack`의 용도와 lazy 렌더링 시점](./lazy-stack-rendering.md)
 - [ ] [`GridItem`으로 만들 수 있는 grid의 종류](./grid-item-sizing.md)
+- [ ] [여러 행으로 grid를 구성하는 방법과 공식 예제](./multi-row-grid-composition.md)
 
 ## 완료 기준
 
