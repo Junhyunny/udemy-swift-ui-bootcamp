@@ -12,6 +12,7 @@
 - [ ] [프리뷰의 파란 테두리와 Image 크기 조절 modifier](./image-layout-and-preview-bounds.md)
 - [ ] [`ForEach`의 `id`와 `\.self` key path](./foreach-id-and-identity-keypath.md)
 - [ ] [`LazyVStack`의 용도와 lazy 렌더링 시점](./lazy-stack-rendering.md)
+- [ ] [`GridItem`으로 만들 수 있는 grid의 종류](./grid-item-sizing.md)
 
 ## 완료 기준
 
