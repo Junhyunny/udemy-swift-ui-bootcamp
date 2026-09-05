@@ -7,6 +7,7 @@
 - [ ] [Swift 접근 제어](./access-control.md)
 - [ ] [`let`과 `var`](./let-vs-var.md)
 - [ ] [프로퍼티 래퍼의 `$` 사용 기준](./property-wrapper-dollar-sign.md)
+- [ ] [SF Symbol rendering mode의 종류와 차이](./symbol-rendering-mode.md)
 
 ## 완료 기준
 
