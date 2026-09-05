@@ -8,6 +8,8 @@
 - [ ] [`let`과 `var`](./let-vs-var.md)
 - [ ] [프로퍼티 래퍼의 `$` 사용 기준](./property-wrapper-dollar-sign.md)
 - [ ] [SF Symbol rendering mode의 종류와 차이](./symbol-rendering-mode.md)
+- [ ] [Asset catalog의 "Universal"과 배율 슬롯의 의미](./asset-catalog-universal-scale.md)
+- [ ] [프리뷰의 파란 테두리와 Image 크기 조절 modifier](./image-layout-and-preview-bounds.md)
 
 ## 완료 기준
 
