@@ -10,6 +10,7 @@
 - [ ] [SF Symbol rendering mode의 종류와 차이](./symbol-rendering-mode.md)
 - [ ] [Asset catalog의 "Universal"과 배율 슬롯의 의미](./asset-catalog-universal-scale.md)
 - [ ] [프리뷰의 파란 테두리와 Image 크기 조절 modifier](./image-layout-and-preview-bounds.md)
+- [ ] [`ForEach`의 `id`와 `\.self` key path](./foreach-id-and-identity-keypath.md)
 
 ## 완료 기준
 
