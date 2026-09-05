@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         ScrollView {
-            // TODO, LazyVStack 사용 용도와 어느 시점에 Lazy 렌더링 되는 것인지 정확히 이해할 수 있는 예제 를 찾아줘.
+            // TODO: [todos/lazy-stack-rendering.md](../../todos/lazy-stack-rendering.md)
             LazyVStack(spacing: 10) {
                 ForEach(0..<200, id: \.self) { _ in
                     Text(
