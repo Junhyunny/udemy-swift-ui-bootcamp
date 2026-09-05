@@ -1,14 +1,14 @@
 //
-//  chapter_12Tests.swift
-//  chapter-12Tests
+//  chapter_13Tests.swift
+//  chapter-13Tests
 //
 //  Created by 강준현 on 9/5/26.
 //
 
 import Testing
-@testable import chapter_12
+@testable import chapter_13
 
-struct chapter_12Tests {
+struct chapter_13Tests {
 
     @Test func example() async throws {
         // Write your test here and use APIs like `#expect(...)` to check expected conditions.

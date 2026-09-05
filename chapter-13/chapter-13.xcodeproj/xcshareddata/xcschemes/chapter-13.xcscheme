@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A695DF8D304B9C6300878B35"
-               BuildableName = "chapter-12.app"
-               BlueprintName = "chapter-12"
-               ReferencedContainer = "container:chapter-12.xcodeproj">
+               BuildableName = "chapter-13.app"
+               BlueprintName = "chapter-13"
+               ReferencedContainer = "container:chapter-13.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -36,9 +36,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A695DF9A304B9C6400878B35"
-               BuildableName = "chapter-12Tests.xctest"
-               BlueprintName = "chapter-12Tests"
-               ReferencedContainer = "container:chapter-12.xcodeproj">
+               BuildableName = "chapter-13Tests.xctest"
+               BlueprintName = "chapter-13Tests"
+               ReferencedContainer = "container:chapter-13.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -47,9 +47,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A695DFA4304B9C6400878B35"
-               BuildableName = "chapter-12UITests.xctest"
-               BlueprintName = "chapter-12UITests"
-               ReferencedContainer = "container:chapter-12.xcodeproj">
+               BuildableName = "chapter-13UITests.xctest"
+               BlueprintName = "chapter-13UITests"
+               ReferencedContainer = "container:chapter-13.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -70,9 +70,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A695DF8D304B9C6300878B35"
-            BuildableName = "chapter-12.app"
-            BlueprintName = "chapter-12"
-            ReferencedContainer = "container:chapter-12.xcodeproj">
+            BuildableName = "chapter-13.app"
+            BlueprintName = "chapter-13"
+            ReferencedContainer = "container:chapter-13.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -87,9 +87,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A695DF8D304B9C6300878B35"
-            BuildableName = "chapter-12.app"
-            BlueprintName = "chapter-12"
-            ReferencedContainer = "container:chapter-12.xcodeproj">
+            BuildableName = "chapter-13.app"
+            BlueprintName = "chapter-13"
+            ReferencedContainer = "container:chapter-13.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
