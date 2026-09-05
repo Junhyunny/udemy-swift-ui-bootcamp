@@ -9,13 +9,14 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        Image(systemName: "square.and.arrow.up.badge.checkmark")
+            .resizable()
+            .scaledToFit()
+            .padding()
+            // TODO: [todos/symbol-rendering-mode.md](../../todos/symbol-rendering-mode.md)
+            // .symbolRenderingMode(.multicolor)
+            .symbolRenderingMode(.palette)
+            .foregroundStyle(.indigo, .mint)
     }
 }
 
