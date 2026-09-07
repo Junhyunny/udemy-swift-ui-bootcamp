@@ -23,6 +23,7 @@
 - [ ] [`id`에 쓰이는 `Hashable`과 해시 충돌 걱정](./hashable-id-and-collisions.md)
 - [ ] [`ForEach`에서 무엇이 `Binding`이고 무엇이 값인가](./binding-in-foreach.md)
 - [ ] [SwiftUI의 생명주기 — App, Scene, View](./view-lifecycle-hooks.md)
+- [ ] [`ComponentName { }`의 정체 — 클로저, trailing closure, result builder](./closures-and-view-builders.md)
 
 ## 완료 기준
 
