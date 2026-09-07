@@ -14,6 +14,12 @@
 - [ ] [`LazyVStack`의 용도와 lazy 렌더링 시점](./lazy-stack-rendering.md)
 - [ ] [`GridItem`으로 만들 수 있는 grid의 종류](./grid-item-sizing.md)
 - [ ] [여러 행으로 grid를 구성하는 방법과 공식 예제](./multi-row-grid-composition.md)
+- [ ] [`Identifiable` 프로토콜을 쓰는 이유와 쓰는 경우](./identifiable-protocol.md)
+- [ ] [Swift의 타입 체계와 상속 구조](./swift-type-system-and-inheritance.md)
+- [ ] [`@State`를 붙이면 타입이 바뀌는가, `$`는 언제 쓸 수 있는가](./state-wrapper-type-and-binding.md)
+- [ ] [`NavigationStack`의 역할과 `navigationTitle`을 붙이는 위치](./navigation-stack-and-title.md)
+- [ ] [`at:` 문법의 정체와 `IndexSet`](./argument-labels-and-indexset.md)
+- [ ] [`mutating`은 무엇이고, `@State`는 왜 없어도 되는가](./mutating-and-state-mutation.md)
 
 ## 완료 기준
 
