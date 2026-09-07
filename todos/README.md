@@ -1,6 +1,6 @@
 # 미커밋 코드 학습 TODO
 
-2026-09-05 기준 미커밋 코드의 `TODO` 주석에 적힌 학습 주제만 정리했다.
+2026-09-07 기준 미커밋 코드의 `TODO` 주석에 적힌 학습 주제만 정리했다.
 
 - [ ] [Combine 프레임워크](./combine.md)
 - [ ] [`struct`와 `class`](./struct-vs-class.md)
@@ -31,6 +31,8 @@
 - [ ] [Swift의 오류 처리 방식들 — `try`, `try?`, `try!`, `do-catch`, `defer`](./swift-error-handling-forms.md)
 - [ ] [`@ViewBuilder` 함수 vs 별도 `View` 구조체](./viewbuilder-vs-view-struct.md)
 - [ ] [`makeBody`는 override가 아니다 — protocol 요구사항과 style 프로토콜](./protocol-requirements-and-style-protocols.md)
+- [ ] [`animation(_:value:)`의 `value`가 필요한 이유](./animation-value-trigger.md)
+- [ ] [암시적 애니메이션과 `withAnimation`의 차이](./implicit-vs-explicit-animation.md)
 
 ## 완료 기준
 
