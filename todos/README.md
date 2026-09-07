@@ -39,6 +39,8 @@
 - [ ] [`Canvas` 좌표계와 0~1 정규화 좌표](./canvas-coordinate-space-and-normalization.md)
 - [ ] [`GeometryReader`를 언제, 왜 쓰는가](./geometry-reader-use-cases.md)
 - [ ] [좌표 공간 — local, global, named와 부모·자식 뷰의 관계](./coordinate-space-local-global-named.md)
+- [ ] [`$0`의 정체 — shorthand argument name과 클로저 축약 단계](./closure-shorthand-argument-names.md)
+- [ ] [`CG`로 시작하는 타입들과 `CGFloat`](./coregraphics-types-and-cgfloat.md)
 
 ## 완료 기준
 
