@@ -27,6 +27,8 @@
 - [ ] [`overlay`는 무엇이고, 왜 화면이 까맣게 덮였나](./overlay-and-shape-fill.md)
 - [ ] [`extension` 키워드는 무엇이고 언제 쓰는가](./extension-keyword.md)
 - [ ] [`static` 타입 프로퍼티와 `.init` — 장단점과 함정](./static-type-properties-and-implicit-init.md)
+- [ ] [Swift의 async/await 실행 모델 — JavaScript·Python과 무엇이 다른가](./swift-async-await-model.md)
+- [ ] [Swift의 오류 처리 방식들 — `try`, `try?`, `try!`, `do-catch`, `defer`](./swift-error-handling-forms.md)
 
 ## 완료 기준
 
