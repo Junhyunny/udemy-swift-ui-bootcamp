@@ -20,6 +20,9 @@
 - [ ] [`NavigationStack`의 역할과 `navigationTitle`을 붙이는 위치](./navigation-stack-and-title.md)
 - [ ] [`at:` 문법의 정체와 `IndexSet`](./argument-labels-and-indexset.md)
 - [ ] [`mutating`은 무엇이고, `@State`는 왜 없어도 되는가](./mutating-and-state-mutation.md)
+- [ ] [`id`에 쓰이는 `Hashable`과 해시 충돌 걱정](./hashable-id-and-collisions.md)
+- [ ] [`ForEach`에서 무엇이 `Binding`이고 무엇이 값인가](./binding-in-foreach.md)
+- [ ] [SwiftUI의 생명주기 — App, Scene, View](./view-lifecycle-hooks.md)
 
 ## 완료 기준
 
