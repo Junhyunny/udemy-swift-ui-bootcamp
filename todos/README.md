@@ -30,6 +30,7 @@
 - [ ] [Swift의 async/await 실행 모델 — JavaScript·Python과 무엇이 다른가](./swift-async-await-model.md)
 - [ ] [Swift의 오류 처리 방식들 — `try`, `try?`, `try!`, `do-catch`, `defer`](./swift-error-handling-forms.md)
 - [ ] [`@ViewBuilder` 함수 vs 별도 `View` 구조체](./viewbuilder-vs-view-struct.md)
+- [ ] [`makeBody`는 override가 아니다 — protocol 요구사항과 style 프로토콜](./protocol-requirements-and-style-protocols.md)
 
 ## 완료 기준
 
