@@ -37,6 +37,8 @@
 - [ ] [`rotation3DEffect`의 회전축과 카드 기울이기](./rotation3d-axis-and-card-tilt.md)
 - [ ] [Swift의 기본 타입과 비교 방법](./swift-fundamental-types-and-comparison.md)
 - [ ] [`Canvas` 좌표계와 0~1 정규화 좌표](./canvas-coordinate-space-and-normalization.md)
+- [ ] [`GeometryReader`를 언제, 왜 쓰는가](./geometry-reader-use-cases.md)
+- [ ] [좌표 공간 — local, global, named와 부모·자식 뷰의 관계](./coordinate-space-local-global-named.md)
 
 ## 완료 기준
 
