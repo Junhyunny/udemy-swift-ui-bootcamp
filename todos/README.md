@@ -24,6 +24,9 @@
 - [ ] [`ForEach`에서 무엇이 `Binding`이고 무엇이 값인가](./binding-in-foreach.md)
 - [ ] [SwiftUI의 생명주기 — App, Scene, View](./view-lifecycle-hooks.md)
 - [ ] [`ComponentName { }`의 정체 — 클로저, trailing closure, result builder](./closures-and-view-builders.md)
+- [ ] [`overlay`는 무엇이고, 왜 화면이 까맣게 덮였나](./overlay-and-shape-fill.md)
+- [ ] [`extension` 키워드는 무엇이고 언제 쓰는가](./extension-keyword.md)
+- [ ] [`static` 타입 프로퍼티와 `.init` — 장단점과 함정](./static-type-properties-and-implicit-init.md)
 
 ## 완료 기준
 
