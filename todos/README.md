@@ -29,6 +29,7 @@
 - [ ] [`static` 타입 프로퍼티와 `.init` — 장단점과 함정](./static-type-properties-and-implicit-init.md)
 - [ ] [Swift의 async/await 실행 모델 — JavaScript·Python과 무엇이 다른가](./swift-async-await-model.md)
 - [ ] [Swift의 오류 처리 방식들 — `try`, `try?`, `try!`, `do-catch`, `defer`](./swift-error-handling-forms.md)
+- [ ] [`@ViewBuilder` 함수 vs 별도 `View` 구조체](./viewbuilder-vs-view-struct.md)
 
 ## 완료 기준
 

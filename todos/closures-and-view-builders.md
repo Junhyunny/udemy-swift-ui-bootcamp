@@ -6,6 +6,8 @@ argument label과 trailing closure의 기본 규칙은 [`at:` 문법의 정체�
 
 `chapter-33/chapter-33/ContentView.swift`의 `ScrollView { VStack(spacing: 15) { ... } }`와 `ForEach(0..<30) { idx in ... }`
 
+`chapter-36/chapter-36/ContentView.swift`의 `Button(role: .confirm) { ... } label: { ... }` — 왜 `action`은 이름이 없고 `label`은 있는가
+
 ## 공부할 내용
 
 ### 결론 먼저
@@ -55,6 +57,38 @@ loadPicture(from: someServer) { picture in
 ```
 
 첫 trailing closure만 label이 없고 나머지는 label을 붙인다.
+
+#### `Button(role:) { } label: { }`이 그 예다
+
+이 형태가 헷갈리는 이유는 **인자 세 개가 서로 다른 방식으로 전달되기 때문**이다. 선언을 보면 한눈에 풀린다.
+
+> `init(role: ButtonRole?, action: @escaping @MainActor () -> Void, @ContentBuilder label: () -> Label)`
+
+인자는 `role`, `action`, `label` 세 개이고 뒤의 둘이 클로저다. 그래서 이렇게 전달된다.
+
+```swift
+Button(role: .confirm) {      // role: 은 괄호 안에 그대로
+    increaseCount()           // action: — 첫 trailing closure라 이름 생략
+} label: {                    // label: — 두 번째 trailing closure라 이름 필요
+    Text("Up")
+}
+```
+
+**"왜 `action`은 이름이 없고 `label`은 있나"의 답이 이것이다.** `action`이 특별해서가 아니라 **먼저 나온 trailing closure이기 때문**이다. 규칙은 위치가 정한다. 괄호 안에 다 넣으면 둘 다 이름이 붙는다.
+
+```swift
+Button(role: .confirm, action: { increaseCount() }, label: { Text("Up") })
+```
+
+같은 파일의 다른 형태들도 전부 같은 규칙에서 나온다.
+
+```swift
+Button("Click Me") { counter += 1 }              // title은 label 없는 인자, action은 trailing
+Button("Click Me", action: { counter += 1 })     // 괄호 안에 넣으면 이름을 쓴다
+Button("Click Me", action: increaseCount)        // 클로저 대신 함수를 지목
+```
+
+마지막 형태는 클로저를 새로 쓰지 않고 기존 함수를 그대로 넘긴 것이다. `Button(action: increaseCount)`와 `Button { increaseCount() }`는 결과가 같지만, 앞은 함수 자체를 넘기고 뒤는 그 함수를 호출하는 새 클로저를 만든다.
 
 ### 3. 함수는 이렇게 만든다
 
@@ -150,6 +184,9 @@ VStack {
 - [ ] `VStack { }` 안에 `if`를 넣어 조건부 뷰를 만들고, 일반 클로저에서는 왜 안 되는지 설명한다.
 - [ ] `@ViewBuilder`를 붙인 자체 함수를 만들어 여러 뷰를 반환받는다.
 - [ ] `ForEach`의 클로저가 몇 번 호출되는지 `print`로 세어 본다.
+- [ ] `Button(role:) { } label: { }`를 `Button(role:action:label:)` 한 줄 형태로 풀어 써 본다.
+- [ ] 그 상태에서 `action:` 이름을 지우면 어떤 오류가 나는지 확인한다.
+- [ ] `label:`을 첫 trailing closure로 만들 수 있는지 시도해 보고 왜 안 되는지 설명한다.
 
 ## 참고 자료
 
@@ -163,4 +200,6 @@ VStack {
 - [Apple: Button.init(action:label:)](https://developer.apple.com/documentation/swiftui/button/init(action:label:))
 - [Apple: ScrollView](https://developer.apple.com/documentation/swiftui/scrollview)
 - [Apple: ForEach.init(_:content:)](https://developer.apple.com/documentation/swiftui/foreach/init(_:content:))
+- [Apple: Button.init(role:action:label:)](https://developer.apple.com/documentation/swiftui/button/init(role:action:label:))
+- [Apple: ButtonRole](https://developer.apple.com/documentation/swiftui/buttonrole)
 - [Swift API Design Guidelines](https://www.swift.org/documentation/api-design-guidelines/)
