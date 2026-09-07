@@ -33,6 +33,9 @@
 - [ ] [`makeBody`는 override가 아니다 — protocol 요구사항과 style 프로토콜](./protocol-requirements-and-style-protocols.md)
 - [ ] [`animation(_:value:)`의 `value`가 필요한 이유](./animation-value-trigger.md)
 - [ ] [암시적 애니메이션과 `withAnimation`의 차이](./implicit-vs-explicit-animation.md)
+- [ ] [여러 `offset` modifier는 어떻게 합성되는가](./chained-offset-modifiers.md)
+- [ ] [`rotation3DEffect`의 회전축과 카드 기울이기](./rotation3d-axis-and-card-tilt.md)
+- [ ] [Swift의 기본 타입과 비교 방법](./swift-fundamental-types-and-comparison.md)
 
 ## 완료 기준
 
