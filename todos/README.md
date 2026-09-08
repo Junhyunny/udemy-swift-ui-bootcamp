@@ -60,6 +60,11 @@
 - [ ] [애니메이션 API 세 가지 비교 — `animation`, `withAnimation`, `phaseAnimator`](./animation-api-comparison.md)
 - [ ] [`ImageResource`는 언제 등장했고, 그전에는 어떻게 했나](./image-resource-and-asset-symbols.md)
 - [ ] [`scaledToFill()`이 레이아웃을 흔드는 이유와 `clipped()`](./scaled-to-fill-and-clipped.md)
+- [ ] [`NavigationStack`은 언제 등장했고 `NavigationView`와 무엇이 다른가](./navigation-stack-vs-navigation-view.md)
+- [ ] [Swift · iOS · 기기 버전 호환성을 확인하는 방법](./swift-ios-device-compatibility.md)
+- [ ] [`NavigationPath`와 타입 배열 — 무엇이 다르고 언제 쓰는가](./navigation-path-and-typed-array.md)
+- [ ] [`NavigationLink`의 `value`와 `navigationDestination`의 `String.self`](./navigation-link-value-and-destination.md)
+- [ ] [`static var { }`와 `static let = []`의 차이](./static-stored-vs-computed-property.md)
 
 ## 완료 기준
 
