@@ -47,6 +47,7 @@
 - [ ] [`SomeType.self`의 정체 — 메타타입과 `.self`](./metatype-and-self.md)
 - [ ] [Swift의 메모리 구조 — JVM과 비교해서](./swift-memory-model.md)
 - [ ] [`GeometryReader`와 성능 — 중첩이 왜 문제가 되는가](./geometry-reader-performance.md)
+- [ ] [`@Environment` — 언제 쓰고, 무엇을 받을 수 있는가](./environment-property-wrapper.md)
 
 ## 완료 기준
 
