@@ -48,6 +48,10 @@
 - [ ] [Swift의 메모리 구조 — JVM과 비교해서](./swift-memory-model.md)
 - [ ] [`GeometryReader`와 성능 — 중첩이 왜 문제가 되는가](./geometry-reader-performance.md)
 - [ ] [`@Environment` — 언제 쓰고, 무엇을 받을 수 있는가](./environment-property-wrapper.md)
+- [ ] [`onChange`의 `oldValue`, `newValue`](./onchange-old-new-value.md)
+- [ ] [URL 탐지의 원리와 `NSDataDetector`의 `matches` API](./nsdatadetector-and-url-detection.md)
+- [ ] [`NS` 접두사가 붙은 타입들](./ns-prefix-foundation-classes.md)
+- [ ] [`guard` 키워드 — 조기 탈출과 그 장점](./guard-keyword.md)
 
 ## 완료 기준
 
