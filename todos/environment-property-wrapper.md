@@ -220,6 +220,88 @@ private struct DetailView: View {
 
 **닫으려는 뷰 안에서 선언해야 한다.** 이 예제의 `ExternalLink`가 자기 안에서 `openURL`을 선언한 것과 같은 원칙이다.
 
+#### `dismiss`는 시트만 닫는 것이 아니다 — `chapter-58`의 사례
+
+`DismissAction` 문서가 용도를 세 가지로 명시한다.
+
+> You can use this action to:
+> - Dismiss a modal presentation, like a sheet or a popover.
+> - **Pop the current view from a `NavigationStack`.**
+>
+> On apps targeting iOS 18 and aligned releases, you also use the dismiss action to pop the implicit stack of a collapsed `NavigationSplitView`, or clear the equivalent state in an expanded split view.
+
+**같은 `dismiss()` 호출이 문맥에 따라 다르게 동작한다.** 시트 안에서는 시트를 닫고, `NavigationStack` 안에서는 한 단계 pop 한다. 별도의 API가 없다.
+
+> The specific behavior of the action depends on where you call it from.
+
+`chapter-58/chapter-58/ContentView.swift`가 이 두 번째 용도를 쓴다.
+
+```swift
+struct DestView: View {
+    @Environment(\.dismiss) var dismiss
+    var title: String
+    var body: some View {
+        Text(title)
+            .navigationBarBackButtonHidden()
+            .onTapGesture { _ in
+                dismiss()
+            }
+    }
+}
+```
+
+**왜 이런 코드가 필요한가**를 보면 `dismiss`의 실용적 가치가 드러난다.
+
+`navigationBarBackButtonHidden()`은 기본 back 버튼을 감춘다. 커스텀 back 버튼을 만들거나, 저장하지 않은 변경이 있을 때 함부로 나가지 못하게 막을 때 쓴다. 그런데 감추고 나면 **뒤로 갈 방법이 사라진다.** 스와이프 제스처도 함께 비활성화된다.
+
+그래서 직접 나가는 수단을 제공해야 하고, `dismiss()`가 그 역할을 한다.
+
+```swift
+// 커스텀 back 버튼
+.navigationBarBackButtonHidden()
+.toolbar {
+    ToolbarItem(placement: .topBarLeading) {
+        Button {
+            dismiss()
+        } label: {
+            Label("뒤로", systemImage: "chevron.left")
+        }
+    }
+}
+```
+
+```swift
+// 저장 여부를 확인한 뒤 나가기
+Button("취소") {
+    if hasUnsavedChanges {
+        showConfirmDialog = true
+    } else {
+        dismiss()
+    }
+}
+```
+
+**`dismiss()`와 `path` 조작의 차이**도 알아 둘 만하다.
+
+| | `dismiss()` | `path.removeLast()` |
+| --- | --- | --- |
+| 어디서 호출 | **밀려 올라간 화면 안에서** | path를 소유한 뷰에서 |
+| 몇 단계 | 한 단계 | 원하는 만큼 |
+| 필요한 것 | `@Environment(\.dismiss)` | `path` 접근 권한 |
+| 재사용 컴포넌트 | **적합** — path를 몰라도 된다 | 부적합 |
+
+`DestView`처럼 **재사용되는 화면**은 자기가 어떤 스택에 올라와 있는지 알 필요가 없다. `dismiss()`만 호출하면 시스템이 알아서 처리한다. 반대로 "루트까지 한 번에" 같은 조작은 `path = []`가 필요하다. [`NavigationPath`와 타입 배열](./navigation-path-and-typed-array.md) 참조.
+
+`dismiss`가 **아무 효과를 내지 않는 경우**도 있다.
+
+> The dismiss action has no effect on a view that isn't currently presented. If you need to query whether SwiftUI is currently presenting a view, read the `isPresented` environment value.
+
+표시 중이 아닌 뷰에서 호출하면 조용히 무시된다. 확인이 필요하면 `\.isPresented`를 읽는다.
+
+macOS에서 창을 닫는 용도로는 별도 API를 권한다.
+
+> While the dismiss action can be used to a close window that you create with `WindowGroup` or `Window`, prefer `dismissWindow` for that use case instead.
+
 **2. `\.colorScheme` — 다크 모드 분기**
 
 ```swift
@@ -436,6 +518,12 @@ environment(\.keyPath, v) 조상이 값을 심는다 (자손 전체에 적용)
 - [ ] 시스템 설정을 바꿔 값 변경만으로 뷰가 갱신되는 것을 확인한다.
 - [ ] 시트를 띄우고 `\.dismiss`로 닫아 본다.
 - [ ] `dismiss`를 부모 뷰에서 선언해 시트가 닫히지 않는 함정을 재현한다.
+- [ ] `NavigationStack`에 밀어 올린 화면에서 `dismiss()`가 pop으로 동작하는지 확인한다.
+- [ ] `navigationBarBackButtonHidden()`을 붙인 뒤 뒤로 갈 방법이 없어지는 것을 확인한다.
+- [ ] 그 상태에서 `dismiss()`로 나가는 커스텀 back 버튼을 툴바에 만든다.
+- [ ] 표시 중이 아닌 뷰에서 `dismiss()`를 호출해 아무 일도 없는 것을 확인한다.
+- [ ] `\.isPresented`를 읽어 현재 표시 중인지 판별해 본다.
+- [ ] `dismiss()`와 `path.removeLast()`의 차이를 재사용 컴포넌트 관점에서 설명한다.
 - [ ] `\.horizontalSizeClass`로 아이폰 세로·가로에서 레이아웃을 분기한다.
 - [ ] 부모에 `.disabled(true)`를 걸고 자식이 `\.isEnabled`로 읽는지 확인한다.
 - [ ] `.environment(\.lineLimit, 2)`와 `.lineLimit(2)`의 결과를 비교한다.
@@ -453,6 +541,9 @@ environment(\.keyPath, v) 조상이 값을 심는다 (자손 전체에 적용)
 - [Apple: EnvironmentValues.openURL](https://developer.apple.com/documentation/swiftui/environmentvalues/openurl)
 - [Apple: OpenURLAction](https://developer.apple.com/documentation/swiftui/openurlaction)
 - [Apple: EnvironmentValues.dismiss](https://developer.apple.com/documentation/swiftui/environmentvalues/dismiss)
+- [Apple: DismissAction](https://developer.apple.com/documentation/swiftui/dismissaction)
+- [Apple: EnvironmentValues.isPresented](https://developer.apple.com/documentation/swiftui/environmentvalues/ispresented)
+- [Apple: view.navigationBarBackButtonHidden(_:)](https://developer.apple.com/documentation/swiftui/view/navigationbarbackbuttonhidden(_:))
 - [Apple: EnvironmentValues.colorScheme](https://developer.apple.com/documentation/swiftui/environmentvalues/colorscheme)
 - [Apple: EnvironmentValues.horizontalSizeClass](https://developer.apple.com/documentation/swiftui/environmentvalues/horizontalsizeclass)
 - [Apple: EnvironmentValues.isEnabled](https://developer.apple.com/documentation/swiftui/environmentvalues/isenabled)
