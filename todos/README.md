@@ -69,6 +69,16 @@
 - [ ] [`NavigationLink` 두 방식의 공존과 혼용](./navigation-link-two-styles-mixed.md)
 - [ ] [`hash(into:)`와 Java의 `equals()`·`hashCode()` 비교](./hash-into-and-java-comparison.md)
 - [ ] [`some` 키워드 — opaque type과 함께 공부할 개념들](./some-keyword-opaque-types.md)
+- [ ] [API 키를 앱에 넣는 방법과 그 한계 — xcconfig, Info.plist, CI/CD](./api-key-security-and-environment-variables.md)
+- [ ] [`.task`는 무엇인가 — 뷰 생명주기와 비동기 작업](./task-modifier-and-async-lifecycle.md)
+- [ ] [`Codable`과 `CodingKeys`](./codable-and-codingkey.md)
+- [ ] [`enum Foo: String`은 상속이 아니다 — raw value](./enum-raw-values.md)
+- [ ] [Swift의 제네릭 — 선언, 사용, 주의사항](./swift-generics.md)
+- [ ] [`async throws`와 커스텀 에러](./async-throws-and-custom-errors.md)
+- [ ] [`if`의 조건 결합과 옵셔널 바인딩](./if-conditions-and-optional-binding.md)
+- [ ] [`UIViewRepresentable`과 `UI` 접두사 — UIKit 컴포넌트 가져오기](./uiviewrepresentable-and-uikit-bridge.md)
+- [ ] [`ZStack`에서 탭이 어디로 가는가 — 히트 테스트와 DOM 이벤트](./swiftui-hit-testing-vs-dom-events.md)
+- [ ] [`AsyncImage` — `Image`와 무엇이 다른가](./async-image.md)
 
 ## 완료 기준
 
