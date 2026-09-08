@@ -67,6 +67,8 @@
 - [ ] [`static var { }`와 `static let = []`의 차이](./static-stored-vs-computed-property.md)
 - [ ] [deprecated된 `NavigationLink` 이니셜라이저와 최신 대안](./deprecated-navigation-link-initializers.md)
 - [ ] [`NavigationLink` 두 방식의 공존과 혼용](./navigation-link-two-styles-mixed.md)
+- [ ] [`hash(into:)`와 Java의 `equals()`·`hashCode()` 비교](./hash-into-and-java-comparison.md)
+- [ ] [`some` 키워드 — opaque type과 함께 공부할 개념들](./some-keyword-opaque-types.md)
 
 ## 완료 기준
 
