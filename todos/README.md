@@ -58,6 +58,8 @@
 - [ ] [브라우저가 앱을 찾아가는 원리와 스킴 충돌](./url-scheme-resolution-and-conflicts.md)
 - [ ] [`phaseAnimator`의 파라미터와 phase에 담을 수 있는 것](./phase-animator-parameters-and-phase-types.md)
 - [ ] [애니메이션 API 세 가지 비교 — `animation`, `withAnimation`, `phaseAnimator`](./animation-api-comparison.md)
+- [ ] [`ImageResource`는 언제 등장했고, 그전에는 어떻게 했나](./image-resource-and-asset-symbols.md)
+- [ ] [`scaledToFill()`이 레이아웃을 흔드는 이유와 `clipped()`](./scaled-to-fill-and-clipped.md)
 
 ## 완료 기준
 
