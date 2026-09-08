@@ -52,6 +52,10 @@
 - [ ] [URL 탐지의 원리와 `NSDataDetector`의 `matches` API](./nsdatadetector-and-url-detection.md)
 - [ ] [`NS` 접두사가 붙은 타입들](./ns-prefix-foundation-classes.md)
 - [ ] [`guard` 키워드 — 조기 탈출과 그 장점](./guard-keyword.md)
+- [ ] [`Observation` 모듈과 `@Observable` 매크로](./observation-framework-and-observable.md)
+- [ ] [`enum`은 항상 `Hashable`이어야 하는가](./enum-hashable-conformance.md)
+- [ ] [딥링크와 커스텀 URL 스킴 — 용도와 Info.plist 프로퍼티](./deep-link-and-url-scheme.md)
+- [ ] [브라우저가 앱을 찾아가는 원리와 스킴 충돌](./url-scheme-resolution-and-conflicts.md)
 
 ## 완료 기준
 
