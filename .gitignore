@@ -36,3 +36,6 @@ fastlane/test_output/
 
 # Claude Code - per-user settings
 .claude/settings.local.json
+
+# Secrets configuration
+Secrets.xcconfig
