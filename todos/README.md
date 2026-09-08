@@ -66,6 +66,7 @@
 - [ ] [`NavigationLink`의 `value`와 `navigationDestination`의 `String.self`](./navigation-link-value-and-destination.md)
 - [ ] [`static var { }`와 `static let = []`의 차이](./static-stored-vs-computed-property.md)
 - [ ] [deprecated된 `NavigationLink` 이니셜라이저와 최신 대안](./deprecated-navigation-link-initializers.md)
+- [ ] [`NavigationLink` 두 방식의 공존과 혼용](./navigation-link-two-styles-mixed.md)
 
 ## 완료 기준
 
