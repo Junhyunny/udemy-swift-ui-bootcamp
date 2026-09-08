@@ -24,7 +24,7 @@
 
 ```swift
 nonisolated func phaseAnimator<Phase>(
-    _ phases: some Sequence,
+    _ phases: some Sequence<Phase>,
     trigger: some Equatable,
     @ViewBuilder content: @escaping (PlaceholderContentView<Self>, Phase) -> some View,
     animation: @escaping (Phase) -> Animation? = { _ in .default }
@@ -37,7 +37,9 @@ nonisolated func phaseAnimator<Phase>(
 
 애니메이션이 순서대로 지나갈 값들이다. 예제의 `[1.0, 0.5]`가 여기 해당한다.
 
-타입이 `some Sequence`라는 점이 중요하다. 배열뿐 아니라 어떤 시퀀스든 된다. 요소 타입 `Phase`의 유일한 제약은 `Equatable`이다 — 2부의 주제다.
+타입이 `some Sequence<Phase>`라는 점이 중요하다. 배열뿐 아니라 어떤 시퀀스든 되고, 그 **요소 타입이 곧 `Phase`** 가 된다. `Phase`의 유일한 제약은 `Equatable`이다 — 2부의 주제다.
+
+> 참고: Apple의 `View` extension 문서 페이지는 이 자리를 `some Sequence`로 렌더링해 primary associated type을 빠뜨리고 있다. `PhaseAnimator.init(_:trigger:content:animation:)` 페이지에는 `some Sequence<Phase>`로 정확히 나온다. 후자가 맞다 — `<Phase>`가 없으면 제네릭 파라미터 `Phase`가 `phases`와 연결되지 않아 추론 자체가 불가능하다.
 
 동작 규칙은 Apple 문서가 정확히 설명한다.
 
@@ -155,7 +157,7 @@ animation: @escaping (Phase) -> Animation? = { _ in .default }
 
 ```swift
 nonisolated func phaseAnimator<Phase>(
-    _ phases: some Sequence,
+    _ phases: some Sequence<Phase>,
     @ViewBuilder content: @escaping (PlaceholderContentView<Self>, Phase) -> some View,
     animation: @escaping (Phase) -> Animation? = { _ in .default }
 ) -> some View
