@@ -19,7 +19,7 @@ enum Route: Hashable {
 @Observable
 final class NavigationCoordinator {
     var path = NavigationPath()
-    
+
     func handleDeepLinkURL(_ url: URL) {
         guard url.scheme == "devtechie" else { return }
         switch url.host {
@@ -58,7 +58,7 @@ struct ContentView: View {
     @State private var coordinator = NavigationCoordinator()
     @State private var latestURL: URL?
     @State private var messageFromDeepLink: String?
-    
+
     var body: some View {
         NavigationStack(path: $coordinator.path) {
             VStack(alignment: .leading, spacing: 16) {
@@ -94,7 +94,7 @@ struct ContentView: View {
         }
         .padding()
     }
-    
+
     func handleURL(_ url: URL?) {
         guard let url else { return }
         if url.scheme == "devtechie" {
@@ -115,7 +115,7 @@ struct ContentView: View {
 struct DeepLinkExample1: View {
     @State private var text = ""
     @State private var detectedURL: URL? = nil
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Junhyunny's Example")
@@ -126,8 +126,8 @@ struct DeepLinkExample1: View {
                 .onChange(of: text) { _, _ in
                     detectedURL = extractFirstURL(from: text)
                 }
-            // TODO: [todos/deep-link-and-url-scheme.md](../../todos/deep-link-and-url-scheme.md)
-            // TODO: [todos/url-scheme-resolution-and-conflicts.md](../../todos/url-scheme-resolution-and-conflicts.md)
+                // TODO: [todos/deep-link-and-url-scheme.md](../../todos/deep-link-and-url-scheme.md)
+                // TODO: [todos/url-scheme-resolution-and-conflicts.md](../../todos/url-scheme-resolution-and-conflicts.md)
                 .onOpenURL { url in
                     text += "\nOpened URL: \(url.absoluteString)"
                 }
@@ -143,7 +143,7 @@ struct DeepLinkExample1: View {
         }
         .padding()
     }
-    
+
     func extractFirstURL(from text: String) -> URL? {
         let types: NSTextCheckingResult.CheckingType = .link
         guard let detector = try? NSDataDetector(types: types.rawValue) else {
