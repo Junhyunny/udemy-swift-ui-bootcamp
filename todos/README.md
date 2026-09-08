@@ -56,6 +56,7 @@
 - [ ] [`enum`은 항상 `Hashable`이어야 하는가](./enum-hashable-conformance.md)
 - [ ] [딥링크와 커스텀 URL 스킴 — 용도와 Info.plist 프로퍼티](./deep-link-and-url-scheme.md)
 - [ ] [브라우저가 앱을 찾아가는 원리와 스킴 충돌](./url-scheme-resolution-and-conflicts.md)
+- [ ] [`phaseAnimator`의 파라미터와 phase에 담을 수 있는 것](./phase-animator-parameters-and-phase-types.md)
 
 ## 완료 기준
 
