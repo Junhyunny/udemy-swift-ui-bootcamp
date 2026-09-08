@@ -41,6 +41,12 @@
 - [ ] [좌표 공간 — local, global, named와 부모·자식 뷰의 관계](./coordinate-space-local-global-named.md)
 - [ ] [`$0`의 정체 — shorthand argument name과 클로저 축약 단계](./closure-shorthand-argument-names.md)
 - [ ] [`CG`로 시작하는 타입들과 `CGFloat`](./coregraphics-types-and-cgfloat.md)
+- [ ] [`PreferenceKey` — 자식이 조상에게 값을 올려 보내는 통로](./preference-key-and-onpreferencechange.md)
+- [ ] [`typealias`는 왜 쓰는가 — associatedtype과의 관계](./typealias-and-associated-type.md)
+- [ ] [`ViewModifier` 프로토콜과 `modifier(_:)`](./view-modifier-protocol.md)
+- [ ] [`SomeType.self`의 정체 — 메타타입과 `.self`](./metatype-and-self.md)
+- [ ] [Swift의 메모리 구조 — JVM과 비교해서](./swift-memory-model.md)
+- [ ] [`GeometryReader`와 성능 — 중첩이 왜 문제가 되는가](./geometry-reader-performance.md)
 
 ## 완료 기준
 

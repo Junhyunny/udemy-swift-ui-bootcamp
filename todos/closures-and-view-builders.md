@@ -137,6 +137,45 @@ transform(3) { "번호 \($0)" }
 
 `ForEach(0..<30) { idx in ... }`는 또 조금 다르다. 각 항목마다 뷰를 만들기 위해 **여러 번** 호출되는 클로저다. 콜백처럼 나중에 불리는 게 아니라 목록을 그리는 동안 반복 호출된다.
 
+#### 내 함수에서 콜백을 받아 넘길 때 — `chapter-47`의 사례
+
+`chapter-47/chapter-47/ContentView.swift`는 직접 만든 API에서 `@escaping`이 왜 필요한지 보여 준다.
+
+```swift
+extension View {
+    func measureSzie(perform action: @escaping (CGSize) -> Void) -> some View {
+        modifier(MeasuringSizeModifier())
+            .onPreferenceChange(SizePreferenceKey.self, perform: action)
+    }
+}
+```
+
+호출하는 쪽은 이렇게 쓴다.
+
+```swift
+.measureSzie { size in
+    viewSize = size          // ← 이 클로저가 action
+}
+```
+
+**`action`이 무엇인가**를 정리하면 이렇다.
+
+- 타입은 `(CGSize) -> Void`다. 측정된 크기를 받고 아무것도 돌려주지 않는다.
+- 호출한 쪽이 "크기를 알게 되면 이걸 해 달라"고 건네는 **콜백**이다.
+- `measureSzie`는 이 콜백을 **실행하지 않는다.** 그대로 `onPreferenceChange`에 넘기기만 한다.
+
+**왜 `@escaping`이 필요한가**는 이 마지막 줄에서 나온다. `measureSzie`는 값을 반환하며 즉시 끝나지만, `action`은 그 뒤로도 살아남아 크기가 바뀔 때마다 불려야 한다. 앞서 인용한 정의가 그대로 적용된다 — 함수가 반환된 뒤에 호출되는 클로저이므로 escape한다.
+
+받는 쪽 시그니처를 보면 확인된다.
+
+> `nonisolated func onPreferenceChange<K>(_ key: K.Type = K.self, perform action: @escaping (K.Value) -> Void) -> some View where K : PreferenceKey, K.Value : Equatable`
+
+`onPreferenceChange`가 `@escaping`을 요구하므로, 거기에 클로저를 전달하는 `measureSzie`도 **연쇄적으로** `@escaping`이어야 한다. 붙이지 않으면 `escaping closure` 관련 컴파일 오류가 난다.
+
+`Button`의 `action`과 성격이 같다. 둘 다 "나중에 불릴 동작"이고, 둘 다 `@escaping`이다. 반면 `label`이나 `content`는 즉시 실행되므로 `@escaping`이 아니다. 이 구분이 SwiftUI API를 읽는 기준이 된다.
+
+전체 데이터 흐름은 [PreferenceKey 문서](./preference-key-and-onpreferencechange.md)에, `extension View`로 감싸는 이유는 [ViewModifier 문서](./view-modifier-protocol.md)에 정리했다.
+
 ### 5. `{ }` 안에서 `if`와 `for`가 되는 이유 — result builder
 
 일반 클로저라면 뷰를 여러 개 나열해 놓고 `return`도 없이 끝낼 수 없다. 그게 가능한 것은 `@ViewBuilder`(현재 SDK 선언에서는 `@ContentBuilder`) 덕분이다.
@@ -187,6 +226,10 @@ VStack {
 - [ ] `Button(role:) { } label: { }`를 `Button(role:action:label:)` 한 줄 형태로 풀어 써 본다.
 - [ ] 그 상태에서 `action:` 이름을 지우면 어떤 오류가 나는지 확인한다.
 - [ ] `label:`을 첫 trailing closure로 만들 수 있는지 시도해 보고 왜 안 되는지 설명한다.
+- [ ] `measureSzie(perform:)`에서 `@escaping`을 지우고 어떤 오류가 나는지 읽는다.
+- [ ] `action`에 `print`를 넣어 `measureSzie` 호출이 끝난 뒤에 불리는 것을 확인한다.
+- [ ] `action`을 `measureSzie` 안에서 즉시 호출하도록 바꿔 보고 의미가 어떻게 달라지는지 비교한다.
+- [ ] `typealias SizeHandler = (CGSize) -> Void`로 시그니처를 정리해 본다.
 
 ## 참고 자료
 
@@ -198,6 +241,8 @@ VStack {
 - [Apple: ContentBuilder](https://developer.apple.com/documentation/swiftui/contentbuilder)
 - [Apple: VStack.init(alignment:spacing:content:)](https://developer.apple.com/documentation/swiftui/vstack/init(alignment:spacing:content:))
 - [Apple: Button.init(action:label:)](https://developer.apple.com/documentation/swiftui/button/init(action:label:))
+- [The Swift Programming Language: Closures — Escaping Closures](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/#Escaping-Closures)
+- [Apple: view.onPreferenceChange(_:perform:)](https://developer.apple.com/documentation/swiftui/view/onpreferencechange(_:perform:))
 - [Apple: ScrollView](https://developer.apple.com/documentation/swiftui/scrollview)
 - [Apple: ForEach.init(_:content:)](https://developer.apple.com/documentation/swiftui/foreach/init(_:content:))
 - [Apple: Button.init(role:action:label:)](https://developer.apple.com/documentation/swiftui/button/init(role:action:label:))
