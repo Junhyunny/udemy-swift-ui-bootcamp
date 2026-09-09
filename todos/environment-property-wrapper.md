@@ -345,6 +345,38 @@ struct FancyButton: View {
 
 **6. `\.scenePhase` — 앱 상태 전환 시 저장/정리**
 
+`chapter-94/chapter-94/chapter_94App.swift`가 이것을 쓴다.
+
+```swift
+@main
+struct chapter_94App: App {
+    @Environment(\.scenePhase) var scene
+
+    var body: some Scene {
+        WindowGroup { ContentView() }
+            .onChange(of: scene) { _, newValue in
+                if newValue == .background { viewModel.leftTime = Date() }
+                if newValue == .active { /* 경과 시간 보정 */ }
+            }
+    }
+}
+```
+
+**`App`과 `Scene`에서도 `@Environment`를 쓸 수 있다는 점**이 눈에 띈다. 뷰 전용이 아니다.
+
+`ScenePhase`는 세 값을 갖는다.
+
+| 값 | 상태 |
+| --- | --- |
+| `.active` | 화면에 보이고 상호작용 가능 |
+| `.inactive` | 보이지만 상호작용 불가 (전환 중, 알림 센터 내림) |
+| `.background` | 화면에 없다 |
+
+**저장은 `.background`가 아니라 `.inactive`에서 하는 편이 안전하다.** `.background`까지 가지 않고 `.inactive`에서 종료되는 경우가 있다. 다만 이 예제는 "백그라운드에 있던 시간"을 재는 것이 목적이므로 `.background`가 맞다.
+
+앱이 백그라운드에서 [`Timer`가 멈추는 문제](./timer-publisher-and-onreceive.md)를 보정하는 용도이고, 시뮬레이터에서 제외한 이유는 [별도 문서](./simulator-vs-device-behavior.md)에 정리했다.
+
+
 **7. `\.modelContext` / `\.managedObjectContext` — 데이터 저장소 접근**
 
 **8. `\.locale`, `\.calendar` — 지역화 대응 포매팅**
