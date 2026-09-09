@@ -1,5 +1,7 @@
 # SwiftUI의 생명주기 — App, Scene, View
 
+UIKit의 `UIViewController` 생명주기와 SwiftUI의 `.task`, `.onAppear`, `.onDisappear`를 큰 구조에서 비교하려면 [SwiftUI와 UIKit 아키텍처 학습 노트](./swiftui-and-uikit-architecture.md)를 함께 본다.
+
 ## 질문이 나온 코드
 
 `chapter-32/chapter-32/ContentView.swift`의 `.onAppear { ... }`와 `.onChange(of: todos) { ... }`

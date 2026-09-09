@@ -2,6 +2,8 @@
 
 `NS` 접두사는 [별도 문서](./ns-prefix-foundation-classes.md)에, `CG`는 [여기](./coregraphics-types-and-cgfloat.md)에 정리했다. 이 문서는 **`UI` 접두사**와 **UIKit ↔ SwiftUI 연결**을 다룬다.
 
+UIKit과 SwiftUI의 전체 아키텍처, 명령형·선언형 UI의 차이, `UIViewControllerRepresentable`과 `UIHostingController`까지 포함한 큰 그림은 [SwiftUI와 UIKit 아키텍처 학습 노트](./swiftui-and-uikit-architecture.md)에서 다룬다.
+
 ## 질문이 나온 코드
 
 `chapter-61/chapter-61/ContentView.swift`
