@@ -111,6 +111,80 @@ let meta = Counter.self        // ← 후위 self 표현식: 타입을 값으로
 
 `\.self` 형태도 또 다른 것이다. `ForEach(0..<n, id: \.self)`의 `\.self`는 **key path**이며, 값 자신을 가리키는 경로다. 이 얘기는 [ForEach의 id와 key path](./foreach-id-and-identity-keypath.md)에 있다.
 
+### 대문자 `Self`는 또 다른 것이다 — `chapter-80`의 사례
+
+`chapter-80/chapter-80/Models/ExchangeRate.swift`에 이런 코드가 있다.
+
+```swift
+extension ExchangeRate {
+    static var placeholder: ExchangeRate {
+        // TODO, Self 는 뭐야? .init 과 다른건가?
+        Self(date: nil, rates: nil)
+    }
+}
+```
+
+**대문자 `Self`는 "현재 타입"을 가리키는 타입 이름**이다. 소문자 `self`와 완전히 다르다.
+
+| 표기 | 의미 | 위치 |
+| --- | --- | --- |
+| `self` | 현재 **인스턴스** (또는 타입 메서드에서는 타입) | 값 |
+| `Self` | 현재 **타입** | **타입 자리** |
+| `Type.self` | 타입을 값으로 꺼낸 것 (메타타입) | 값 |
+
+> Inside a class, structure, or enumeration declaration, `Self` refers to the type introduced by the declaration.
+
+즉 `ExchangeRate`의 `extension` 안에서 `Self`는 `ExchangeRate`와 같다.
+
+```swift
+Self(date: nil, rates: nil)          // = ExchangeRate(date: nil, rates: nil)
+```
+
+**질문의 "`.init`과 다른건가"에 답하면 — 세 표기가 모두 같은 것을 뜻한다.**
+
+```swift
+Self(date: nil, rates: nil)              // Self를 타입 이름으로
+Self.init(date: nil, rates: nil)         // init을 명시
+ExchangeRate(date: nil, rates: nil)      // 타입 이름을 직접
+.init(date: nil, rates: nil)             // 타입이 추론되면 생략
+```
+
+마지막 형태가 [implicit member expression](./static-type-properties-and-implicit-init.md)이다. 반환 타입이 `ExchangeRate`로 적혀 있으므로 타입을 생략할 수 있다.
+
+**`Self`를 쓰는 이점**
+
+- **타입 이름이 바뀌어도 고쳐 쓸 필요가 없다.** `ExchangeRate`를 `Rate`로 리네임하면 `Self`는 그대로 동작한다
+- 타입 이름이 길면 짧아진다
+- 제네릭 타입에서 타입 파라미터를 다시 쓰지 않아도 된다
+
+**프로토콜에서 특히 유용하다.**
+
+```swift
+protocol Duplicatable {
+    func duplicate() -> Self      // 채택하는 타입 자신을 반환
+}
+
+struct Item: Duplicatable {
+    func duplicate() -> Self { Self() }    // Item을 반환
+}
+```
+
+`Self`가 없다면 프로토콜에서 "구현하는 타입 자신"을 표현할 방법이 없다. [`Hashable`의 `==`](./hash-into-and-java-comparison.md) 시그니처에도 `Self`가 등장한다.
+
+```swift
+static func == (lhs: Self, rhs: Self) -> Bool
+```
+
+**`class`에서는 의미가 조금 다르다.** 상속이 있으면 `Self`는 **런타임의 실제 타입**을 가리킨다.
+
+```swift
+class Base {
+    func make() -> Self { Self() }    // 하위 클래스에서는 하위 타입을 반환
+}
+```
+
+`struct`는 상속이 없으므로 항상 선언된 타입과 같다.
+
 ### 왜 SwiftUI는 인스턴스가 아니라 타입을 받는가
 
 `preference`와 `onPreferenceChange`의 시그니처를 보면 명확하다.
@@ -234,10 +308,17 @@ SizePreferenceKey.Type   위 값이 갖는 타입 (메타타입)
 - [ ] `Codable`로 `decode(User.self, forKey:)`를 써 보고 왜 타입을 넘기는지 설명한다.
 - [ ] `\.self` key path와 `.self` 메타타입이 왜 다른지 한 문장으로 정리한다.
 - [ ] `[Any]` 배열에 `Int.self`를 담아 메타타입도 값임을 확인한다.
+- [ ] `Self(date: nil, rates: nil)`을 `ExchangeRate(...)`로 바꿔도 같은지 확인한다.
+- [ ] `.init(date: nil, rates: nil)`으로도 되는지 확인한다 (타입 추론).
+- [ ] 타입 이름을 리네임하고 `Self`는 고칠 필요가 없는 것을 확인한다.
+- [ ] `Self`를 타입이 아닌 값 자리에 써 보고 에러를 확인한다.
+- [ ] 프로토콜에 `func duplicate() -> Self`를 선언해 구현해 본다.
+- [ ] `class`에서 `Self`가 하위 타입을 가리키는지 실험한다.
 
 ## 공식 참고 자료
 
 - [Swift 공식 문서: Types — Metatype Type](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/types/#Metatype-Type)
+- [Swift 공식 문서: Types — Self Type](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/types/#Self-Type)
 - [Swift 공식 문서: Types — Any Type](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/types/#Any-Type)
 - [Swift 공식 문서: Expressions — Self Expression](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/expressions/#Self-Expression)
 - [Swift 공식 문서: Methods — Type Methods](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/methods/#Type-Methods)
