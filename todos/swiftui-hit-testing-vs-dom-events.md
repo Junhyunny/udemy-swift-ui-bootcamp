@@ -253,6 +253,47 @@ List(news.articles) { article in
 .buttonStyle(.plain)
 ```
 
+### 같은 패턴의 다른 사례 — `chapter-69`
+
+`chapter-69/chapter-69/CourseHome.swift`도 똑같은 구조를 쓴다.
+
+```swift
+List(Course.sample) { course in
+    ZStack {
+        NavigationLink(
+            destination: CourseDetailView(course: course, cart: cart)
+        ) {
+            EmptyView()
+        }.opacity(0)
+        CourseCardView(course: course)
+    }
+    .listRowSeparator(.hidden)
+}
+```
+
+**chapter-61과 다른 점은 값 기반이 아니라 `destination:` 방식이라는 것**이다. 목적지를 직접 갖는 형태이므로 [`navigationDestination`이 필요 없다](./navigation-link-two-styles-mixed.md).
+
+**정리하면 이렇게 된다.**
+
+```swift
+List(Course.sample) { course in
+    NavigationLink {
+        CourseDetailView(course: course, cart: cart)
+    } label: {
+        CourseCardView(course: course)
+    }
+    .listRowSeparator(.hidden)
+}
+```
+
+`ZStack`, `EmptyView()`, `.opacity(0)` 세 줄이 사라지고 의도가 그대로 드러난다.
+
+**왜 이 우회책이 퍼졌나**를 알아 두면 비슷한 코드를 만났을 때 판단이 쉽다. 초기 SwiftUI에서는 `NavigationLink`가 라벨에 리스트 기본 스타일(chevron, 강조, 여백)을 강하게 적용해, 커스텀 카드 디자인이 깨지는 경우가 있었다. 그래서 링크를 투명하게 감추고 원하는 뷰를 위에 겹치는 방식이 관용구처럼 쓰였다.
+
+지금은 스타일을 modifier로 조절할 수 있어 우회할 이유가 줄었다. **먼저 라벨에 직접 넣어 보고, 스타일이 마음에 들지 않을 때만 조정하는 순서**가 맞다.
+
+한 가지 더 짚으면, 이 방식은 **`.opacity(0)`인 뷰도 레이아웃 공간을 차지한다**는 부작용이 있다. `EmptyView()`라 실질적 영향은 없지만, 다른 뷰를 감췄다면 예상치 못한 여백이 생길 수 있다.
+
 ### 정리
 
 ```text
@@ -292,6 +333,9 @@ DOM ↔ SwiftUI 대응
 - [ ] `highPriorityGesture`로 부모가 자식보다 먼저 받게 해 본다.
 - [ ] `Color.clear`와 `EmptyView()`의 탭 수신 차이를 실험한다.
 - [ ] `disabled(true)`와 `allowsHitTesting(false)`의 차이를 비교한다.
+- [ ] `chapter-69`의 `ZStack` 패턴을 `NavigationLink { } label: { }`로 정리해 본다.
+- [ ] 정리 후 카드 디자인이 깨지는지 확인하고, 깨지면 어떤 modifier로 조절할지 찾아본다.
+- [ ] `.listRowSeparator(.hidden)`, `.buttonStyle(.plain)`을 적용해 스타일을 비교한다.
 
 ## 공식 참고 자료
 

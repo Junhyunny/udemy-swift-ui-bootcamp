@@ -243,6 +243,94 @@ NavigationStack(path: $path) {
 
 `NavigationView`에서는 링크마다 목적지를 직접 지정했으니 이런 "타입별 분기"라는 개념 자체가 없었다.
 
+### 마이그레이션 사례 — `chapter-69`의 `TabView` + `NavigationView`
+
+`chapter-69/chapter-69/CourseHome.swift`가 전형적인 구형 구조다.
+
+```swift
+TabView {
+    NavigationView {
+        List(Course.sample) { course in
+            ZStack {
+                NavigationLink(destination: CourseDetailView(course: course, cart: cart)) {
+                    EmptyView()
+                }.opacity(0)
+                CourseCardView(course: course)
+            }
+        }
+        .navigationTitle("Jun's Courses")
+    }
+    .tabItem { Label("Courses", systemImage: "list.bullet.circle") }
+
+    NavigationView {
+        CartView(cart: cart)
+    }
+    .tabItem { Label("Cart", systemImage: "cart.circle") }
+}
+```
+
+**탭마다 `NavigationView`를 하나씩 두는 것 자체는 올바른 구조다.** 각 탭이 독립적인 네비게이션 스택을 가져야 하기 때문이다. 바꿀 것은 컨테이너 이름뿐이다.
+
+```swift
+TabView {
+    NavigationStack {
+        // ...
+    }
+    .tabItem { Label("Courses", systemImage: "list.bullet.circle") }
+
+    NavigationStack {
+        CartView(cart: cart)
+    }
+    .tabItem { Label("Cart", systemImage: "cart.circle") }
+}
+```
+
+**이름만 바꿔도 동작한다.** `NavigationLink(destination:)` 방식은 [여전히 현행 API](./navigation-link-two-styles-mixed.md)이므로 함께 고칠 필요가 없다.
+
+**주의할 차이가 하나 있다.** `NavigationView`는 iPad에서 자동으로 2컬럼(split) 레이아웃이 되지만 `NavigationStack`은 항상 스택이다. iPhone 전용 앱이라면 오히려 예측 가능해지는 것이고, iPad에서 split을 원한다면 `NavigationSplitView`를 써야 한다.
+
+**`ZStack` + 투명 `NavigationLink` 패턴도 함께 정리할 수 있다.** 이건 `NavigationView` 시절의 우회책이었다. [히트 테스트 문서](./swiftui-hit-testing-vs-dom-events.md)에서 다룬 대로, 현행 API에서는 라벨에 직접 넣으면 된다.
+
+```swift
+List(Course.sample) { course in
+    NavigationLink {
+        CourseDetailView(course: course, cart: cart)
+    } label: {
+        CourseCardView(course: course)
+    }
+    .listRowSeparator(.hidden)
+}
+```
+
+`ZStack`, `EmptyView()`, `.opacity(0)`이 모두 사라진다.
+
+**더 나아가려면 값 기반으로 옮긴다.**
+
+```swift
+@State private var path: [Course] = []
+
+NavigationStack(path: $path) {
+    List(Course.sample) { course in
+        NavigationLink(course.title, value: course)
+    }
+    .navigationDestination(for: Course.self) { course in
+        CourseDetailView(course: course, cart: cart)
+    }
+}
+```
+
+이러면 `path`로 코드에서 화면을 제어할 수 있고, 목적지가 탭할 때 생성된다. 다만 `Course`가 `Hashable`을 채택해야 하고([enum과 Hashable](./enum-hashable-conformance.md) 참조), [`id`가 안정적이어야 한다](./duplicate-id-in-list.md)는 전제가 붙는다. 현재 `Course.sample`은 계산 프로퍼티라 그 전제가 깨져 있다.
+
+**세 단계로 정리하면 이렇다.**
+
+| 단계 | 작업 | 난이도 |
+| --- | --- | --- |
+| ① | `NavigationView` → `NavigationStack` | 이름만 교체 |
+| ② | `ZStack` 패턴 → 라벨에 직접 | 코드가 줄어든다 |
+| ③ | 값 기반 + `path` | `Hashable`·`id` 안정성 필요 |
+
+①만 해도 deprecation 경고가 사라진다. ②는 가독성 개선이고, ③은 프로그래밍 방식 제어가 필요할 때 한다.
+
 ## 학습 체크리스트
 
 - [ ] 주석 처리된 `NavigationView` 버전을 되살려 실행하고 deprecation 경고를 확인한다.
@@ -256,6 +344,10 @@ NavigationStack(path: $path) {
 - [ ] `#available(iOS 16.0, *)` 분기를 작성해 본다.
 - [ ] 프로젝트의 최소 배포 타겟을 iOS 15로 낮추고 어떤 에러가 나는지 본다.
 - [ ] `navigationDestination`을 하나 지우고 해당 타입의 링크를 탭했을 때 어떻게 되는지 확인한다.
+- [ ] `chapter-69`의 두 `NavigationView`를 `NavigationStack`으로 바꿔 경고가 사라지는지 확인한다.
+- [ ] 바꾼 뒤 `NavigationLink(destination:)` 방식이 그대로 동작하는지 확인한다.
+- [ ] iPad에서 `NavigationView`와 `NavigationStack`의 레이아웃 차이를 비교한다.
+- [ ] `ZStack` + 투명 링크 패턴을 라벨 방식으로 정리해 코드 줄 수를 비교한다.
 
 ## 공식 참고 자료
 

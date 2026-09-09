@@ -253,6 +253,144 @@ Apple도 마이그레이션을 권한다. `EnvironmentObject`에 대한 안내�
 
 > If your observable object conforms to the `Observable` protocol, use `Environment` instead of `EnvironmentObject`.
 
+### 마이그레이션 절차 — `chapter-69`의 `Cart`를 예로
+
+Apple이 마이그레이션 전용 문서를 제공한다. 얻는 이점을 이렇게 정리한다.
+
+> Adopting Observation provides your app with the following benefits:
+> - Tracking optionals and collections of objects, which isn't possible when using `ObservableObject`.
+> - Using existing data flow primitives like `State` and `Environment` instead of object-based equivalents such as `StateObject` and `EnvironmentObject`.
+> - Updating views based on changes to the observable properties that a view's `body` reads instead of any property changes that occur to an observable object, **which can help improve your app's performance**.
+
+`chapter-69/chapter-69/Cart.swift`가 구형 방식이다.
+
+```swift
+import SwiftUI
+import Foundation
+internal import Combine
+
+class Cart: ObservableObject {
+    @Published var courses: [Course] = []
+
+    func addCourse(course: Course) { courses.append(course) }
+    func deleteCourse(idSet: IndexSet) { courses.remove(atOffsets: idSet) }
+}
+```
+
+**단계별로 옮기면 이렇게 된다.**
+
+**① 모델 — `ObservableObject`를 `@Observable`로**
+
+> To adopt Observation in an existing app, begin by replacing `ObservableObject` in your data model type with the `Observable` macro. (…) Then **remove the `Published` property wrapper** from observable properties. Observation doesn't require a property wrapper to make a property observable.
+
+```swift
+import Foundation
+// Combine import가 불필요해진다
+
+@Observable
+final class Cart {
+    var courses: [Course] = []       // @Published 제거
+
+    func addCourse(course: Course) { courses.append(course) }
+    func deleteCourse(idSet: IndexSet) { courses.remove(atOffsets: idSet) }
+}
+```
+
+**`internal import Combine`이 사라지는 것도 이점**이다. `ObservableObject`와 `@Published`가 Combine 소속이라 필요했던 import다. [Combine 문서](./combine.md) 참조.
+
+추적하고 싶지 않은 프로퍼티가 있으면 `@ObservationIgnored`를 붙인다.
+
+> If you have properties that are accessible to an observer that you don't want to track, apply the `ObservationIgnored` macro to the property.
+
+**② 소유하는 뷰 — `@StateObject`를 `@State`로**
+
+```swift
+// BEFORE
+@StateObject private var library = Library()
+// AFTER
+@State private var library = Library()
+```
+
+**③ 전달받는 뷰 — `@ObservedObject`를 제거**
+
+`chapter-69/chapter-69/CartView.swift`가 여기 해당한다.
+
+```swift
+// BEFORE
+@ObservedObject var cart: Cart
+
+// AFTER
+var cart: Cart              // 래퍼가 필요 없다
+```
+
+> Next, remove the `ObservedObject` property wrapper from the book variable in the `BookView`. This property wrapper isn't needed when adopting Observation. **That's because SwiftUI automatically tracks any observable properties that a view's `body` reads directly.**
+
+**④ 환경 주입 — `environmentObject`를 `environment`로**
+
+```swift
+// BEFORE
+LibraryView().environmentObject(library)
+struct LibraryView: View { @EnvironmentObject var library: Library }
+
+// AFTER
+LibraryView().environment(library)
+struct LibraryView: View { @Environment(Library.self) var library }
+```
+
+**⑤ 바인딩이 필요하면 `@Bindable`**
+
+> However, if a view needs a binding to an observable type, replace `ObservedObject` with the `Bindable` property wrapper.
+
+```swift
+@Bindable var book: Book
+TextField("Title", text: $book.title)
+```
+
+`@Observable` 객체의 프로퍼티에 `$`로 바인딩을 만들려면 `@Bindable`이 필요하다. [프로퍼티 래퍼의 `$`](./property-wrapper-dollar-sign.md) 참조.
+
+**점진적으로 옮겨도 된다**
+
+> You don't need to make a wholesale replacement of the `ObservableObject` protocol throughout your app. Instead, you can make changes incrementally. Start by changing one data model type to use the `Observable` macro. **Your app can mix data model types that use different observation systems.**
+
+`@StateObject`와 `@ObservedObject`도 `@Observable` 타입을 받아 준다. 모델만 먼저 바꾸고 뷰는 나중에 정리해도 동작한다.
+
+**동작 차이를 알아 둘 것**
+
+> You may notice slight behavioral differences in your app based on the tracking method. For instance, when tracking as `Observable`, SwiftUI updates a view only when an observable property changes **and the view's `body` reads the property directly**. The view doesn't update when observable properties not read by body changes. In contrast, a view updates when **any** published property of an `ObservableObject` instance changes, even if the view doesn't read the property that changes.
+
+이것이 성능 이점의 근원이자, 동작이 미묘하게 달라지는 지점이다.
+
+### `chapter-69`에서 함께 고칠 것 — 실제 버그
+
+마이그레이션과 별개로 **`CourseHome`에 문제가 있다.**
+
+```swift
+struct CourseHome: View {
+    var cart: Cart = Cart()          // ⚠️ 래퍼가 없다
+```
+
+`CourseHome`은 `struct`이고, SwiftUI는 뷰를 자주 다시 만든다. **`@StateObject`(구형) 또는 `@State`(현행)가 없으면 뷰가 재생성될 때마다 `Cart()`가 새로 만들어질 수 있다.** 장바구니에 담은 항목이 사라질 수 있다는 뜻이다.
+
+`@State`의 역할이 여기서 드러난다. [Observation 문서 앞부분](#다른-래퍼와-어떻게-조합하나)에서 다룬 대로, `@Observable` 객체에 `@State`를 붙이는 것은 **값 변화 감지가 아니라 인스턴스 수명을 뷰에 묶는 역할**이다.
+
+```swift
+struct CourseHome: View {
+    @State private var cart = Cart()      // 수명이 뷰에 묶인다
+```
+
+**하위 뷰로 전달하는 방식도 두 가지가 있다.**
+
+```swift
+// ① 프로퍼티로 직접 전달 — 현재 방식
+CartView(cart: cart)
+
+// ② 환경으로 주입 — 계층이 깊으면 유리
+.environment(cart)
+// 받는 쪽: @Environment(Cart.self) private var cart
+```
+
+지금은 계층이 얕아 ①로 충분하다. [`@Environment` 문서](./environment-property-wrapper.md)에서 선택 기준을 다뤘다.
+
 ### 주의점
 
 - **`class`에만 붙는다.** `struct`에는 쓸 수 없다. 참조 타입이어야 여러 곳에서 같은 인스턴스를 관찰할 수 있다.
@@ -276,6 +414,12 @@ Apple도 마이그레이션을 권한다. `EnvironmentObject`에 대한 안내�
 - [ ] `withObservationTracking`으로 SwiftUI 없이 변경을 감지해 본다.
 - [ ] `@Observable`을 `struct`에 붙여 보고 에러를 확인한다.
 - [ ] `.environment(coordinator)`로 주입하고 자손에서 `@Environment(NavigationCoordinator.self)`로 꺼내 본다.
+- [ ] `chapter-69`의 `Cart`를 `ObservableObject`에서 `@Observable`로 옮겨 본다.
+- [ ] 그 과정에서 `@Published`와 `internal import Combine`이 불필요해지는 것을 확인한다.
+- [ ] `CartView`의 `@ObservedObject`를 제거하고도 갱신이 되는지 확인한다.
+- [ ] `CourseHome`의 `var cart = Cart()`에 `@State`를 붙이기 전후로 장바구니가 유지되는지 비교한다.
+- [ ] `@StateObject`가 `@Observable` 타입도 받아 주는지 확인한다 (점진적 마이그레이션).
+- [ ] `@Bindable`로 `@Observable` 객체의 프로퍼티에 바인딩을 만들어 본다.
 
 ## 공식 참고 자료
 
@@ -287,5 +431,8 @@ Apple도 마이그레이션을 권한다. `EnvironmentObject`에 대한 안내�
 - [Apple: ObservationRegistrar](https://developer.apple.com/documentation/observation/observationregistrar)
 - [Apple: Managing model data in your app](https://developer.apple.com/documentation/swiftui/managing-model-data-in-your-app)
 - [Apple: Migrating from the Observable Object protocol to the Observable macro](https://developer.apple.com/documentation/swiftui/migrating-from-the-observable-object-protocol-to-the-observable-macro)
+- [Apple: Bindable](https://developer.apple.com/documentation/swiftui/bindable)
+- [Apple: ObservableObject (구형)](https://developer.apple.com/documentation/combine/observableobject)
+- [Apple: view.environment(_:)](https://developer.apple.com/documentation/swiftui/view/environment(_:))
 - [Apple: State](https://developer.apple.com/documentation/swiftui/state)
 - [Apple: Environment](https://developer.apple.com/documentation/swiftui/environment)
