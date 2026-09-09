@@ -79,6 +79,12 @@
 - [ ] [`UIViewRepresentable`과 `UI` 접두사 — UIKit 컴포넌트 가져오기](./uiviewrepresentable-and-uikit-bridge.md)
 - [ ] [`ZStack`에서 탭이 어디로 가는가 — 히트 테스트와 DOM 이벤트](./swiftui-hit-testing-vs-dom-events.md)
 - [ ] [`AsyncImage` — `Image`와 무엇이 다른가](./async-image.md)
+- [ ] [`NotificationCenter` — 멀리 떨어진 컴포넌트끼리 통신하기](./notification-center.md)
+- [ ] [`for await` — 비동기 시퀀스를 반복하기](./for-await-async-sequence.md)
+- [ ] [Swift의 형변환 — `as?`, `as!`, `as`, `is`](./swift-type-casting.md)
+- [ ] [`MainActor`는 왜 필요한가 — iOS의 스레드 모델](./main-actor-and-ios-threading.md)
+- [ ] [`TaskPriority` — 우선순위 값들과 실제 동작](./task-priority-and-scheduling.md)
+- [ ] [`final` 키워드 — 어디에 붙이고 무엇을 막는가](./final-keyword.md)
 
 ## 완료 기준
 
