@@ -85,6 +85,10 @@
 - [ ] [`MainActor`는 왜 필요한가 — iOS의 스레드 모델](./main-actor-and-ios-threading.md)
 - [ ] [`TaskPriority` — 우선순위 값들과 실제 동작](./task-priority-and-scheduling.md)
 - [ ] [`final` 키워드 — 어디에 붙이고 무엇을 막는가](./final-keyword.md)
+- [ ] [`Foundation` 모듈에는 무엇이 들어 있나](./foundation-framework.md)
+- [ ] [`List`에서 `id`가 중복되면 어떻게 되는가](./duplicate-id-in-list.md)
+- [ ] [`presentationMode`와 `dismiss`의 차이](./presentation-mode-vs-dismiss.md)
+- [ ] [`sheet`의 `onDismiss`와 결과 전달](./sheet-ondismiss-and-result.md)
 
 ## 완료 기준
 
