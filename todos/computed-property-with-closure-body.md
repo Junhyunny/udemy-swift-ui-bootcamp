@@ -68,6 +68,106 @@ var formatter: NumberFormatter {
 
 **읽기 전용이면 `get`을 생략할 수 있다.** [static 프로퍼티 문서](./static-stored-vs-computed-property.md)에서 다룬 `static var sample: [Course] { ... }`와 같은 문법이다.
 
+#### `setter`도 있다 — `chapter-88`의 질문
+
+`chapter-88/chapter-88/Models/Post.swift`에 같은 문법이 나온다.
+
+```swift
+struct Post: Decodable, Identifiable {
+    // TODO, 아래 문법은 getter 같은거야? 비슷하게 setter 컨셉도 있나?
+    var id: String { return objectID }
+    let objectID: String
+    // ...
+}
+```
+
+**두 질문에 모두 "그렇다"가 답이다.** `{ }`는 getter이고, setter도 있다.
+
+**읽기 전용 계산 프로퍼티**
+
+> A computed property with a getter but no setter is known as a *read-only computed property*. A read-only computed property always returns a value, and can be accessed through dot syntax, but **can't be set to a different value**.
+
+`Post.id`가 이 형태다. `objectID`를 그대로 돌려주므로 값을 설정할 대상이 없다.
+
+**`return`도 생략할 수 있다.** 단일 표현식이면 [클로저의 암시적 반환](./closure-shorthand-argument-names.md)과 같은 규칙이 적용된다.
+
+```swift
+var id: String { return objectID }    // 현재
+var id: String { objectID }           // 더 간결
+```
+
+**setter를 붙이면 읽기·쓰기 계산 프로퍼티가 된다**
+
+```swift
+struct Rect {
+    var origin = Point()
+    var size = Size()
+
+    var center: Point {
+        get {
+            Point(x: origin.x + size.width / 2, y: origin.y + size.height / 2)
+        }
+        set {
+            origin.x = newValue.x - (size.width / 2)
+            origin.y = newValue.y - (size.height / 2)
+        }
+    }
+}
+```
+
+`center`는 저장되지 않는다. **읽을 때는 `origin`과 `size`로 계산하고, 쓸 때는 반대로 `origin`을 갱신한다.**
+
+**`newValue`는 기본 제공되는 이름이다.**
+
+> If a computed property's setter doesn't define a name for the new value to be set, a default name of `newValue` is used.
+
+이름을 직접 지을 수도 있다.
+
+```swift
+set(newCenter) {
+    origin.x = newCenter.x - (size.width / 2)
+}
+```
+
+**계산 프로퍼티는 반드시 `var`다**
+
+> **Note:** You must declare computed properties — including read-only computed properties — as variable properties with the `var` keyword, because their value isn't fixed. The `let` keyword is only used for constant properties.
+
+```swift
+var id: String { objectID }      // ✅
+let id: String { objectID }      // ⚠️ 컴파일 에러
+```
+
+읽기 전용이라도 `let`을 쓸 수 없다. 값이 고정된 것이 아니라 **매번 계산**되기 때문이다. [static 프로퍼티 문서](./static-stored-vs-computed-property.md)에서 "계산 프로퍼티가 항상 `var`인 이유"로 다룬 내용이다.
+
+**`willSet`/`didSet`은 다른 것이다**
+
+혼동하기 쉬운데, 이들은 **저장 프로퍼티**의 관찰자(observer)다.
+
+```swift
+var count: Int = 0 {
+    willSet { print("바뀔 예정:", newValue) }
+    didSet { print("바뀜. 이전:", oldValue) }
+}
+```
+
+| 문법 | 종류 | 값 저장 |
+| --- | --- | --- |
+| `var x: T { get }` | 계산 프로퍼티 (읽기 전용) | **안 함** |
+| `var x: T { get set }` | 계산 프로퍼티 (읽기·쓰기) | **안 함** |
+| `var x: T = v { willSet didSet }` | 저장 프로퍼티 + 관찰자 | **함** |
+
+계산 프로퍼티에는 `willSet`/`didSet`을 붙일 수 없다. 저장하지 않으므로 관찰할 대상이 없다.
+
+**`Post.id`가 계산 프로퍼티인 것이 왜 중요한가**
+
+두 가지 이점이 있다.
+
+- **`Decodable`이 무시한다.** 저장 프로퍼티가 아니므로 JSON에 `id` 키가 없어도 된다. [Codable 문서](./codable-and-codingkey.md)에서 `CodingKeys`로 `id`를 제외해야 했던 문제가 애초에 생기지 않는다
+- **신원이 안정적이다.** `objectID`에서 파생되므로 같은 데이터면 항상 같은 `id`다. [`let id = UUID()`의 함정](./duplicate-id-in-list.md)을 피한다
+
+chapter-80의 `ExchangeRate`가 `let id = UUID()` + `CodingKeys` 제외 방식이었던 것과 비교하면 chapter-88이 더 나은 설계다.
+
 **즉시 실행 클로저와 혼동하기 쉽다.** 그쪽은 끝에 `()`가 붙는다.
 
 ```swift

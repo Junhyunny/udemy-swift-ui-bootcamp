@@ -96,6 +96,7 @@
 - [ ] [API 응답 모델에 옵셔널을 써야 하나](./optional-in-api-models.md)
 - [ ] [Swift의 함수 오버로딩 — argument label이 시그니처의 일부다](./swift-function-overloading.md)
 - [ ] [`var x: T { ... }` — 지역 계산 프로퍼티와 즉시 실행 클로저](./computed-property-with-closure-body.md)
+- [ ] [`var posts = [Post]()` — 컬렉션 초기화 표기들](./array-literal-and-initialization.md)
 - [ ] [`Foundation` 모듈에는 무엇이 들어 있나](./foundation-framework.md)
 - [ ] [`List`에서 `id`가 중복되면 어떻게 되는가](./duplicate-id-in-list.md)
 - [ ] [`presentationMode`와 `dismiss`의 차이](./presentation-mode-vs-dismiss.md)

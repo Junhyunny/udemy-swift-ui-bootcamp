@@ -226,6 +226,160 @@ Task(priority: .background) {
 
 우선순위 자체에 대해서는 [TaskPriority 문서](./task-priority-and-scheduling.md)에서 다룬다.
 
+### `Task { @MainActor in }` — `chapter-88`의 네 번째 방법
+
+`chapter-88/chapter-88/Services/NetworkManager.swift`에 또 다른 문법이 나온다.
+
+```swift
+let (data, _) = try await URLSession.shared.data(from: url)
+let decoder = JSONDecoder()
+
+// TODO, 이건 새로운 문법이네? 이건 이전의 MainActor.run , Task 방식과 뭐가 달라?
+Task { @MainActor in
+    let results = try decoder.decode(Results.self, from: data)
+    posts = results.hits
+}
+```
+
+**`Task`의 클로저에 `@MainActor`를 붙인 형태**다. "이 작업 전체를 메인 액터에서 실행하라"는 뜻이다.
+
+### 세 방법을 나란히 놓고 비교
+
+| | `await MainActor.run { }` | `Task { @MainActor in }` | `@MainActor func` |
+| --- | --- | --- | --- |
+| 정체 | 메인 액터로 **전환하고 기다린다** | 메인 액터에서 도는 **새 작업 생성** | 함수 전체를 격리 |
+| 호출부에서 대기 | **예** (`await`) | **아니오** — 바로 다음 줄로 넘어간다 |  예 |
+| 반환값 | 받을 수 있다 | 받기 어렵다 | 받을 수 있다 |
+| 취소 연결 | 현재 작업에 붙는다 | **비구조적 — 끊어진다** | 붙는다 |
+| 오류 전파 | `try await`으로 전파 | **전파되지 않는다** | 전파된다 |
+
+**`Task { @MainActor in }`의 결정적 차이는 "기다리지 않는다"는 것**이다.
+
+```swift
+func fetchPosts() async {
+    let (data, _) = try await URLSession.shared.data(from: url)
+
+    Task { @MainActor in
+        posts = try decoder.decode(Results.self, from: data)   // 나중에 실행된다
+    }
+    // ← 여기로 즉시 넘어온다. 위 작업이 끝나기를 기다리지 않는다
+}                                                              // 함수가 먼저 끝날 수 있다
+```
+
+`MainActor.run`은 반대다.
+
+```swift
+await MainActor.run {
+    posts = ...
+}
+// ← 위 블록이 끝난 뒤에 도달한다
+```
+
+### 이 코드에는 실제 문제가 있다
+
+**① 오류가 사라진다**
+
+```swift
+Task { @MainActor in
+    let results = try decoder.decode(Results.self, from: data)   // ← try
+    posts = results.hits
+}
+```
+
+**이 `try`의 오류를 아무도 받지 않는다.**
+
+`Task`의 클로저가 throwing이면 `Task<Void, Error>`가 만들어지고, 오류는 그 `Task`의 `value`나 `result`를 통해서만 꺼낼 수 있다. 여기서는 `Task`를 변수에 담지도 않으므로 **오류가 조용히 버려진다.**
+
+바깥의 `catch`도 잡지 못한다.
+
+```swift
+do {
+    let (data, _) = try await URLSession.shared.data(from: url)
+    Task { @MainActor in
+        try decoder.decode(...)      // 이 오류는
+    }
+} catch {
+    print(error)                     // ← 여기로 오지 않는다
+}
+```
+
+`Task`가 **별개의 작업**이므로 오류 흐름이 끊긴다. 앞서 겪은 `"The data couldn't be read because it is missing."` 메시지가 보였다면, 그건 이전 버전(`Task` 안에 `do-catch`가 있던 코드)에서 나온 것이다. 현재 코드는 같은 오류가 나도 **아무것도 출력되지 않는다.**
+
+**② 취소가 연결되지 않는다**
+
+`.task { await networkManager.fetchPosts() }`로 호출하므로 뷰가 사라지면 `fetchPosts`는 취소된다. 하지만 **안에서 만든 `Task`는 별개**라 계속 실행된다. [`.task` 문서](./task-modifier-and-async-lifecycle.md)에서 다룬 구조적 동시성의 이점이 여기서 끊긴다.
+
+**③ 디코딩을 메인 액터에서 한다**
+
+`decode`는 CPU 작업이다. 항목이 많으면 메인 스레드를 점유해 UI가 멈출 수 있다. **디코딩은 백그라운드에서 하고 대입만 메인에서** 하는 것이 맞다.
+
+### 권장하는 형태
+
+**`@MainActor` 함수로 만드는 것이 가장 단순하다.**
+
+```swift
+@Observable
+final class NetworkManager {
+    var posts = [Post]()
+
+    @MainActor
+    func fetchPosts() async throws {
+        guard let url = URL(string: "https://hn.algolia.com/api/v1/search?tags=story") else {
+            throw URLError(.badURL)
+        }
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let results = try JSONDecoder().decode(Results.self, from: data)
+        posts = results.hits
+    }
+}
+```
+
+`Task`, `MainActor.run`이 모두 사라진다. **`await` 지점에서 스레드를 놓아주므로 UI를 막지 않는다.**
+
+`throws`로 바꿨으므로 뷰에서 오류를 처리한다.
+
+```swift
+.task {
+    do {
+        try await networkManager.fetchPosts()
+    } catch {
+        errorMessage = error.localizedDescription
+    }
+}
+```
+
+**디코딩을 백그라운드로 분리하려면** 클래스 전체를 격리하지 않고 대입 지점만 넘긴다.
+
+```swift
+func fetchPosts() async throws {
+    let (data, _) = try await URLSession.shared.data(from: url)
+    let results = try JSONDecoder().decode(Results.self, from: data)   // 백그라운드
+
+    await MainActor.run {
+        posts = results.hits                                            // 메인
+    }
+}
+```
+
+`MainActor.run`을 쓰되 **오류가 나는 코드는 밖에 두는 것**이 요령이다. `try`가 `MainActor.run` 안에 있으면 오류 전파가 복잡해진다.
+
+### 언제 `Task { @MainActor in }`이 적절한가
+
+**"결과를 기다릴 필요가 없는 UI 갱신"** 에는 유효하다.
+
+```swift
+// 동기 함수에서 UI를 갱신해야 할 때
+func handleNotification(_ note: Notification) {      // 동기 콜백
+    Task { @MainActor in
+        self.badgeCount += 1                          // await할 필요 없다
+    }
+}
+```
+
+동기 문맥에서는 `await MainActor.run`을 쓸 수 없으므로 이 방법이 필요하다. [`Task { }`가 동기·비동기 경계를 넘는 다리](./task-modifier-and-async-lifecycle.md)라는 점과 같은 맥락이다.
+
+**하지만 이미 `async` 함수 안이라면** `MainActor.run`이나 `@MainActor` 함수가 낫다. 굳이 새 작업을 만들 이유가 없고, 오류·취소 연결도 유지된다.
+
 ### `@MainActor`를 붙이는 위치
 
 | 위치 | 효과 |

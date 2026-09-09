@@ -171,6 +171,76 @@ guard let detectedURL else { return }     // guard let detectedURL = detectedURL
 
 예제 코드의 `if let detectedURL {`도 같은 축약 문법이다.
 
+#### 축약 문법을 자세히 — `chapter-88`의 질문
+
+`chapter-88/chapter-88/WebView.swift`에 이 문법이 나온다.
+
+```swift
+struct WebView: UIViewRepresentable {
+    let urlString: String?          // ← 멤버 프로퍼티 (옵셔널)
+
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        // TODO, 여기서 urlString 이라는 키워드가 위 멤버 변수 urlString이 있는지 없는지
+        //       보기 위한 가드가 되는거야? let 을 사용해서 새로 선언한 것인줄 알았는데
+        guard let urlString, let url = URL(string: urlString) else { return }
+        // ...
+    }
+}
+```
+
+**질문의 첫 번째 이해가 맞다.** 멤버 프로퍼티 `urlString`이 `nil`인지 확인하는 것이다.
+
+**두 번째 짐작("`let`으로 새로 선언한 것")도 절반은 맞다.** 실제로 **새 상수를 만든다.** 다만 값을 다른 데서 가져오는 것이 아니라 **같은 이름의 옵셔널에서 꺼낸다.**
+
+```swift
+guard let urlString              // 축약형
+guard let urlString = urlString  // 원래 형태 — 완전히 같다
+//        ↑ 새 상수      ↑ self.urlString (옵셔널)
+```
+
+즉 **두 개의 `urlString`이 존재한다.**
+
+| | 타입 | 정체 |
+| --- | --- | --- |
+| `self.urlString` | `String?` | 멤버 프로퍼티 |
+| `urlString` (guard 이후) | **`String`** | 새로 만든 비옵셔널 상수 |
+
+블록 안에서 `urlString`을 쓰면 **새로 만든 비옵셔널 상수**를 가리키고, 원래 옵셔널은 가려진다(shadowed). 이것이 [`if` 조건 문서](./if-conditions-and-optional-binding.md)에서 다룬 **그늘짐(shadowing)** 이다.
+
+**그래서 `URL(string: urlString)`에 옵셔널이 아닌 값이 들어간다.**
+
+```swift
+guard let urlString, let url = URL(string: urlString) else { return }
+//                                         ↑ 비옵셔널 String
+```
+
+축약형이 없던 시절에는 이름을 다르게 지어야 했다.
+
+```swift
+// Swift 5.7 이전 관례
+guard let unwrappedURLString = urlString else { return }
+guard let urlString = self.urlString else { return }   // self.로 구분
+```
+
+**축약 문법이 이 번거로움을 없앤 것**이다. Swift Evolution SE-0345가 그 제안이다.
+
+**주의할 점** — 축약형은 **이름이 같을 때만** 쓸 수 있다.
+
+```swift
+guard let url = URL(string: urlString) else { return }   // 이름이 다르므로 축약 불가
+guard let url else { ... }                               // url이라는 옵셔널이 있어야 성립
+```
+
+같은 줄의 두 바인딩이 서로 다른 형태인 이유가 이것이다. `urlString`은 이름이 같아 축약했고, `url`은 `URL(string:)`의 결과라 이름을 명시했다.
+
+**`self`를 축약할 때는 의미가 조금 다르다.**
+
+```swift
+guard let self else { return }      // weak self를 강한 참조로 승격
+```
+
+[`[weak self]` 문서](./weak-self-and-deinit.md)에서 다룬 형태다. 문법은 같지만 "옵셔널 `self`를 비옵셔널로"라는 목적이 뚜렷하다.
+
 **불리언 조건**
 
 ```swift
