@@ -114,6 +114,7 @@
 - [ ] [SwiftUI `transition`의 효과와 조합 방법](./swiftui-transition-composition.md)
 - [ ] [GameKit과 GameplayKit — 게임 서비스와 게임 로직 도구](./gamekit-and-gameplaykit.md)
 - [ ] [`CaseIterable`과 `Sequence` — 열거형 전체 사례 순회](./caseiterable-and-sequence.md)
+- [ ] [Core Data와 SwiftData — 개념, 구조, 동시성, 마이그레이션과 선택 기준](./core-data-vs-swiftdata.md)
 
 ## 완료 기준
 
