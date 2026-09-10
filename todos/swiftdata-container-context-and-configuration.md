@@ -23,6 +23,12 @@ Text(modelContext.container.configurations.debugDescription)
 - model이 여러 개면 modifier를 여러 번 붙이는가?
 - `inMemory`가 true일 때와 false일 때 무엇이 달라지는가?
 
+같은 질문이 `chapter-115/chapter-115/Todo.swift`에서도 나왔다.
+
+```swift
+configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+```
+
 ## 공부할 내용
 
 ### 역할을 한 그림으로 보기
@@ -147,16 +153,35 @@ let container = try ModelContainer(
 )
 ```
 
+`ModelConfiguration(isStoredInMemoryOnly: true)`도 같은 뜻이다.
+
 데이터가 disk의 production store에 영속되지 않고 container 수명 동안만 유지된다. 앱 process나 해당 container가 사라지면 데이터도 사라진다.
 
-적합한 용도는 다음과 같다.
+`true`와 `false`가 실제로 무엇이 다른지는 configuration을 출력해 보면 분명하다.
 
-- unit test
-- Xcode Preview
-- sample/demo mode
-- 임시 계산이나 사용자가 저장을 명시하기 전 draft
+```swift
+let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+let container = try ModelContainer(for: Grocery.self, configurations: configuration)
+print(container.configurations.first!.url.path)
+```
 
-실제 사용자 데이터 저장에는 적합하지 않다.
+```text
+isStoredInMemoryOnly = true   → url = /dev/null
+isStoredInMemoryOnly = false  → url = .../Application Support/default.store
+                                (+ default.store-wal, default.store-shm)
+```
+
+| 항목 | `true` | `false` |
+|---|---|---|
+| store 파일 | 생기지 않는다 (`/dev/null`) | Application Support에 SQLite 파일과 WAL 파일이 생긴다 |
+| 앱 재실행 후 데이터 | 사라진다 | 남는다 |
+| container를 다시 만들면 | 빈 상태로 시작한다 | 이전 데이터를 그대로 읽는다 |
+| migration | 사실상 무의미 | schema가 바뀌면 필요하다 |
+| 적합한 용도 | test, Preview, demo, draft | 실제 사용자 데이터 |
+
+특히 세 번째 줄이 중요하다. container를 반복해서 만드는 코드(예: Preview용 mock 팩토리)에서 `false`를 쓰면 **같은 파일에 sample 데이터가 계속 누적된다**. 실제로 측정하면 접근할 때마다 row가 늘어난다. 자세한 실험 결과는 [Preview의 mock container 문서](./swiftdata-preview-mock-container.md)에 정리했다.
+
+실제 사용자 데이터 저장에 `true`는 적합하지 않다.
 
 ### Preview에는 별도 container를 주입한다
 

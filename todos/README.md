@@ -120,6 +120,10 @@
 - [ ] [SwiftData `ModelContainer`, `ModelContext`, configuration과 in-memory 저장소](./swiftdata-container-context-and-configuration.md)
 - [ ] [SwiftData 저장 위치, 보안, 용량과 성능](./swiftdata-storage-security-and-performance.md)
 - [ ] [SwiftData relationship과 연관 데이터 조회 — SQL JOIN과의 차이](./swiftdata-relationships-and-fetching.md)
+- [ ] [Swift macro는 언제 코드가 추가되는가 — 빌드 파이프라인과 Java 비교](./swift-macros-and-build-pipeline.md)
+- [ ] [SwiftData의 식별자 — `PersistentIdentifier`, 중복 데이터와 업데이트](./swiftdata-identity-and-updates.md)
+- [ ] [SwiftData 동시성 — 메인 스레드, 동일 context, 데이터 충돌과 `@MainActor`](./swiftdata-concurrency-and-context-isolation.md)
+- [ ] [Preview의 mock container — 무엇이 주입되고 `static var`는 매번 실행되는가](./swiftdata-preview-mock-container.md)
 
 ## 완료 기준
 
