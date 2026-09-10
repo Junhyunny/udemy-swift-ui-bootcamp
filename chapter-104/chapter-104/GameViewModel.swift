@@ -5,7 +5,7 @@
 //  Created by 강준현 on 9/10/26.
 //
 
-// TODO, GameKit 모듈에는 어떤 기능이 들어있어? 언제 사용하는 기능이지?
+// TODO: [todos/gamekit-and-gameplaykit.md](../../todos/gamekit-and-gameplaykit.md)
 import GameKit
 import Observation
 import SwiftUI

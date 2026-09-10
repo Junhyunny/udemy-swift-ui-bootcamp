@@ -31,7 +31,7 @@ struct ContentView: View {
                 VStack {
                     Text("You choose: \(playerMove.rawValue)")
                         .font(.title)
-                        // TODO, transition 은 어떤 효과야? .scaled 는 어떤 기능들이 있지? .opacity와 함께 트랜지션 한다는건 어떤 의미지?
+                        // TODO: [todos/swiftui-transition-composition.md](../../todos/swiftui-transition-composition.md)
                         .transition(.scale.combined(with: .opacity))
                     Text("Opponent choose: \(opponentMove.rawValue)")
                         .font(.title)
@@ -56,7 +56,7 @@ struct ContentView: View {
                     .foregroundStyle(.white)
                     .clipShape(.rect(cornerRadius: 20))
                     .shadow(radius: 10)
-                    // TODO, 여기 transition 도 좋은 예시일 것 같아. transition에 대해 이해할 수 있도록 여러가지 예시들을 만들어줄래? .combined 함수 말고도 다른 기능이 있는 것 같은데 그 부분도 커버해줘
+                    // TODO: [todos/swiftui-transition-composition.md](../../todos/swiftui-transition-composition.md)
                     .transition(
                         .move(edge: .bottom).combined(with: .opacity)
                     )

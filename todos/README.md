@@ -111,6 +111,9 @@
 - [ ] [`List`에서 `id`가 중복되면 어떻게 되는가](./duplicate-id-in-list.md)
 - [ ] [`presentationMode`와 `dismiss`의 차이](./presentation-mode-vs-dismiss.md)
 - [ ] [`sheet`의 `onDismiss`와 결과 전달](./sheet-ondismiss-and-result.md)
+- [ ] [SwiftUI `transition`의 효과와 조합 방법](./swiftui-transition-composition.md)
+- [ ] [GameKit과 GameplayKit — 게임 서비스와 게임 로직 도구](./gamekit-and-gameplaykit.md)
+- [ ] [`CaseIterable`과 `Sequence` — 열거형 전체 사례 순회](./caseiterable-and-sequence.md)
 
 ## 완료 기준
 

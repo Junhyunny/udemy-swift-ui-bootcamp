@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// TODO, CaseIterable 프로토콜은 뭐야? Iterable 프로토콜이랑 뭐가 다르지?
+// TODO: [todos/caseiterable-and-sequence.md](../../todos/caseiterable-and-sequence.md)
 enum Move: String, CaseIterable {
     case rock = "🪨"
     case paper = "📝"
