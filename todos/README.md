@@ -124,6 +124,7 @@
 - [ ] [SwiftData의 식별자 — `PersistentIdentifier`, 중복 데이터와 업데이트](./swiftdata-identity-and-updates.md)
 - [ ] [SwiftData 동시성 — 메인 스레드, 동일 context, 데이터 충돌과 `@MainActor`](./swiftdata-concurrency-and-context-isolation.md)
 - [ ] [Preview의 mock container — 무엇이 주입되고 `static var`는 매번 실행되는가](./swiftdata-preview-mock-container.md)
+- [ ] [`PreviewModifier` — preview에 container가 주입되는 원리와 shared context](./preview-modifier-and-shared-context.md)
 
 ## 완료 기준
 
