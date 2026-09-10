@@ -115,6 +115,11 @@
 - [ ] [GameKit과 GameplayKit — 게임 서비스와 게임 로직 도구](./gamekit-and-gameplaykit.md)
 - [ ] [`CaseIterable`과 `Sequence` — 열거형 전체 사례 순회](./caseiterable-and-sequence.md)
 - [ ] [Core Data와 SwiftData — 개념, 구조, 동시성, 마이그레이션과 선택 기준](./core-data-vs-swiftdata.md)
+- [ ] [SwiftData `@Model`은 왜 class이고 `final`은 필수인가](./swiftdata-model-class-and-final.md)
+- [ ] [SwiftData `@Query` — 실행 시점, 조건·정렬과 query 디버깅](./swiftdata-query-and-debugging.md)
+- [ ] [SwiftData `ModelContainer`, `ModelContext`, configuration과 in-memory 저장소](./swiftdata-container-context-and-configuration.md)
+- [ ] [SwiftData 저장 위치, 보안, 용량과 성능](./swiftdata-storage-security-and-performance.md)
+- [ ] [SwiftData relationship과 연관 데이터 조회 — SQL JOIN과의 차이](./swiftdata-relationships-and-fetching.md)
 
 ## 완료 기준
 

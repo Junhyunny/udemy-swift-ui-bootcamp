@@ -302,9 +302,45 @@ actor NoteStore {
 
 성능과 안전성은 서로 다른 질문이다. concurrency API는 안전한 접근 규칙을 제공하고, 성능은 query plan, index, fetch 범위, 객체 수, 저장 빈도와 실제 측정 결과로 판단한다.
 
-## 7. 메모리와 성능
+## 7. 용량, 메모리와 성능 제약
 
 “메모리가 중요하면 Core Data”나 “SwiftData concurrency가 더 빠르다”는 식으로 미리 결론 내리면 안 된다.
+
+### 로컬 저장 용량에 하나의 고정 한도가 있는가
+
+Apple은 Core Data나 SwiftData 전체에 공통으로 적용되는 “최대 N MB” 같은 단일 한도를 제시하지 않는다. 실제 한계는 persistent store 종류, 파일 시스템, 기기의 남은 공간, 데이터 형태와 앱의 query 패턴에 따라 달라진다.
+
+```text
+디스크에 저장할 수 있는 전체 데이터 양
+    ≠
+한 번의 query로 메모리에 올려도 되는 양
+```
+
+저장 파일이 커질 수 있다는 것과 앱이 그 데이터를 원활하게 검색·수정할 수 있다는 것은 다른 문제다. 프레임워크 선택보다 schema, index, fetch 범위와 migration 시간이 실질적인 제한이 되기 쉽다.
+
+CloudKit 동기화를 켠 경우에는 로컬 저장소 크기와 별도로 사용자의 iCloud 저장 공간, CloudKit database 유형과 quota, 네트워크 전송 비용을 고려해야 한다. 로컬에서 저장에 성공했다고 동기화까지 성공한다는 뜻은 아니다.
+
+### 이미지·영상 같은 큰 binary data
+
+큰 파일을 model row의 `Data` 프로퍼티에 무조건 넣으면 fetch, save, migration, backup 비용이 커질 수 있다.
+
+- Core Data: Binary Data attribute의 “Allows External Storage” 옵션을 검토한다.
+- SwiftData: `@Attribute(.externalStorage)`를 검토한다.
+- 매우 큰 사용자 파일: 파일 시스템에 두고 model에는 URL, 식별자와 metadata만 저장하는 구조를 검토한다.
+
+`externalStorage`는 저장 위치에 대한 힌트이지 모든 성능 문제를 자동으로 해결하는 옵션이 아니다. 파일과 model의 생성·삭제를 함께 관리하고, orphan file과 backup 정책을 테스트해야 한다.
+
+### 메모리 working set
+
+저장소 전체 크기보다 현재 context가 추적하는 객체 수와 실제로 materialize된 프로퍼티·관계가 메모리에 직접 영향을 준다.
+
+- Core Data의 fault는 필요한 시점까지 일부 데이터 로딩을 미룬다.
+- fetch limit과 batch size로 한 번에 다루는 객체 수를 제한한다.
+- SwiftData에서도 fetch limit, offset, batch enumeration 등 목표 OS에서 제공하는 API를 사용한다.
+- 긴 import가 끝난 뒤 불필요한 객체와 context를 계속 보유하지 않는다.
+- 대형 목록은 모든 row를 한꺼번에 배열로 가져오기보다 paging을 설계한다.
+
+faulting이나 lazy loading은 “query 비용이 사라진다”는 뜻이 아니다. 스크롤 중 관계를 하나씩 접근하면 작은 query가 반복되는 N+1 문제가 생길 수 있다.
 
 ### 공통적으로 확인할 것
 
@@ -317,6 +353,21 @@ actor NoteStore {
 - Instruments의 Core Data template, Allocations, Time Profiler로 측정했는가?
 
 Core Data는 faulting, fetch batch size, refresh, reset, batch operation 등 객체 수와 메모리를 세밀하게 조절해 온 API가 성숙하다. SwiftData는 더 높은 수준의 API로 시작하기 쉽지만, 최신 OS에서 index, batch enumeration, history 같은 기능도 확장되고 있다. 따라서 **최소 지원 OS에서 실제로 쓸 수 있는 API**를 확인해야 한다.
+
+### 성능을 좌우하는 항목
+
+| 항목 | 느려지기 쉬운 형태 | 개선 방향 |
+|---|---|---|
+| query | 전체 fetch 후 Swift에서 filter | 저장소에서 실행 가능한 predicate 사용 |
+| 정렬·검색 | 자주 찾는 필드에 index 없음 | 실제 query를 기준으로 index 검토 |
+| 결과 크기 | 수만 건을 한 번에 materialize | limit, paging, batch enumeration |
+| relationship | 반복문 안에서 관계를 매번 지연 로딩 | prefetch 또는 query 구조 재설계 |
+| save | 매 row마다 save | 의미 있는 transaction 단위로 묶기 |
+| UI 반응성 | main context에서 대량 import | background context 또는 `ModelActor` 사용 |
+| binary | 큰 이미지·영상을 row에 직접 저장 | external storage 또는 파일 시스템 분리 |
+| migration | 첫 실행에 대규모 변환 | 실제 이전 store로 시간·실패 복구 검증 |
+
+Core Data와 SwiftData의 성능을 비교하려면 같은 schema, 같은 데이터 fixture, 같은 query와 같은 build configuration을 사용한다. cold launch, 첫 fetch, 반복 fetch, insert/save, migration, peak memory를 각각 측정해야 “어느 쪽이 빠르다”는 결론에 의미가 생긴다.
 
 ## 8. Schema 변경과 migration
 
@@ -456,6 +507,10 @@ Core Data의 `NSPersistentCloudKitContainer`는 오래된 통합 경로이고, S
 - [ ] `@ModelActor` 기반 background import를 만들고 UI context와 경계를 그림으로 설명한다.
 - [ ] V1 store fixture를 만든 뒤 프로퍼티 추가·이름 변경을 V2로 migration한다.
 - [ ] 같은 1만 건 데이터를 대상으로 fetch 범위와 save 횟수를 바꿔 시간·메모리를 측정한다.
+- [ ] 큰 `Data`를 직접 저장하는 방식, external storage, 파일 URL 저장 방식의 store 크기와 fetch 시간을 비교한다.
+- [ ] 1만 건 전체 fetch와 100건 단위 paging의 peak memory를 Instruments로 비교한다.
+- [ ] index 적용 전후의 검색 시간을 같은 fixture와 release build에서 측정한다.
+- [ ] CloudKit을 사용할 경우 local disk, iCloud quota, network failure를 별도 제약으로 설명한다.
 - [ ] 최소 OS, 기존 저장소, query, migration, 동시성 요구사항 표를 작성한 뒤 프레임워크를 선택한다.
 
 ## 공식 문서와 개념 이해 자료
@@ -475,6 +530,7 @@ Core Data의 `NSPersistentCloudKitContainer`는 오래된 통합 경로이고, S
 - [Apple: ModelContext](https://developer.apple.com/documentation/swiftdata/modelcontext)
 - [Apple: ModelActor](https://developer.apple.com/documentation/swiftdata/modelactor)
 - [Apple: FetchDescriptor](https://developer.apple.com/documentation/swiftdata/fetchdescriptor)
+- [Apple: SwiftData Attribute externalStorage](https://developer.apple.com/documentation/swiftdata/schema/attribute/option/externalstorage)
 - [Apple: SchemaMigrationPlan](https://developer.apple.com/documentation/swiftdata/schemamigrationplan)
 
 ### Core Data 공식 문서
@@ -483,5 +539,7 @@ Core Data의 `NSPersistentCloudKitContainer`는 오래된 통합 경로이고, S
 - [Apple: NSPersistentContainer](https://developer.apple.com/documentation/coredata/nspersistentcontainer)
 - [Apple: Setting up a Core Data stack](https://developer.apple.com/documentation/coredata/setting-up-a-core-data-stack)
 - [Apple: Using Core Data in the background](https://developer.apple.com/documentation/coredata/using-core-data-in-the-background)
+- [Apple: Core Data performance](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreData/Performance.html)
+- [Apple: NSAttributeDescription.allowsExternalBinaryDataStorage](https://developer.apple.com/documentation/coredata/nsattributedescription/allowsexternalbinarydatastorage)
 - [Apple: Adopting SwiftData for a Core Data app](https://developer.apple.com/documentation/coredata/adopting-swiftdata-for-a-core-data-app)
 - [Apple: Mirroring a Core Data store with CloudKit](https://developer.apple.com/documentation/coredata/mirroring-a-core-data-store-with-cloudkit)
