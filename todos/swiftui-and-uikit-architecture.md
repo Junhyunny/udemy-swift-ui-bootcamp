@@ -28,22 +28,24 @@ SwiftUI 코드에서 이름 앞에 `UI`가 붙는 타입을 만났다면, 대부
 
 | 타입 | 프레임워크 | 역할 |
 |---|---|---|
-| `UIView` | UIKit | 모든 UIKit View의 기본 클래스 |
-| `UILabel` | UIKit | 텍스트 표시 |
-| `UIButton` | UIKit | 버튼 |
-| `UIImageView` | UIKit | 이미지 표시 |
-| `UITextField` | UIKit | 한 줄 텍스트 입력 |
-| `UITextView` | UIKit | 여러 줄 텍스트 입력 |
-| `UIScrollView` | UIKit | 스크롤 컨테이너 |
-| `UITableView` | UIKit | 행 기반 리스트 |
-| `UICollectionView` | UIKit | 컬렉션·그리드·복합 목록 |
-| `UIViewController` | UIKit | 화면과 생명주기 관리 |
-| `UINavigationController` | UIKit | 스택 기반 내비게이션 |
-| `UITabBarController` | UIKit | 탭 기반 화면 전환 |
-| `UIApplication` | UIKit | 실행 중인 앱을 대표하는 객체 |
-| `UIWindow` | UIKit | 화면 계층이 표시되는 윈도우 |
-| `UIScreen` | UIKit | 물리적 디스플레이 정보 |
-| `UIColor`, `UIImage`, `UIFont` | UIKit | 색상, 이미지, 글꼴 값 |
+| [`UIView`](https://developer.apple.com/documentation/uikit/uiview) | UIKit | 모든 UIKit View의 기본 클래스 |
+| [`UILabel`](https://developer.apple.com/documentation/uikit/uilabel) | UIKit | 텍스트 표시 |
+| [`UIButton`](https://developer.apple.com/documentation/uikit/uibutton) | UIKit | 버튼 |
+| [`UIImageView`](https://developer.apple.com/documentation/uikit/uiimageview) | UIKit | 이미지 표시 |
+| [`UITextField`](https://developer.apple.com/documentation/uikit/uitextfield) | UIKit | 한 줄 텍스트 입력 |
+| [`UITextView`](https://developer.apple.com/documentation/uikit/uitextview) | UIKit | 여러 줄 텍스트 입력 |
+| [`UIScrollView`](https://developer.apple.com/documentation/uikit/uiscrollview) | UIKit | 스크롤 컨테이너 |
+| [`UITableView`](https://developer.apple.com/documentation/uikit/uitableview) | UIKit | 행 기반 리스트 |
+| [`UICollectionView`](https://developer.apple.com/documentation/uikit/uicollectionview) | UIKit | 컬렉션·그리드·복합 목록 |
+| [`UIViewController`](https://developer.apple.com/documentation/uikit/uiviewcontroller) | UIKit | 화면과 생명주기 관리 |
+| [`UINavigationController`](https://developer.apple.com/documentation/uikit/uinavigationcontroller) | UIKit | 스택 기반 내비게이션 |
+| [`UITabBarController`](https://developer.apple.com/documentation/uikit/uitabbarcontroller) | UIKit | 탭 기반 화면 전환 |
+| [`UIApplication`](https://developer.apple.com/documentation/uikit/uiapplication) | UIKit | 실행 중인 앱을 대표하는 객체 |
+| [`UIWindow`](https://developer.apple.com/documentation/uikit/uiwindow) | UIKit | 화면 계층이 표시되는 윈도우 |
+| [`UIScreen`](https://developer.apple.com/documentation/uikit/uiscreen) | UIKit | 물리적 디스플레이 정보 |
+| [`UIColor`](https://developer.apple.com/documentation/uikit/uicolor), [`UIImage`](https://developer.apple.com/documentation/uikit/uiimage), [`UIFont`](https://developer.apple.com/documentation/uikit/uifont) | UIKit | 색상, 이미지, 글꼴 값 |
+
+각 타입의 공식 문서는 [UIKit](https://developer.apple.com/documentation/uikit) 프레임워크 문서의 [Views and controls](https://developer.apple.com/documentation/uikit/views-and-controls), [View controllers](https://developer.apple.com/documentation/uikit/view-controllers) 항목에서 찾을 수 있다.
 
 UIKit과 SwiftUI의 대표적인 표현은 다음과 같이 대응한다.
 
@@ -59,7 +61,7 @@ Button("Save") { }
 Image(systemName: "star")
 ```
 
-UIKit은 2008년부터 사용된 전통적인 iOS UI 프레임워크이며 `UI` 접두사를 적극적으로 사용한다.
+[UIKit](https://developer.apple.com/documentation/uikit)은 2008년부터 사용된 전통적인 iOS UI 프레임워크이며 `UI` 접두사를 적극적으로 사용한다.
 
 ```text
 UIKit
@@ -75,7 +77,7 @@ UIKit
  └─ UIViewController
 ```
 
-SwiftUI는 2019년에 등장한 선언형 UI 프레임워크로, 타입 이름이 더 간결하다.
+[SwiftUI](https://developer.apple.com/documentation/swiftui)는 2019년 WWDC19 [SwiftUI Essentials](https://developer.apple.com/videos/play/wwdc2019/216/)에서 소개된 선언형 UI 프레임워크로, 타입 이름이 더 간결하다.
 
 ```swift
 struct ContentView: View {
@@ -91,7 +93,7 @@ struct ContentView: View {
 }
 ```
 
-다만 `UI` 접두사만으로 프레임워크를 100% 단정해서는 안 된다. 예를 들어 `UIViewRepresentable`과 `UIViewControllerRepresentable`은 이름에 UIKit 타입이 들어가지만, **SwiftUI가 제공하는 상호운용 프로토콜**이다.
+다만 `UI` 접두사만으로 프레임워크를 100% 단정해서는 안 된다. 예를 들어 [`UIViewRepresentable`](https://developer.apple.com/documentation/swiftui/uiviewrepresentable)과 [`UIViewControllerRepresentable`](https://developer.apple.com/documentation/swiftui/uiviewcontrollerrepresentable)은 이름에 UIKit 타입이 들어가지만, **SwiftUI가 제공하는 상호운용 프로토콜**이다. 이 도구들은 SwiftUI 문서의 [UIKit integration](https://developer.apple.com/documentation/swiftui/uikit-integration)에 모여 있다.
 
 ```text
              iOS UI 개발
@@ -169,9 +171,9 @@ iOS App
 
 | 가져오는 방향 | 대상 | 도구 |
 |---|---|---|
-| UIKit → SwiftUI | `UIView` | `UIViewRepresentable` |
-| UIKit → SwiftUI | `UIViewController` | `UIViewControllerRepresentable` |
-| SwiftUI → UIKit | SwiftUI `View` | `UIHostingController` |
+| UIKit → SwiftUI | [`UIView`](https://developer.apple.com/documentation/uikit/uiview) | [`UIViewRepresentable`](https://developer.apple.com/documentation/swiftui/uiviewrepresentable) |
+| UIKit → SwiftUI | [`UIViewController`](https://developer.apple.com/documentation/uikit/uiviewcontroller) | [`UIViewControllerRepresentable`](https://developer.apple.com/documentation/swiftui/uiviewcontrollerrepresentable) |
+| SwiftUI → UIKit | SwiftUI [`View`](https://developer.apple.com/documentation/swiftui/view) | [`UIHostingController`](https://developer.apple.com/documentation/swiftui/uihostingcontroller) |
 
 ```text
 UIKit View
@@ -245,9 +247,9 @@ VStack
 
 `UIViewRepresentable`의 핵심 메서드는 다음과 같다.
 
-- `makeUIView(context:)`: UIKit View를 최초 한 번 생성하고 기본 설정을 한다.
-- `updateUIView(_:context:)`: SwiftUI 상태 변화가 기존 UIKit View에 반영되도록 동기화한다.
-- `makeCoordinator()`: delegate, target-action, callback 같은 UIKit 이벤트를 SwiftUI 상태와 연결할 때 사용한다.
+- [`makeUIView(context:)`](https://developer.apple.com/documentation/swiftui/uiviewrepresentable/makeuiview(context:)): UIKit View를 최초 한 번 생성하고 기본 설정을 한다.
+- [`updateUIView(_:context:)`](https://developer.apple.com/documentation/swiftui/uiviewrepresentable/updateuiview(_:context:)): SwiftUI 상태 변화가 기존 UIKit View에 반영되도록 동기화한다.
+- [`makeCoordinator()`](https://developer.apple.com/documentation/swiftui/uiviewrepresentable/makecoordinator()): delegate, target-action, callback 같은 UIKit 이벤트를 SwiftUI 상태와 연결할 때 사용한다.
 
 ### 3.2 `UIViewControllerRepresentable`: UIKit 화면 단위를 SwiftUI에 넣기
 
@@ -301,7 +303,7 @@ UIImage(...)
 UIColor(...)
 ```
 
-이런 API나 값 객체는 SwiftUI 코드에서 직접 사용할 수 있다.
+이런 API나 값 객체는 SwiftUI 코드에서 직접 사용할 수 있다. 각각 [`UIApplication`](https://developer.apple.com/documentation/uikit/uiapplication), [`UIDevice`](https://developer.apple.com/documentation/uikit/uidevice), [`UIImage`](https://developer.apple.com/documentation/uikit/uiimage), [`UIColor`](https://developer.apple.com/documentation/uikit/uicolor) 문서를 참고한다.
 
 ```swift
 struct ContentView: View {
@@ -632,13 +634,15 @@ UIApplication
                         └── ...
 ```
 
-- `UIApplication`: 실행 중인 앱과 시스템 이벤트를 대표한다.
-- `AppDelegate`: 앱 수준 생명주기와 설정을 다룬다.
-- `UIScene`: 하나의 UI 세션을 나타낸다. 멀티 윈도우 환경에서는 여러 Scene이 존재할 수 있다.
-- `SceneDelegate`: Scene의 연결·활성·비활성 같은 생명주기를 다룬다.
-- `UIWindow`: ViewController와 View 계층이 표시되는 윈도우다.
-- `UIViewController`: 화면 단위 구성, 생명주기, 이벤트, 내비게이션을 관리한다.
-- `UIView`: 실제 화면 계층을 이루는 객체다.
+- [`UIApplication`](https://developer.apple.com/documentation/uikit/uiapplication): 실행 중인 앱과 시스템 이벤트를 대표한다.
+- [`UIApplicationDelegate`](https://developer.apple.com/documentation/uikit/uiapplicationdelegate) (AppDelegate): 앱 수준 생명주기와 설정을 다룬다.
+- [`UIScene`](https://developer.apple.com/documentation/uikit/uiscene): 하나의 UI 세션을 나타낸다. 멀티 윈도우 환경에서는 여러 Scene이 존재할 수 있다.
+- [`UISceneDelegate`](https://developer.apple.com/documentation/uikit/uiscenedelegate) (SceneDelegate): Scene의 연결·활성·비활성 같은 생명주기를 다룬다.
+- [`UIWindow`](https://developer.apple.com/documentation/uikit/uiwindow): ViewController와 View 계층이 표시되는 윈도우다.
+- [`UIViewController`](https://developer.apple.com/documentation/uikit/uiviewcontroller): 화면 단위 구성, 생명주기, 이벤트, 내비게이션을 관리한다.
+- [`UIView`](https://developer.apple.com/documentation/uikit/uiview): 실제 화면 계층을 이루는 객체다.
+
+이 흐름의 공식 설명은 [Managing your app's life cycle](https://developer.apple.com/documentation/uikit/managing-your-app-s-life-cycle)과 [Specifying the scenes your app supports](https://developer.apple.com/documentation/uikit/specifying-the-scenes-your-app-supports)에 있다.
 
 ### 8.2 SwiftUI 계층
 
@@ -662,26 +666,28 @@ App
                 └── ...
 ```
 
-- `App`: 앱의 진입점과 Scene 구성을 선언한다.
-- `Scene`: 앱이 제공하는 UI 세션을 선언한다.
-- `WindowGroup`: SwiftUI가 윈도우 생성과 관리를 수행하도록 선언한다.
-- `View`: 상태를 바탕으로 UI가 어떻게 보여야 하는지 기술한다.
+- [`App`](https://developer.apple.com/documentation/swiftui/app): 앱의 진입점과 Scene 구성을 선언한다.
+- [`Scene`](https://developer.apple.com/documentation/swiftui/scene): 앱이 제공하는 UI 세션을 선언한다.
+- [`WindowGroup`](https://developer.apple.com/documentation/swiftui/windowgroup): SwiftUI가 윈도우 생성과 관리를 수행하도록 선언한다.
+- [`View`](https://developer.apple.com/documentation/swiftui/view): 상태를 바탕으로 UI가 어떻게 보여야 하는지 기술한다.
+
+계층 전체 구성은 [App organization](https://developer.apple.com/documentation/swiftui/app-organization)에, UIKit 생명주기에서 옮겨 오는 방법은 [Migrating to the SwiftUI life cycle](https://developer.apple.com/documentation/swiftui/migrating-to-the-swiftui-life-cycle)에 정리되어 있다. 이 계층만 더 깊게 보려면 [SwiftUI 애플리케이션 아키텍처](./swiftui-application-architecture.md)를 본다.
 
 ### 8.3 개념적 대응 관계
 
 | UIKit | SwiftUI | 주의점 |
 |---|---|---|
-| `UIApplication` / `AppDelegate` | `App` | 완전한 1:1 대응이 아니라 앱 구성의 추상화 |
-| `UIScene` / `SceneDelegate` | `Scene` | SwiftUI가 많은 생명주기 처리를 감춘다 |
-| `UIWindow` | `WindowGroup` | `WindowGroup`이 윈도우 생성을 관리한다 |
-| `UIViewController` | 직접 대응 없음 | 역할이 View, 상태, 프레임워크로 분산된다 |
-| `UIView` | `View` | 이름은 비슷하지만 본질이 다르다 |
-| `UILabel` | `Text` | 객체와 선언이라는 차이가 있다 |
-| `UIButton` | `Button` | 객체와 선언이라는 차이가 있다 |
-| `UIImageView` | `Image` | 객체와 선언이라는 차이가 있다 |
-| `UIStackView` | `VStack`, `HStack`, `ZStack` | SwiftUI는 조합으로 레이아웃을 표현한다 |
-| `UINavigationController` | `NavigationStack` | 명령형 push와 상태 기반 내비게이션의 차이 |
-| `UITabBarController` | `TabView` | SwiftUI는 탭 구성을 선언한다 |
+| [`UIApplication`](https://developer.apple.com/documentation/uikit/uiapplication) / [`UIApplicationDelegate`](https://developer.apple.com/documentation/uikit/uiapplicationdelegate) | [`App`](https://developer.apple.com/documentation/swiftui/app) | 완전한 1:1 대응이 아니라 앱 구성의 추상화 |
+| [`UIScene`](https://developer.apple.com/documentation/uikit/uiscene) / [`UISceneDelegate`](https://developer.apple.com/documentation/uikit/uiscenedelegate) | [`Scene`](https://developer.apple.com/documentation/swiftui/scene) | SwiftUI가 많은 생명주기 처리를 감춘다 |
+| [`UIWindow`](https://developer.apple.com/documentation/uikit/uiwindow) | [`WindowGroup`](https://developer.apple.com/documentation/swiftui/windowgroup) | `WindowGroup`이 윈도우 생성을 관리한다 |
+| [`UIViewController`](https://developer.apple.com/documentation/uikit/uiviewcontroller) | 직접 대응 없음 | 역할이 View, 상태, 프레임워크로 분산된다 |
+| [`UIView`](https://developer.apple.com/documentation/uikit/uiview) | [`View`](https://developer.apple.com/documentation/swiftui/view) | 이름은 비슷하지만 본질이 다르다 |
+| [`UILabel`](https://developer.apple.com/documentation/uikit/uilabel) | [`Text`](https://developer.apple.com/documentation/swiftui/text) | 객체와 선언이라는 차이가 있다 |
+| [`UIButton`](https://developer.apple.com/documentation/uikit/uibutton) | [`Button`](https://developer.apple.com/documentation/swiftui/button) | 객체와 선언이라는 차이가 있다 |
+| [`UIImageView`](https://developer.apple.com/documentation/uikit/uiimageview) | [`Image`](https://developer.apple.com/documentation/swiftui/image) | 객체와 선언이라는 차이가 있다 |
+| [`UIStackView`](https://developer.apple.com/documentation/uikit/uistackview) | [`VStack`](https://developer.apple.com/documentation/swiftui/vstack), [`HStack`](https://developer.apple.com/documentation/swiftui/hstack), [`ZStack`](https://developer.apple.com/documentation/swiftui/zstack) | SwiftUI는 조합으로 레이아웃을 표현한다 |
+| [`UINavigationController`](https://developer.apple.com/documentation/uikit/uinavigationcontroller) | [`NavigationStack`](https://developer.apple.com/documentation/swiftui/navigationstack) | 명령형 push와 상태 기반 내비게이션의 차이 |
+| [`UITabBarController`](https://developer.apple.com/documentation/uikit/uitabbarcontroller) | [`TabView`](https://developer.apple.com/documentation/swiftui/tabview) | SwiftUI는 탭 구성을 선언한다 |
 
 중요한 결론은 `UIViewController → 어떤 SwiftUI 타입`, `UIView → SwiftUI View`처럼 기계적으로 치환할 수 없다는 것이다. SwiftUI는 UIKit에서 개발자가 직접 맡던 여러 역할을 프레임워크 수준으로 추상화한다.
 
@@ -786,7 +792,7 @@ button.isEnabled = false
 button.isEnabled = true
 ```
 
-반면 SwiftUI의 `View`는 프로토콜이며, 우리가 정의하는 View는 대개 struct다.
+반면 SwiftUI의 [`View`](https://developer.apple.com/documentation/swiftui/view)는 프로토콜이며, 우리가 정의하는 View는 대개 struct다. 이 프로토콜의 의미는 [View fundamentals](https://developer.apple.com/documentation/swiftui/view-fundamentals)에 설명되어 있다.
 
 ```swift
 public protocol View {
@@ -944,7 +950,7 @@ ProfileViewController
       └── business logic
 ```
 
-전통적인 Cocoa MVC에서는 ViewController가 Controller 역할을 하지만, 실제 구현에서 View와 Controller의 결합이 강해지면서 비대해지기 쉽다. 이를 완화하기 위해 UIKit 프로젝트에서는 MVC 외에도 MVVM, MVP, VIPER, Coordinator 같은 패턴을 사용해 상태, 비즈니스 로직, 내비게이션 책임을 분리해 왔다.
+전통적인 [Cocoa MVC](https://developer.apple.com/library/archive/documentation/General/Conceptual/DevPedia-CocoaCore/MVC.html)에서는 ViewController가 Controller 역할을 하지만, 실제 구현에서 View와 Controller의 결합이 강해지면서 비대해지기 쉽다. 이를 완화하기 위해 UIKit 프로젝트에서는 MVC 외에도 MVVM, MVP, [VIPER](https://www.objc.io/issues/13-architecture/viper/), Coordinator 같은 패턴을 사용해 상태, 비즈니스 로직, 내비게이션 책임을 분리해 왔다. Massive View Controller와 이 패턴들은 Apple 공식 문서가 아니라 커뮤니티에서 정착된 용어다.
 
 ### 11.2 SwiftUI에서 ViewController가 보이지 않는 이유
 
@@ -988,7 +994,7 @@ struct ProfileView: View {
 
 ### 12.1 생명주기
 
-UIKit의 ViewController 생명주기는 명시적인 callback 중심이다.
+UIKit의 [ViewController 생명주기](https://developer.apple.com/documentation/uikit/view-controllers)는 명시적인 callback 중심이다.
 
 ```swift
 override func viewDidLoad() { }
@@ -1014,7 +1020,7 @@ viewWillDisappear
 viewDidDisappear
 ```
 
-SwiftUI에서는 View modifier와 상태 중심으로 필요한 작업을 선언한다.
+SwiftUI에서는 [`onAppear(perform:)`](https://developer.apple.com/documentation/swiftui/view/onappear(perform:)), [`task(id:...)`](https://developer.apple.com/documentation/swiftui/view/task(id:name:executorpreference:priority:file:line:_:)), [`onDisappear(perform:)`](https://developer.apple.com/documentation/swiftui/view/ondisappear(perform:)) 같은 View modifier와 상태 중심으로 필요한 작업을 선언한다.
 
 ```swift
 struct ContentView: View {
@@ -1046,7 +1052,7 @@ var body: some View {
 
 ### 12.2 레이아웃
 
-UIKit은 전통적으로 Auto Layout constraint로 View 사이의 관계를 설정한다.
+UIKit은 전통적으로 [Auto Layout](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/index.html) constraint([`NSLayoutConstraint`](https://developer.apple.com/documentation/uikit/nslayoutconstraint))로 View 사이의 관계를 설정한다.
 
 ```swift
 NSLayoutConstraint.activate([
@@ -1094,7 +1100,7 @@ VStack
  └── padding(16)
 ```
 
-UIKit에서는 개발자가 제약 조건과 View 계층을 관리하는 반면, SwiftUI에서는 부모가 공간을 제안하고 자식이 크기를 선택하는 레이아웃 체계 안에서 View를 조합한다.
+UIKit에서는 개발자가 제약 조건과 View 계층을 관리하는 반면, SwiftUI에서는 부모가 공간을 제안하고 자식이 크기를 선택하는 레이아웃 체계 안에서 View를 조합한다. SwiftUI의 레이아웃 컨테이너는 [Layout fundamentals](https://developer.apple.com/documentation/swiftui/layout-fundamentals)에 정리되어 있다.
 
 ### 12.3 내비게이션
 
@@ -1115,7 +1121,7 @@ pushViewController()
 Navigation 변경
 ```
 
-SwiftUI에서는 목적 화면을 선언한다.
+SwiftUI에서는 [`NavigationStack`](https://developer.apple.com/documentation/swiftui/navigationstack)과 [`NavigationLink`](https://developer.apple.com/documentation/swiftui/navigationlink)로 목적 화면을 선언한다.
 
 ```swift
 NavigationStack {
@@ -1207,7 +1213,7 @@ Action
 - 로직이 Action을 처리해 상태를 변경한다.
 - 바뀐 상태로 View가 다시 계산된다.
 
-이 구조는 화면에 표시되는 내용과 실제 상태의 관계를 추적하기 쉽게 만들며, 테스트와 기능 분리에 유리하다. 다만 상태 소유권과 의존성 경계를 설계하지 않으면 SwiftUI View나 ViewModel도 충분히 비대해질 수 있다.
+이 구조는 화면에 표시되는 내용과 실제 상태의 관계를 추적하기 쉽게 만들며, 테스트와 기능 분리에 유리하다. SwiftUI의 상태 전달 규칙은 [State and data flow](https://developer.apple.com/documentation/swiftui/state-and-data-flow)와 [Managing model data in your app](https://developer.apple.com/documentation/swiftui/managing-model-data-in-your-app)에 정리되어 있다. 다만 상태 소유권과 의존성 경계를 설계하지 않으면 SwiftUI View나 ViewModel도 충분히 비대해질 수 있다.
 
 ---
 
@@ -1224,8 +1230,8 @@ View
  └── @Binding
 ```
 
-- `@State`: 해당 View가 소유하는 로컬 상태
-- `@Binding`: 상위 계층이 소유한 상태에 대한 읽기·쓰기 연결
+- [`@State`](https://developer.apple.com/documentation/swiftui/state): 해당 View가 소유하는 로컬 상태
+- [`@Binding`](https://developer.apple.com/documentation/swiftui/binding): 상위 계층이 소유한 상태에 대한 읽기·쓰기 연결
 
 화면 범위가 작고 비즈니스 로직이 단순하다면 이 구성이 가장 직접적이다.
 
@@ -1278,7 +1284,7 @@ struct ProfileView: View {
 }
 ```
 
-MVVM에서는 ViewModel이 화면 상태와 사용자 액션 처리를 맡고, Repository·Service가 데이터 접근과 외부 시스템 연동을 맡는 식으로 책임을 나눌 수 있다. 다만 모든 코드를 ViewModel 하나에 몰아넣으면 “Massive ViewModel”이 될 수 있으므로 기능 경계를 유지해야 한다.
+[`@Observable`](https://developer.apple.com/documentation/observation/observable())은 [Observation](https://developer.apple.com/documentation/observation) 모듈이 제공하는 매크로다. MVVM에서는 ViewModel이 화면 상태와 사용자 액션 처리를 맡고, Repository·Service가 데이터 접근과 외부 시스템 연동을 맡는 식으로 책임을 나눌 수 있다. 다만 모든 코드를 ViewModel 하나에 몰아넣으면 “Massive ViewModel”이 될 수 있으므로 기능 경계를 유지해야 한다.
 
 ### 14.3 복잡한 기능: Reducer 기반 구조와 TCA
 
@@ -1302,7 +1308,7 @@ MVVM에서는 ViewModel이 화면 상태와 사용자 액션 처리를 맡고, R
         └─────────────────┘
 ```
 
-TCA(The Composable Architecture)가 대표적인 예다.
+[TCA(The Composable Architecture)](https://github.com/pointfreeco/swift-composable-architecture)가 대표적인 예다. Apple 프레임워크가 아니라 Point-Free가 만든 오픈소스 라이브러리다.
 
 - `State`: 화면과 기능의 전체 상태
 - `Action`: 사용자 입력, 시스템 이벤트, 비동기 결과
@@ -1468,6 +1474,66 @@ SwiftUI 학습을 멈추고 UIKit 전체를 먼저 공부하기보다 다음 순
 11. SwiftUI에서는 State → View → Action → State 흐름이 자연스럽다.
 12. 앱 규모에 맞춰 View-local state, MVVM, Reducer/TCA 등을 선택한다.
 ```
+
+---
+
+## 공식 참고 자료
+
+본문에 인용한 출처를 한곳에 모았다. 별도 표기가 없으면 Apple 공식 문서다.
+
+### 프레임워크 개요
+
+- [UIKit](https://developer.apple.com/documentation/uikit)
+- [SwiftUI](https://developer.apple.com/documentation/swiftui)
+- [Views and controls](https://developer.apple.com/documentation/uikit/views-and-controls)
+- [View controllers](https://developer.apple.com/documentation/uikit/view-controllers)
+- [App organization](https://developer.apple.com/documentation/swiftui/app-organization)
+- [View fundamentals](https://developer.apple.com/documentation/swiftui/view-fundamentals)
+- [Layout fundamentals](https://developer.apple.com/documentation/swiftui/layout-fundamentals)
+- [State and data flow](https://developer.apple.com/documentation/swiftui/state-and-data-flow)
+- [Managing model data in your app](https://developer.apple.com/documentation/swiftui/managing-model-data-in-your-app)
+
+### 상호운용
+
+- [UIKit integration](https://developer.apple.com/documentation/swiftui/uikit-integration)
+- [UIViewRepresentable](https://developer.apple.com/documentation/swiftui/uiviewrepresentable)
+- [UIViewControllerRepresentable](https://developer.apple.com/documentation/swiftui/uiviewcontrollerrepresentable)
+- [UIHostingController](https://developer.apple.com/documentation/swiftui/uihostingcontroller)
+- [UIViewRepresentable.makeCoordinator()](https://developer.apple.com/documentation/swiftui/uiviewrepresentable/makecoordinator())
+- [Migrating to the SwiftUI life cycle](https://developer.apple.com/documentation/swiftui/migrating-to-the-swiftui-life-cycle)
+
+### UIKit 타입
+
+- [UIView](https://developer.apple.com/documentation/uikit/uiview) · [UILabel](https://developer.apple.com/documentation/uikit/uilabel) · [UIButton](https://developer.apple.com/documentation/uikit/uibutton) · [UIImageView](https://developer.apple.com/documentation/uikit/uiimageview)
+- [UITextField](https://developer.apple.com/documentation/uikit/uitextfield) · [UITextView](https://developer.apple.com/documentation/uikit/uitextview) · [UIScrollView](https://developer.apple.com/documentation/uikit/uiscrollview)
+- [UITableView](https://developer.apple.com/documentation/uikit/uitableview) · [UICollectionView](https://developer.apple.com/documentation/uikit/uicollectionview) · [UIStackView](https://developer.apple.com/documentation/uikit/uistackview)
+- [UIViewController](https://developer.apple.com/documentation/uikit/uiviewcontroller) · [UINavigationController](https://developer.apple.com/documentation/uikit/uinavigationcontroller) · [UITabBarController](https://developer.apple.com/documentation/uikit/uitabbarcontroller)
+- [UIApplication](https://developer.apple.com/documentation/uikit/uiapplication) · [UIApplicationDelegate](https://developer.apple.com/documentation/uikit/uiapplicationdelegate) · [UIScene](https://developer.apple.com/documentation/uikit/uiscene) · [UISceneDelegate](https://developer.apple.com/documentation/uikit/uiscenedelegate) · [UIWindow](https://developer.apple.com/documentation/uikit/uiwindow)
+- [UIScreen](https://developer.apple.com/documentation/uikit/uiscreen) · [UIDevice](https://developer.apple.com/documentation/uikit/uidevice) · [UIColor](https://developer.apple.com/documentation/uikit/uicolor) · [UIImage](https://developer.apple.com/documentation/uikit/uiimage) · [UIFont](https://developer.apple.com/documentation/uikit/uifont)
+- [NSLayoutConstraint](https://developer.apple.com/documentation/uikit/nslayoutconstraint) · [Auto Layout Guide](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/index.html)
+- [Managing your app's life cycle](https://developer.apple.com/documentation/uikit/managing-your-app-s-life-cycle) · [Specifying the scenes your app supports](https://developer.apple.com/documentation/uikit/specifying-the-scenes-your-app-supports)
+
+### SwiftUI 타입
+
+- [App](https://developer.apple.com/documentation/swiftui/app) · [Scene](https://developer.apple.com/documentation/swiftui/scene) · [WindowGroup](https://developer.apple.com/documentation/swiftui/windowgroup) · [View](https://developer.apple.com/documentation/swiftui/view)
+- [Text](https://developer.apple.com/documentation/swiftui/text) · [Button](https://developer.apple.com/documentation/swiftui/button) · [Image](https://developer.apple.com/documentation/swiftui/image) · [List](https://developer.apple.com/documentation/swiftui/list)
+- [VStack](https://developer.apple.com/documentation/swiftui/vstack) · [HStack](https://developer.apple.com/documentation/swiftui/hstack) · [ZStack](https://developer.apple.com/documentation/swiftui/zstack)
+- [NavigationStack](https://developer.apple.com/documentation/swiftui/navigationstack) · [NavigationLink](https://developer.apple.com/documentation/swiftui/navigationlink) · [TabView](https://developer.apple.com/documentation/swiftui/tabview)
+- [State](https://developer.apple.com/documentation/swiftui/state) · [Binding](https://developer.apple.com/documentation/swiftui/binding) · [Observation](https://developer.apple.com/documentation/observation) · [Observable() macro](https://developer.apple.com/documentation/observation/observable())
+- [onAppear(perform:)](https://developer.apple.com/documentation/swiftui/view/onappear(perform:)) · [task(id:...)](https://developer.apple.com/documentation/swiftui/view/task(id:name:executorpreference:priority:file:line:_:)) · [onDisappear(perform:)](https://developer.apple.com/documentation/swiftui/view/ondisappear(perform:))
+
+### WWDC 세션
+
+- [WWDC19: SwiftUI Essentials](https://developer.apple.com/videos/play/wwdc2019/216/)
+
+### Apple 외부 출처 (설계 패턴)
+
+Massive View Controller, MVVM, VIPER, Coordinator, TCA는 Apple 공식 문서가 정의한 용어가 아니다. 아래는 널리 인용되는 1차 출처다.
+
+- [Apple 아카이브: Model-View-Controller](https://developer.apple.com/library/archive/documentation/General/Conceptual/DevPedia-CocoaCore/MVC.html)
+- [objc.io: Architecting iOS Apps with VIPER](https://www.objc.io/issues/13-architecture/viper/)
+- [Martin Fowler: Presentation Model](https://martinfowler.com/eaaDev/PresentationModel.html)
+- [The Composable Architecture (pointfreeco)](https://github.com/pointfreeco/swift-composable-architecture)
 
 ---
 

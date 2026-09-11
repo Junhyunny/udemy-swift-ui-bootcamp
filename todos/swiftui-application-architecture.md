@@ -74,11 +74,11 @@ Scene
 View
 ```
 
-- `App`: 애플리케이션 전체와 진입점을 정의한다.
-- `Scene`: 앱이 제공하는 UI 세션 또는 창의 구조를 정의한다.
-- `View`: 사용자가 실제로 보는 화면과 그 안의 UI 트리를 구성한다.
+- [`App`](https://developer.apple.com/documentation/swiftui/app): 애플리케이션 전체와 진입점을 정의한다.
+- [`Scene`](https://developer.apple.com/documentation/swiftui/scene): 앱이 제공하는 UI 세션 또는 창의 구조를 정의한다.
+- [`View`](https://developer.apple.com/documentation/swiftui/view): 사용자가 실제로 보는 화면과 그 안의 UI 트리를 구성한다.
 
-`WindowGroup`과 `DocumentGroup`은 `View`가 아니라 **`Scene`의 구체적인 종류**다.
+[`WindowGroup`](https://developer.apple.com/documentation/swiftui/windowgroup)과 [`DocumentGroup`](https://developer.apple.com/documentation/swiftui/documentgroup)은 `View`가 아니라 **`Scene`의 구체적인 종류**다. 이 세 계층의 공식 개요는 Apple의 [App organization](https://developer.apple.com/documentation/swiftui/app-organization) 문서와 WWDC20 [App essentials in SwiftUI](https://developer.apple.com/videos/play/wwdc2020/10037/)에 정리되어 있다.
 
 ---
 
@@ -106,7 +106,7 @@ struct MyApp: App {
 struct MyApp: App
 ```
 
-`@main`이 붙은 `MyApp` 타입은 프로그램의 진입점이 된다. UIKit에서 `UIApplication`, `AppDelegate`, `SceneDelegate` 등이 맡던 앱 시작과 생명주기 구성의 일부를 SwiftUI에서는 선언적인 형태로 표현한다고 이해할 수 있다.
+[`@main`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/attributes/)이 붙은 `MyApp` 타입은 프로그램의 진입점이 된다. 이 attribute는 [SE-0281 Type-Based Program Entry Points](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0281-main-attribute.md)에서 도입되었다. UIKit에서 [`UIApplication`](https://developer.apple.com/documentation/uikit/uiapplication), [`UIApplicationDelegate`](https://developer.apple.com/documentation/uikit/uiapplicationdelegate), [`UISceneDelegate`](https://developer.apple.com/documentation/uikit/uiscenedelegate) 등이 맡던 앱 시작과 생명주기 구성의 일부를 SwiftUI에서는 선언적인 형태로 표현한다고 이해할 수 있다.
 
 특히 주목해야 할 부분은 다음 선언이다.
 
@@ -161,13 +161,13 @@ App
 public protocol Scene
 ```
 
-일반적으로 개발자가 Scene 프로토콜을 직접 구현하기보다는 Apple이 제공하는 구체적인 Scene 타입을 사용한다. 대표적인 예는 다음과 같다.
+일반적으로 개발자가 Scene 프로토콜을 직접 구현하기보다는 Apple이 제공하는 구체적인 Scene 타입을 사용한다. 대표적인 예는 다음과 같다. 전체 목록은 Apple의 [Scenes](https://developer.apple.com/documentation/swiftui/scenes) 문서에 있다.
 
-- `WindowGroup`
-- `DocumentGroup`
-- `Window`
-- `Settings`
-- `MenuBarExtra`
+- [`WindowGroup`](https://developer.apple.com/documentation/swiftui/windowgroup)
+- [`DocumentGroup`](https://developer.apple.com/documentation/swiftui/documentgroup)
+- [`Window`](https://developer.apple.com/documentation/swiftui/window)
+- [`Settings`](https://developer.apple.com/documentation/swiftui/settings)
+- [`MenuBarExtra`](https://developer.apple.com/documentation/swiftui/menubarextra)
 
 ---
 
@@ -226,7 +226,7 @@ View
 
 ### 왜 `Window`가 아니라 `WindowGroup`인가?
 
-iPhone만 개발하면 보통 앱을 실행했을 때 화면 하나만 보이므로 단순히 `Window`라고 불러도 될 것처럼 느껴진다. 하지만 Apple 플랫폼에서는 하나의 앱이 여러 Window를 가질 수 있다. 특히 macOS, iPadOS, visionOS에서 중요하다.
+iPhone만 개발하면 보통 앱을 실행했을 때 화면 하나만 보이므로 단순히 `Window`라고 불러도 될 것처럼 느껴진다. 하지만 Apple 플랫폼에서는 하나의 앱이 여러 Window를 가질 수 있다. 특히 macOS, iPadOS, visionOS에서 중요하다. 다중 창 구성은 Apple의 [Windows](https://developer.apple.com/documentation/swiftui/windows) 문서와 WWDC22 [Bring multiple windows to your SwiftUI app](https://developer.apple.com/videos/play/wwdc2022/10061/)에서 다룬다.
 
 ```text
 WindowGroup
@@ -269,7 +269,7 @@ Device Screen
 └─────────────────────────────┘
 ```
 
-UIKit을 알고 있다면 `UIWindow`와 연결해 생각할 수 있다. 다만 SwiftUI의 일반적인 앱에서는 `UIWindow`를 직접 만들고 생명주기를 관리할 필요가 없다.
+UIKit을 알고 있다면 [`UIWindow`](https://developer.apple.com/documentation/uikit/uiwindow)와 연결해 생각할 수 있다. 다만 SwiftUI의 일반적인 앱에서는 `UIWindow`를 직접 만들고 생명주기를 관리할 필요가 없다.
 
 ```swift
 WindowGroup {
@@ -300,7 +300,7 @@ Window      = 특정 목적의 개별 창을 나타내는 Scene
 - 은행 앱
 - 메신저
 
-반면 `DocumentGroup`은 **문서 기반 애플리케이션(document-based app)**을 만들기 위한 Scene이다.
+반면 `DocumentGroup`은 **문서 기반 애플리케이션(document-based app)**을 만들기 위한 Scene이다. Apple의 [Building a document-based app with SwiftUI](https://developer.apple.com/documentation/swiftui/building-a-document-based-app-with-swiftui) 문서가 전체 구성을 보여 준다.
 
 - 텍스트 에디터
 - 드로잉 앱
@@ -362,7 +362,7 @@ Document
 ContentView / EditorView
 ```
 
-`DocumentGroup`은 문서 생성, 열기, 저장과 같은 document lifecycle을 SwiftUI 시스템과 통합한다. 따라서 개발자가 다음 기능을 모두 처음부터 직접 구축해야 하는 부담을 줄여 준다.
+`DocumentGroup`은 문서 생성, 열기, 저장과 같은 document lifecycle을 SwiftUI 시스템과 통합한다. 문서 타입은 [`FileDocument`](https://developer.apple.com/documentation/swiftui/filedocument) 같은 프로토콜로 정의하며, 관련 API는 [Documents](https://developer.apple.com/documentation/swiftui/documents)에 모여 있다. 따라서 개발자가 다음 기능을 모두 처음부터 직접 구축해야 하는 부담을 줄여 준다.
 
 - 파일 선택
 - 파일 열기
@@ -461,7 +461,7 @@ App
        └── SettingsView
 ```
 
-즉, `App.body`의 `some Scene`은 “Scene 하나만 쓴다”는 뜻이 아니다. Swift의 result builder를 통해 여러 Scene 선언을 하나의 Scene 구성으로 묶을 수 있다.
+즉, `App.body`의 `some Scene`은 “Scene 하나만 쓴다”는 뜻이 아니다. Swift의 [result builder](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0289-result-builders.md)를 통해 여러 Scene 선언을 하나의 Scene 구성으로 묶을 수 있다. SwiftUI에서 이 역할을 맡는 것이 [`SceneBuilder`](https://developer.apple.com/documentation/swiftui/scenebuilder)이며, View 쪽의 [`ViewBuilder`](https://developer.apple.com/documentation/swiftui/viewbuilder)와 같은 구조다. `some`이 뜻하는 opaque type은 [The Swift Programming Language — Opaque Types](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/opaquetypes/)에 정의되어 있다.
 
 ---
 
@@ -488,6 +488,8 @@ UIViewController
 UIView
 ```
 
+위 계층의 공식 설명은 [`UIApplication`](https://developer.apple.com/documentation/uikit/uiapplication), [`UIScene`](https://developer.apple.com/documentation/uikit/uiscene), [`UIWindow`](https://developer.apple.com/documentation/uikit/uiwindow), [`UIViewController`](https://developer.apple.com/documentation/uikit/uiviewcontroller), [`UIView`](https://developer.apple.com/documentation/uikit/uiview) 문서에 각각 있고, 앱 시작과 scene 구성 규칙은 [Managing your app's life cycle](https://developer.apple.com/documentation/uikit/managing-your-app-s-life-cycle)과 [Specifying the scenes your app supports](https://developer.apple.com/documentation/uikit/specifying-the-scenes-your-app-supports)에 정리되어 있다.
+
 SwiftUI에서는 다음과 같은 구조로 볼 수 있다.
 
 ```text
@@ -513,10 +515,10 @@ View
 
 | UIKit 쪽 개념 | SwiftUI에서 연결해 볼 개념 | 주의점 |
 |---|---|---|
-| `UIApplication`, `AppDelegate` | `App` 및 SwiftUI 생명주기 | 역할이 정확히 같지는 않다. |
-| `UIScene`, `SceneDelegate` | `Scene` | SwiftUI에서는 구조를 선언하는 방식이 중심이다. |
-| `UIWindow` | `WindowGroup` 또는 `Window`가 관리하는 실제 창 | `WindowGroup` 자체가 `UIWindow`는 아니다. |
-| `UIViewController`와 `UIView` 계층 | SwiftUI `View` 트리 | SwiftUI View는 선언적 값 타입 중심이며 UIView와 동일하지 않다. |
+| [`UIApplication`](https://developer.apple.com/documentation/uikit/uiapplication), [`UIApplicationDelegate`](https://developer.apple.com/documentation/uikit/uiapplicationdelegate) | [`App`](https://developer.apple.com/documentation/swiftui/app) 및 [`ScenePhase`](https://developer.apple.com/documentation/swiftui/scenephase) 기반 생명주기 | 역할이 정확히 같지는 않다. 기존 delegate가 필요하면 [`UIApplicationDelegateAdaptor`](https://developer.apple.com/documentation/swiftui/uiapplicationdelegateadaptor)로 연결한다. |
+| [`UIScene`](https://developer.apple.com/documentation/uikit/uiscene), [`UISceneDelegate`](https://developer.apple.com/documentation/uikit/uiscenedelegate) | [`Scene`](https://developer.apple.com/documentation/swiftui/scene) | SwiftUI에서는 구조를 선언하는 방식이 중심이다. |
+| [`UIWindow`](https://developer.apple.com/documentation/uikit/uiwindow) | [`WindowGroup`](https://developer.apple.com/documentation/swiftui/windowgroup) 또는 [`Window`](https://developer.apple.com/documentation/swiftui/window)가 관리하는 실제 창 | `WindowGroup` 자체가 `UIWindow`는 아니다. |
+| [`UIViewController`](https://developer.apple.com/documentation/uikit/uiviewcontroller)와 [`UIView`](https://developer.apple.com/documentation/uikit/uiview) 계층 | SwiftUI [`View`](https://developer.apple.com/documentation/swiftui/view) 트리 | SwiftUI View는 선언적 값 타입 중심이며 UIView와 동일하지 않다. |
 
 가장 큰 관점의 차이는 다음과 같다.
 
@@ -578,13 +580,15 @@ API / DB / System Framework
 
 다음 용어들은 주로 두 번째 계층에 속한다.
 
-- MVVM
+- MVVM ([Martin Fowler, Presentation Model](https://martinfowler.com/eaaDev/PresentationModel.html)이 원형)
 - MVI
-- TCA(The Composable Architecture)
-- Clean Architecture
+- [TCA(The Composable Architecture)](https://github.com/pointfreeco/swift-composable-architecture)
+- [Clean Architecture](http://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 - Repository Pattern
 - Coordinator
 - Dependency Injection
+
+이 목록은 Apple 프레임워크 문서가 아니라 커뮤니티와 일반 소프트웨어 설계 문헌에서 온 개념이다. 위 SwiftUI 계층과 출처 자체가 다르다는 점을 구분해 두면 좋다.
 
 따라서 `App`, `Scene`, `WindowGroup`을 이해하는 것과 MVVM을 적용하는 것은 서로 경쟁하는 선택지가 아니다. 전자는 SwiftUI 앱의 바깥 골격이고, 후자는 그 안의 상태와 기능을 조직하는 설계 방식이다.
 
@@ -736,6 +740,8 @@ View lifecycle
 Scene lifecycle
 ```
 
+각 단계의 공식 문서는 [`State`](https://developer.apple.com/documentation/swiftui/state), [`Binding`](https://developer.apple.com/documentation/swiftui/binding), [`Environment`](https://developer.apple.com/documentation/swiftui/environment), [Observation](https://developer.apple.com/documentation/observation), [`ScenePhase`](https://developer.apple.com/documentation/swiftui/scenephase)이며, 상태 관리 전반은 [Managing model data in your app](https://developer.apple.com/documentation/swiftui/managing-model-data-in-your-app)에 정리되어 있다.
+
 그 다음 앱 규모가 커질 때 아래 주제로 확장하는 것이 자연스럽다.
 
 ```text
@@ -788,3 +794,71 @@ UseCase / Service / Repository
 한 문장으로 압축하면 다음과 같다.
 
 > SwiftUI 앱은 `App`이 하나 이상의 `Scene`을 선언하고, 각 Scene이 Window 또는 문서 세션을 제공하며, 그 안의 `View` 트리가 실제 화면을 구성하는 선언적 구조다.
+
+---
+
+## 공식 참고 자료
+
+본문에 인용한 출처를 한곳에 모았다. 별도 표기가 없으면 Apple 공식 문서다.
+
+### SwiftUI — App, Scene, View
+
+- [App](https://developer.apple.com/documentation/swiftui/app)
+- [Scene](https://developer.apple.com/documentation/swiftui/scene)
+- [View](https://developer.apple.com/documentation/swiftui/view)
+- [App organization](https://developer.apple.com/documentation/swiftui/app-organization)
+- [Scenes](https://developer.apple.com/documentation/swiftui/scenes)
+- [Windows](https://developer.apple.com/documentation/swiftui/windows)
+- [Documents](https://developer.apple.com/documentation/swiftui/documents)
+- [SceneBuilder](https://developer.apple.com/documentation/swiftui/scenebuilder)
+- [ViewBuilder](https://developer.apple.com/documentation/swiftui/viewbuilder)
+- [ScenePhase](https://developer.apple.com/documentation/swiftui/scenephase)
+
+### SwiftUI — Scene 종류
+
+- [WindowGroup](https://developer.apple.com/documentation/swiftui/windowgroup)
+- [DocumentGroup](https://developer.apple.com/documentation/swiftui/documentgroup)
+- [Window](https://developer.apple.com/documentation/swiftui/window)
+- [Settings](https://developer.apple.com/documentation/swiftui/settings)
+- [MenuBarExtra](https://developer.apple.com/documentation/swiftui/menubarextra)
+- [FileDocument](https://developer.apple.com/documentation/swiftui/filedocument)
+- [Building a document-based app with SwiftUI](https://developer.apple.com/documentation/swiftui/building-a-document-based-app-with-swiftui)
+
+### SwiftUI — 상태와 데이터
+
+- [State](https://developer.apple.com/documentation/swiftui/state)
+- [Binding](https://developer.apple.com/documentation/swiftui/binding)
+- [Environment](https://developer.apple.com/documentation/swiftui/environment)
+- [Observation](https://developer.apple.com/documentation/observation)
+- [Managing model data in your app](https://developer.apple.com/documentation/swiftui/managing-model-data-in-your-app)
+
+### UIKit — 대응 계층
+
+- [UIApplication](https://developer.apple.com/documentation/uikit/uiapplication)
+- [UIApplicationDelegate](https://developer.apple.com/documentation/uikit/uiapplicationdelegate)
+- [UIScene](https://developer.apple.com/documentation/uikit/uiscene)
+- [UISceneDelegate](https://developer.apple.com/documentation/uikit/uiscenedelegate)
+- [UIWindow](https://developer.apple.com/documentation/uikit/uiwindow)
+- [UIViewController](https://developer.apple.com/documentation/uikit/uiviewcontroller)
+- [UIView](https://developer.apple.com/documentation/uikit/uiview)
+- [Managing your app's life cycle](https://developer.apple.com/documentation/uikit/managing-your-app-s-life-cycle)
+- [Specifying the scenes your app supports](https://developer.apple.com/documentation/uikit/specifying-the-scenes-your-app-supports)
+- [UIApplicationDelegateAdaptor](https://developer.apple.com/documentation/swiftui/uiapplicationdelegateadaptor)
+
+### Swift 언어
+
+- [The Swift Programming Language — Attributes](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/attributes/)
+- [The Swift Programming Language — Opaque Types](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/opaquetypes/)
+- [SE-0281: Type-Based Program Entry Points](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0281-main-attribute.md)
+- [SE-0289: Result Builders](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0289-result-builders.md)
+
+### WWDC 세션
+
+- [WWDC20: App essentials in SwiftUI](https://developer.apple.com/videos/play/wwdc2020/10037/)
+- [WWDC22: Bring multiple windows to your SwiftUI app](https://developer.apple.com/videos/play/wwdc2022/10061/)
+
+### Apple 외부 출처 (앱 내부 설계 패턴)
+
+- [Martin Fowler: Presentation Model](https://martinfowler.com/eaaDev/PresentationModel.html)
+- [Robert C. Martin: The Clean Architecture](http://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+- [The Composable Architecture (pointfreeco)](https://github.com/pointfreeco/swift-composable-architecture)
