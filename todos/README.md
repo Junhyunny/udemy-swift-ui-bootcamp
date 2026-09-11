@@ -125,6 +125,9 @@
 - [ ] [SwiftData 동시성 — 메인 스레드, 동일 context, 데이터 충돌과 `@MainActor`](./swiftdata-concurrency-and-context-isolation.md)
 - [ ] [Preview의 mock container — 무엇이 주입되고 `static var`는 매번 실행되는가](./swiftdata-preview-mock-container.md)
 - [ ] [`PreviewModifier` — preview에 container가 주입되는 원리와 shared context](./preview-modifier-and-shared-context.md)
+- [ ] [`where` 키워드 — 반복문 필터부터 제네릭 제약까지](./where-clause-usages.md)
+- [ ] [`actor` 타입 — 무엇이고, 어떤 용도로 왜 쓰는가](./swift-actor-type.md)
+- [ ] [AVFoundation은 무슨 모듈인가](./avfoundation-framework.md)
 
 ## 완료 기준
 
