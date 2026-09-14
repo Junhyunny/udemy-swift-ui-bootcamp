@@ -128,6 +128,9 @@
 - [ ] [`where` 키워드 — 반복문 필터부터 제네릭 제약까지](./where-clause-usages.md)
 - [ ] [`actor` 타입 — 무엇이고, 어떤 용도로 왜 쓰는가](./swift-actor-type.md)
 - [ ] [AVFoundation은 무슨 모듈인가](./avfoundation-framework.md)
+- [ ] [`subscript` 키워드 — `[ ]` 표기를 직접 정의하기](./subscript-keyword.md)
+- [ ] [`@State`와 `_viewModel` — 프로퍼티 래퍼가 만드는 세 개의 이름](./state-property-wrapper-backing-storage.md)
+- [ ] [`scrollPosition(id:)` — 무엇이 `currentIndex`를 바꾸고 있는가](./scroll-position-binding.md)
 
 ## 완료 기준
 
