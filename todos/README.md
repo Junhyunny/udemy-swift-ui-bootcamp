@@ -125,12 +125,15 @@
 - [ ] [SwiftData 동시성 — 메인 스레드, 동일 context, 데이터 충돌과 `@MainActor`](./swiftdata-concurrency-and-context-isolation.md)
 - [ ] [Preview의 mock container — 무엇이 주입되고 `static var`는 매번 실행되는가](./swiftdata-preview-mock-container.md)
 - [ ] [`PreviewModifier` — preview에 container가 주입되는 원리와 shared context](./preview-modifier-and-shared-context.md)
-- [ ] [`where` 키워드 — 반복문 필터부터 제네릭 제약까지](./where-clause-usages.md)
+- [ ] [`where` 키워드 — 반복문 필터부터 연관 타입 제약까지](./where-clause-usages.md)
 - [ ] [`actor` 타입 — 무엇이고, 어떤 용도로 왜 쓰는가](./swift-actor-type.md)
 - [ ] [AVFoundation은 무슨 모듈인가](./avfoundation-framework.md)
 - [ ] [`subscript` 키워드 — `[ ]` 표기를 직접 정의하기](./subscript-keyword.md)
 - [ ] [`@State`와 `_viewModel` — 프로퍼티 래퍼가 만드는 세 개의 이름](./state-property-wrapper-backing-storage.md)
 - [ ] [`scrollPosition(id:)` — 무엇이 `currentIndex`를 바꾸고 있는가](./scroll-position-binding.md)
+- [ ] [`@Namespace` — 두 뷰의 기하 정보를 잇는 이름표](./namespace-and-matched-geometry-effect.md)
+- [ ] [타입을 `&`로 묶기 — 프로토콜 합성과 타입을 모으는 문법 총정리](./protocol-composition-and-type-combining.md)
+- [ ] ["unable to type-check this expression in reasonable time" — 컴파일러가 타입 추론을 포기할 때](./type-checker-timeout-error.md)
 
 ## 완료 기준
 

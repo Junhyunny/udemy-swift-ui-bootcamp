@@ -1,4 +1,4 @@
-# `where` 키워드 — 반복문 필터부터 제네릭 제약까지
+# `where` 키워드 — 반복문 필터부터 연관 타입 제약까지
 
 ## 질문이 나온 코드
 
@@ -15,6 +15,23 @@ func note(at location: CGPoint) -> PianoNote? {
 ```
 
 `for ... in ... where ...` 형태가 낯설다. `where`가 무엇이고 어디에 쓸 수 있는지가 질문이다.
+
+`chapter-156/chapter-156/ContentView.swift`에서 같은 키워드가 **전혀 다른 자리**에 다시 등장했다.
+
+```swift
+protocol SegmentItem: Hashable & CaseIterable & RawRepresentable
+where RawValue == String {
+    var icon: String { get }
+    var color: Color { get }
+}
+
+struct ReusableSegmentedControl<T: SegmentItem>: View
+where T.RawValue == String {
+    // ...
+}
+```
+
+반복문의 `where`와 생김새는 같은데 하는 일이 다르다. **왜 쓰는지, 언제 쓰는지**가 이어진 질문이다.
 
 ## 공부할 내용
 
@@ -170,6 +187,69 @@ protocol KeyboardStyling where Self: View {
 
 제네릭 쪽 `where`는 [Swift 제네릭 문서](./swift-generics.md)에 더 정리되어 있다.
 
+### 6. `where`가 **유일한** 표현 수단인 경우 — 연관 타입 제약
+
+여기가 chapter-156의 사례이고, **`where`를 배워야 하는 진짜 이유**다.
+
+```swift
+protocol SegmentItem: Hashable & CaseIterable & RawRepresentable
+where RawValue == String {
+    var icon: String { get }
+    var color: Color { get }
+}
+```
+
+`RawRepresentable`은 `RawValue`라는 **연관 타입(associated type)**을 갖는다.
+
+```swift
+protocol RawRepresentable {
+    associatedtype RawValue
+    var rawValue: RawValue { get }
+    init?(rawValue: RawValue)
+}
+```
+
+여기서 "raw value가 `String`인 `RawRepresentable`"을 표현하고 싶은데, **`&`로는 쓸 수 없다.**
+
+```swift
+protocol SegmentItem: RawRepresentable & (RawValue == String)   // ❌ 그런 문법은 없다
+```
+
+`&`는 "이 프로토콜도 따른다"만 표현할 수 있고, **"그 프로토콜의 연관 타입이 무엇이다"는 표현하지 못한다.** 그 일을 하는 것이 `where`다.
+
+```swift
+protocol SegmentItem: RawRepresentable where RawValue == String { }   // ✓
+```
+
+이게 있어야 `Text(item.rawValue)`가 컴파일된다. `where`가 없으면 `rawValue`의 타입은 그저 "어떤 `RawValue`"일 뿐이라 `Text`에 넣을 수 없다.
+
+제약의 형태는 두 가지다.
+
+| 형태 | 뜻 | 예 |
+|---|---|---|
+| `T.X == 구체타입` | 같은 타입 요구(same-type requirement) | `where RawValue == String` |
+| `T.X: 프로토콜` | 적합성 요구(conformance requirement) | `where Element: Equatable` |
+
+Swift 5.7부터는 **주 연관 타입(primary associated type)**이 지정된 프로토콜에 한해 꺾쇠로 줄여 쓸 수 있다([SE-0346](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0346-light-weight-same-type-syntax.md)).
+
+```swift
+func f(_ items: any Collection<String>) { }              // 줄인 형태
+func f<C: Collection>(_ x: C) where C.Element == String { }   // 원래 형태
+```
+
+`RawRepresentable`에는 주 연관 타입이 지정되어 있지 않으므로, 이 코드는 **여전히 `where`를 써야 한다.**
+
+### 7. 제약을 겹쳐 쓰면 상속된다
+
+```swift
+struct ReusableSegmentedControl<T: SegmentItem>: View
+where T.RawValue == String {
+```
+
+`SegmentItem` 선언에 이미 `where RawValue == String`이 있으므로, `T: SegmentItem`이면 **`T.RawValue == String`은 자동으로 따라온다.** 이 `where` 절은 지워도 컴파일된다.
+
+남겨 두면 제약이 선언부에 드러나 읽기 좋고, 지우면 중복이 사라진다. 어느 쪽도 틀리지 않는다. [프로토콜 합성 문서](./protocol-composition-and-type-combining.md)에서 이어서 다룬다.
+
 ### 두 부류를 한눈에
 
 ```text
@@ -202,6 +282,7 @@ protocol KeyboardStyling where Self: View {
 | extension | `extension X where 제약 { }` | 타입 |
 | protocol | `protocol P where Self: C { }` | 타입 |
 | associatedtype | `associatedtype E where E: Equatable` | 타입 |
+| 연관 타입 제약 | `where RawValue == String` | 타입 (**`&`로 대체 불가**) |
 
 Swift 5.3부터는 제네릭이 아닌 문맥의 선언에도 `where`를 붙일 수 있게 확장되었다([SE-0267](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0267-where-on-contextually-generic.md)).
 
@@ -230,6 +311,11 @@ where blackKeyRect(at: index).contains(location) {
 - [ ] `catch ... where`로 같은 오류 타입을 값에 따라 나눠 처리한다.
 - [ ] `extension Array where Element == PianoNote`를 만들어 다른 배열 타입에는 안 생기는지 확인한다.
 - [ ] 값 조건 `where`와 타입 제약 `where`를 각각 한 문장으로 구분해 설명한다.
+- [ ] `protocol P: RawRepresentable where RawValue == String`을 만들고, `where`를 지우면 `Text(item.rawValue)`가 왜 실패하는지 확인한다.
+- [ ] 연관 타입 제약을 `&`로 표현하려 시도해 보고 불가능함을 확인한다.
+- [ ] same-type 요구(`==`)와 conformance 요구(`:`)를 각각 써 본다.
+- [ ] `ReusableSegmentedControl`의 `where T.RawValue == String`을 지워도 컴파일되는 이유를 설명한다.
+- [ ] `any Collection<String>`과 `where C.Element == String`을 서로 바꿔 써 본다.
 
 ## 공식 참고 자료
 
@@ -239,3 +325,7 @@ where blackKeyRect(at: index).contains(location) {
 - [The Swift Programming Language: Generics](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/generics/)
 - [The Swift Programming Language: Error Handling](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/errorhandling/)
 - [SE-0267: `where` clauses on contextually generic declarations](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0267-where-on-contextually-generic.md)
+- [The Swift Programming Language: Generics — Generic Where Clauses](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/generics/#Generic-Where-Clauses)
+- [The Swift Programming Language: Generics — Associated Types with a Generic Where Clause](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/generics/#Associated-Types-with-a-Generic-Where-Clause)
+- [Swift Standard Library: RawRepresentable](https://developer.apple.com/documentation/swift/rawrepresentable)
+- [SE-0346: Lightweight same-type requirements for primary associated types](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0346-light-weight-same-type-syntax.md)
