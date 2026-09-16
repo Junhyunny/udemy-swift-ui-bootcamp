@@ -134,6 +134,9 @@
 - [ ] [`@Namespace` — 두 뷰의 기하 정보를 잇는 이름표](./namespace-and-matched-geometry-effect.md)
 - [ ] [타입을 `&`로 묶기 — 프로토콜 합성과 타입을 모으는 문법 총정리](./protocol-composition-and-type-combining.md)
 - [ ] ["unable to type-check this expression in reasonable time" — 컴파일러가 타입 추론을 포기할 때](./type-checker-timeout-error.md)
+- [ ] [`animatableData` — SwiftUI가 중간 프레임을 만들어 내는 원리](./animatable-data-and-interpolation.md)
+- [ ] [`@Animatable`과 `@AnimatableIgnored` — 손으로 쓰던 것을 매크로가 대신 쓴다](./animatable-macro.md)
+- [ ] [`nonisolated` — "이 코드는 액터 밖에서도 안전하다"는 선언](./nonisolated-keyword.md)
 
 ## 완료 기준
 
