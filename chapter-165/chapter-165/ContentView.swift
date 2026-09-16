@@ -14,9 +14,50 @@ struct StarRatingView: View {
     var body: some View {
         HStack(spacing: 6) {
             ForEach(0..<5) { index in
-                Text("index\(index)")
+                starView(for: index)
             }
         }
+        .onAppear {
+            withAnimation(.easeInOut(duration: 0.6)) {
+                animatedRating = rating
+            }
+        }
+        .onChange(of: rating) { _, newRating in
+            withAnimation(.easeInOut(duration: 0.6)) {
+                animatedRating = rating
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func starView(for index: Int) -> some View {
+        let fillAmount = min(max(animatedRating - Double(index), 0), 1)
+
+        ZStack {
+            Image(systemName: "star.fill")
+                .resizable()
+                .scaledToFit()
+                .foregroundStyle(.gray.gradient.opacity(0.5))
+            Image(systemName: "star.fill")
+                .resizable()
+                .scaledToFit()
+                .foregroundStyle(
+                    LinearGradient(
+                        colors: [.yellow, .orange],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
+                // TODO: [todos/mask-and-alpha-channel.md](../../todos/mask-and-alpha-channel.md)
+                .mask {
+                    GeometryReader { geometry in
+                        Rectangle()
+                            .frame(width: geometry.size.width * fillAmount)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                }
+        }
+        .frame(width: 30, height: 30)
     }
 }
 
@@ -27,7 +68,7 @@ struct ContentView: View {
             StarRatingView(rating: 3.5)
             StarRatingView(rating: 2.2)
             StarRatingView(rating: 1)
-            StarRatingView(rating: 1.9)
+            StarRatingView(rating: 2.9)
         }
         .padding()
     }
