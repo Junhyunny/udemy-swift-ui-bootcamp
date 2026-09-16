@@ -137,6 +137,9 @@
 - [ ] [`animatableData` — SwiftUI가 중간 프레임을 만들어 내는 원리](./animatable-data-and-interpolation.md)
 - [ ] [`@Animatable`과 `@AnimatableIgnored` — 손으로 쓰던 것을 매크로가 대신 쓴다](./animatable-macro.md)
 - [ ] [`nonisolated` — "이 코드는 액터 밖에서도 안전하다"는 선언](./nonisolated-keyword.md)
+- [ ] [`mask` — 알파 채널로 뷰를 오려내기](./mask-and-alpha-channel.md)
+- [ ] [`toolbar` API — 배치, 종류, 사용 케이스 총정리](./toolbar-api-use-cases.md)
+- [ ] [SwiftUI가 이미 제공하는 버튼들 — `EditButton`과 그 형제들](./builtin-swiftui-buttons.md)
 
 ## 완료 기준
 
