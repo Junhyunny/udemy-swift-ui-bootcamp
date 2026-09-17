@@ -5,7 +5,7 @@
 //  Created by 강준현 on 9/11/26.
 //
 
-// TODO: [todos/avfoundation-framework.md](../../../todos/avfoundation-framework.md)
+// TODO: [todos/136-avfoundation-framework.md](../../../todos/136-avfoundation-framework.md)
 import AVFoundation
 import AudioKit
 import Foundation
@@ -15,7 +15,7 @@ enum AudioError: Error {
     case setupFailed
 }
 
-// TODO: [todos/swift-actor-type.md](../../../todos/swift-actor-type.md)
+// TODO: [todos/107-swift-actor-type.md](../../../todos/107-swift-actor-type.md)
 // FIXME: [Architecture] 서비스 계층 타입이 Utils/ 에 들어가 있다.
 // - 현상: AudioManager 는 오디오 엔진 수명주기를 소유하는 어엿한 서비스인데,
 //         Color+Extensions.swift 같은 순수 확장과 같은 폴더에 있다.

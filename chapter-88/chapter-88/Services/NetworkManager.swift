@@ -21,7 +21,7 @@ import Observation
 //         ContentView 는 ViewModel 만 알면 되고, 통신 구현은 갈아끼울 수 있게 된다.
 @Observable
 final class NetworkManager {
-    // TODO: [todos/array-literal-and-initialization.md](../../todos/array-literal-and-initialization.md)
+    // TODO: [todos/006-array-literal-and-initialization.md](../../../todos/006-array-literal-and-initialization.md)
     var posts = [Post]()
 
     func fetchPosts() async {
@@ -35,7 +35,7 @@ final class NetworkManager {
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             let decoder = JSONDecoder()
-            // TODO: [todos/main-actor-and-ios-threading.md](../../todos/main-actor-and-ios-threading.md)
+            // TODO: [todos/106-main-actor-and-ios-threading.md](../../../todos/106-main-actor-and-ios-threading.md)
             // FIXME: [Best Practice] 디코딩을 메인 액터 Task 안에서 하면서 에러를 삼키고 있다.
             // - 문제1: Task 클로저가 throwing 이라 try 실패가 do/catch 로 잡히지 않고 그대로 사라진다.
             //          JSON 스키마가 바뀌어도 화면은 빈 리스트만 보여주고 아무도 모른다.

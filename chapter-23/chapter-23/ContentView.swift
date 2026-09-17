@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    // TODO: [todos/grid-item-sizing.md](../../todos/grid-item-sizing.md)
+    // TODO: [todos/063-grid-item-sizing.md](../../todos/063-grid-item-sizing.md)
     // .flexible
     // .adaptive
     // .fixed

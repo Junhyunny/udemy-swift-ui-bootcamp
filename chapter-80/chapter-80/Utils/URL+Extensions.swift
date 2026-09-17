@@ -7,12 +7,12 @@
 
 import Foundation
 
-// TODO: [todos/swift-file-naming-conventions.md](../../todos/swift-file-naming-conventions.md)
+// TODO: [todos/024-swift-file-naming-conventions.md](../../../todos/024-swift-file-naming-conventions.md)
 extension URL {
     func setQueries(_ queries: [String: String]) -> URL? {
         var components = URLComponents(url: self, resolvingAgainstBaseURL: true)
         components?.queryItems = queries.map { URLQueryItem(name: $0.key, value: $0.value) }
-        // TODO: [todos/urlcomponents-and-url-building.md](../../todos/urlcomponents-and-url-building.md)
+        // TODO: [todos/119-urlcomponents-and-url-building.md](../../../todos/119-urlcomponents-and-url-building.md)
         return components?.url
     }
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// TODO: [todos/swift-fundamental-types-and-comparison.md](../../todos/swift-fundamental-types-and-comparison.md)
+// TODO: [todos/001-swift-fundamental-types-and-comparison.md](../../todos/001-swift-fundamental-types-and-comparison.md)
 struct Snowflake: Identifiable {
     let id = UUID()
     var x: Double
@@ -65,7 +65,7 @@ struct ContentView: View {
         for _ in 0..<50 {
             snowflakes.append(
                 Snowflake(
-                    // TODO: [todos/canvas-coordinate-space-and-normalization.md](../../todos/canvas-coordinate-space-and-normalization.md)
+                    // TODO: [todos/069-canvas-coordinate-space-and-normalization.md](../../todos/069-canvas-coordinate-space-and-normalization.md)
                     x: .random(in: 0...1),
                     y: .random(in: -0.2...0),
                     scale: .random(in: 0.5...1.5),
@@ -79,7 +79,7 @@ struct ContentView: View {
             block: { _ in
                 for i in snowflakes.indices {
                     snowflakes[i].y += snowflakes[i].speed
-                    // TODO: [todos/canvas-coordinate-space-and-normalization.md](../../todos/canvas-coordinate-space-and-normalization.md)
+                    // TODO: [todos/069-canvas-coordinate-space-and-normalization.md](../../todos/069-canvas-coordinate-space-and-normalization.md)
                     if snowflakes[i].y > 1.2 {
                         snowflakes[i].y = -0.2
                         snowflakes[i].x = Double.random(in: 0...1)

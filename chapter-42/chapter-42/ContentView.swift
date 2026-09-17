@@ -34,7 +34,7 @@ struct ContentView: View {
                 .resizable()
                 .scaledToFill()
                 .frame(width: 120, height: 200)
-                // TODO: [todos/chained-offset-modifiers.md](../../todos/chained-offset-modifiers.md)
+                // TODO: [todos/095-chained-offset-modifiers.md](../../todos/095-chained-offset-modifiers.md)
                 .offset(y: 20)
                 .offset(
                     x: valueTranslation.width / 30,
@@ -43,7 +43,7 @@ struct ContentView: View {
         }
         .frame(width: 1000, height: 1000)
         .background(.black)
-        // TODO: [todos/rotation3d-axis-and-card-tilt.md](../../todos/rotation3d-axis-and-card-tilt.md)
+        // TODO: [todos/096-rotation3d-axis-and-card-tilt.md](../../todos/096-rotation3d-axis-and-card-tilt.md)
         .rotation3DEffect(
             .degrees(isDragging ? 10 : 0),
             axis: (

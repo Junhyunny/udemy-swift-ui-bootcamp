@@ -31,7 +31,7 @@ struct ContentView: View {
                 VStack {
                     Text("You choose: \(playerMove.rawValue)")
                         .font(.title)
-                        // TODO: [todos/swiftui-transition-composition.md](../../todos/swiftui-transition-composition.md)
+                        // TODO: [todos/094-swiftui-transition-composition.md](../../todos/094-swiftui-transition-composition.md)
                         .transition(.scale.combined(with: .opacity))
                     Text("Opponent choose: \(opponentMove.rawValue)")
                         .font(.title)
@@ -56,7 +56,7 @@ struct ContentView: View {
                     .foregroundStyle(.white)
                     .clipShape(.rect(cornerRadius: 20))
                     .shadow(radius: 10)
-                    // TODO: [todos/swiftui-transition-composition.md](../../todos/swiftui-transition-composition.md)
+                    // TODO: [todos/094-swiftui-transition-composition.md](../../todos/094-swiftui-transition-composition.md)
                     .transition(
                         .move(edge: .bottom).combined(with: .opacity)
                     )

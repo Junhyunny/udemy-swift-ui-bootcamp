@@ -21,7 +21,7 @@ struct CourseHome: View {
             // FIXME: [Best Practice] NavigationView 는 iOS 16 deprecated.
             // - 개선: NavigationStack 으로 교체한다. 아래 Cart 탭의 NavigationView 도 동일하다.
             NavigationView {
-                // TODO: [todos/duplicate-id-in-list.md](../../todos/duplicate-id-in-list.md)
+                // TODO: [todos/054-duplicate-id-in-list.md](../../todos/054-duplicate-id-in-list.md)
                 List(Course.sample) { course in
                     ZStack {
                         NavigationLink(

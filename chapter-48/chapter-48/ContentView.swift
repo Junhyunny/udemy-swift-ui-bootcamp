@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OpenURLExample: View {
-    // TODO: [todos/environment-property-wrapper.md](../../todos/environment-property-wrapper.md)
+    // TODO: [todos/048-environment-property-wrapper.md](../../todos/048-environment-property-wrapper.md)
     @Environment(\.openURL) private var openURL
     var body: some View {
         Button("Visit Junhyunny's blog") {

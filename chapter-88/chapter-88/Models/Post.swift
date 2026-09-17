@@ -12,7 +12,7 @@ struct Results: Decodable {
 }
 
 struct Post: Decodable, Identifiable {
-    // TODO: [todos/computed-property-with-closure-body.md](../../todos/computed-property-with-closure-body.md)
+    // TODO: [todos/010-computed-property-with-closure-body.md](../../../todos/010-computed-property-with-closure-body.md)
     var id: String { return objectID }
     let objectID: String
     let title: String

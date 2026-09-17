@@ -8,8 +8,8 @@
 import Foundation
 import SwiftData
 
-// TODO: [todos/swift-macros-and-build-pipeline.md](../../todos/swift-macros-and-build-pipeline.md)
-// TODO: [todos/swiftdata-identity-and-updates.md](../../todos/swiftdata-identity-and-updates.md)
+// TODO: [todos/037-swift-macros-and-build-pipeline.md](../../todos/037-swift-macros-and-build-pipeline.md)
+// TODO: [todos/129-swiftdata-identity-and-updates.md](../../todos/129-swiftdata-identity-and-updates.md)
 @Model
 final class Todo {
     var title: String
@@ -31,11 +31,11 @@ extension Todo {
         //         원인을 남기거나, Preview 라면 빈 컨테이너로 폴백한다.
         let container = try! ModelContainer(
             for: Todo.self,
-            // TODO: [todos/swiftdata-container-context-and-configuration.md](../../todos/swiftdata-container-context-and-configuration.md)
+            // TODO: [todos/127-swiftdata-container-context-and-configuration.md](../../todos/127-swiftdata-container-context-and-configuration.md)
             configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
-        // TODO: [todos/swiftdata-concurrency-and-context-isolation.md](../../todos/swiftdata-concurrency-and-context-isolation.md)
-        // TODO: [todos/swift-macros-and-build-pipeline.md](../../todos/swift-macros-and-build-pipeline.md)
+        // TODO: [todos/132-swiftdata-concurrency-and-context-isolation.md](../../todos/132-swiftdata-concurrency-and-context-isolation.md)
+        // TODO: [todos/037-swift-macros-and-build-pipeline.md](../../todos/037-swift-macros-and-build-pipeline.md)
         container.mainContext.insert(Todo(title: "Hello", isCompleted: false))
         container.mainContext.insert(Todo(title: "World", isCompleted: true))
         container.mainContext.insert(

@@ -25,10 +25,10 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Jun Examples")
-            // TODO: [todos/toolbar-api-use-cases.md](../../todos/toolbar-api-use-cases.md)
+            // TODO: [todos/082-toolbar-api-use-cases.md](../../todos/082-toolbar-api-use-cases.md)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    // TODO: [todos/builtin-swiftui-buttons.md](../../todos/builtin-swiftui-buttons.md)
+                    // TODO: [todos/083-builtin-swiftui-buttons.md](../../todos/083-builtin-swiftui-buttons.md)
                     EditButton()
                 }
             }

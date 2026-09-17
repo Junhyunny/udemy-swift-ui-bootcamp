@@ -32,7 +32,7 @@ struct ContentView: View {
                 // } label: {
                 //     Label("Click Me", systemImage: "computermouse")
                 // }
-                // TODO: [todos/deprecated-navigation-link-initializers.md](../../todos/deprecated-navigation-link-initializers.md)
+                // TODO: [todos/077-deprecated-navigation-link-initializers.md](../../todos/077-deprecated-navigation-link-initializers.md)
                 NavigationLink(
                     "Click Me",
                     destination: NavigationDestinationView(counter: counter),
@@ -43,7 +43,7 @@ struct ContentView: View {
                     triggerAnimation.toggle()
                 }
                 VStack {
-                    // TODO: [todos/deprecated-navigation-link-initializers.md](../../todos/deprecated-navigation-link-initializers.md)
+                    // TODO: [todos/077-deprecated-navigation-link-initializers.md](../../todos/077-deprecated-navigation-link-initializers.md)
                     NavigationLink(
                         "View 1",
                         destination: Text("View 1")
@@ -86,7 +86,7 @@ struct ContentView: View {
 }
 
 struct DestView: View {
-    // TODO: [todos/environment-property-wrapper.md](../../todos/environment-property-wrapper.md)
+    // TODO: [todos/048-environment-property-wrapper.md](../../todos/048-environment-property-wrapper.md)
     @Environment(\.dismiss) var dismiss
     var title: String
     var body: some View {

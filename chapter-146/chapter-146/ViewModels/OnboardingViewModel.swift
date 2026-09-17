@@ -89,7 +89,7 @@ final class OnboardingViewModel {
 // - 개선: Extensions/Array+Safe.swift 같은 전용 파일로 분리한다.
 //         (chapter-80 의 URL+Extensions.swift 처럼 파일 이름 규칙을 맞춘다)
 extension Array {
-    // TODO: [todos/subscript-keyword.md](../../../todos/subscript-keyword.md)
+    // TODO: [todos/013-subscript-keyword.md](../../../todos/013-subscript-keyword.md)
     subscript(safe index: Int) -> Element? {
         return indices.contains(index) ? self[index] : nil
     }

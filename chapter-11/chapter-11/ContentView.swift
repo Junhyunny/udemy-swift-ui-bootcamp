@@ -13,7 +13,7 @@ struct ContentView: View {
     }
 }
 
-// TODO: [todos/struct-vs-class.md](../../todos/struct-vs-class.md)
+// TODO: [todos/019-struct-vs-class.md](../../todos/019-struct-vs-class.md)
 struct ColorMixerApp: View {
     @State private var red: Double = 0
     @State private var green: Double = 0
@@ -44,9 +44,9 @@ struct ColorMixerApp: View {
 }
 
 struct SliderView: View {
-    // TODO: [todos/access-control.md](../../todos/access-control.md)
+    // TODO: [todos/017-access-control.md](../../todos/017-access-control.md)
     @Binding var value: Double
-    // TODO: [todos/let-vs-var.md](../../todos/let-vs-var.md)
+    // TODO: [todos/002-let-vs-var.md](../../todos/002-let-vs-var.md)
     let name: String
     let color: Color
 
@@ -55,7 +55,7 @@ struct SliderView: View {
             Text(name)
                 .frame(width: 50, alignment: .leading)
                 .foregroundStyle(color)
-            // TODO: [todos/property-wrapper-dollar-sign.md](../../todos/property-wrapper-dollar-sign.md)
+            // TODO: [todos/044-property-wrapper-dollar-sign.md](../../todos/044-property-wrapper-dollar-sign.md)
             Slider(value: $value)
             Text(String(format: "%.2f", value))
         }

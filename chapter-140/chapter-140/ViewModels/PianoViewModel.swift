@@ -21,7 +21,7 @@ import SwiftUI
 @MainActor
 @Observable
 final class PianoViewModel {
-    // TODO: [todos/access-control.md](../../../todos/access-control.md)
+    // TODO: [todos/017-access-control.md](../../../todos/017-access-control.md)
     private(set) var activeNotes: Set<MIDINoteNumber> = []
     private let audioManager: AudioManager = AudioManager.shared
 

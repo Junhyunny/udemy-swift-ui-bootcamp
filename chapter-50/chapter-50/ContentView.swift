@@ -17,7 +17,7 @@ struct ContentView: View {
             TextEditor(text: $text)
                 .frame(height: 150)
                 .border(.gray.opacity(0.5))
-                // TODO: [todos/onchange-old-new-value.md](../../todos/onchange-old-new-value.md)
+                // TODO: [todos/052-onchange-old-new-value.md](../../todos/052-onchange-old-new-value.md)
                 .onChange(of: text) { oldValue, newValue in
                     detectedURL = extractFirstURL(from: text)
                 }
@@ -34,15 +34,15 @@ struct ContentView: View {
         .padding()
     }
 
-    // TODO: [todos/nsdatadetector-and-url-detection.md](../../todos/nsdatadetector-and-url-detection.md)
+    // TODO: [todos/122-nsdatadetector-and-url-detection.md](../../todos/122-nsdatadetector-and-url-detection.md)
     func extractFirstURL(from text: String) -> URL? {
-        // TODO: [todos/ns-prefix-foundation-classes.md](../../todos/ns-prefix-foundation-classes.md)
+        // TODO: [todos/116-ns-prefix-foundation-classes.md](../../todos/116-ns-prefix-foundation-classes.md)
         let types: NSTextCheckingResult.CheckingType = .link
-        // TODO: [todos/guard-keyword.md](../../todos/guard-keyword.md)
+        // TODO: [todos/004-guard-keyword.md](../../todos/004-guard-keyword.md)
         guard let detector = try? NSDataDetector(types: types.rawValue) else {
             return nil
         }
-        // TODO: [todos/nsdatadetector-and-url-detection.md](../../todos/nsdatadetector-and-url-detection.md)
+        // TODO: [todos/122-nsdatadetector-and-url-detection.md](../../todos/122-nsdatadetector-and-url-detection.md)
         let matches = detector.matches(
             in: text,
             options: [],

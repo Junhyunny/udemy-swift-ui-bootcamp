@@ -10,7 +10,7 @@ import SwiftUI
 struct DevTechieCourse: Identifiable, Hashable {
     var id: UUID = UUID()
     var name: String
-    // TODO: [todos/hash-into-and-java-comparison.md](../../todos/hash-into-and-java-comparison.md)
+    // TODO: [todos/027-hash-into-and-java-comparison.md](../../todos/027-hash-into-and-java-comparison.md)
     // func hash(into hasher: inout Hasher) {
     //     hasher.combine(id)
     // }
@@ -54,7 +54,7 @@ struct ContentView: View {
 struct DestinationView: View {
     @Environment(\.dismiss) var dismiss
     var title: String
-    // TODO: [todos/some-keyword-opaque-types.md](../../todos/some-keyword-opaque-types.md)
+    // TODO: [todos/034-some-keyword-opaque-types.md](../../todos/034-some-keyword-opaque-types.md)
     var body: some View {
         Text(title)
             .navigationBarBackButtonHidden()

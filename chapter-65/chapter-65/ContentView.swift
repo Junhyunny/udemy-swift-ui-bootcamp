@@ -43,7 +43,7 @@ struct ReceiverView: View {
             }
         }
         .onAppear {
-            // TODO: [todos/task-priority-and-scheduling.md](../../todos/task-priority-and-scheduling.md)
+            // TODO: [todos/104-task-priority-and-scheduling.md](../../todos/104-task-priority-and-scheduling.md)
             Task(priority: .background) {
                 await receiveNotifications()
             }
@@ -53,17 +53,17 @@ struct ReceiverView: View {
     private func receiveNotifications() async {
         let center = NotificationCenter.default
         let name = Notification.Name("DTAlert")
-        // TODO: [todos/for-await-async-sequence.md](../../todos/for-await-async-sequence.md)
+        // TODO: [todos/105-for-await-async-sequence.md](../../todos/105-for-await-async-sequence.md)
         for await notification in center.notifications(named: name) {
             if let userInfo = notification.userInfo,
-                // TODO: [todos/swift-type-casting.md](../../todos/swift-type-casting.md)
+                // TODO: [todos/021-swift-type-casting.md](../../todos/021-swift-type-casting.md)
                 let moreInfo = userInfo["Course"] as? DTCourse
             {
                 await MainActor.run {
                     additionalInfo = "\(moreInfo.name) by: \(moreInfo.author)"
                 }
             }
-            // TODO: [todos/main-actor-and-ios-threading.md](../../todos/main-actor-and-ios-threading.md)
+            // TODO: [todos/106-main-actor-and-ios-threading.md](../../todos/106-main-actor-and-ios-threading.md)
             await MainActor.run {
                 counter += 1
             }
@@ -76,11 +76,11 @@ struct SenderView: View {
         ZStack {
             Color.orange.opacity(0.2)
             Button("Send Notification") {
-                // TODO: [todos/notification-center.md](../../todos/notification-center.md)
+                // TODO: [todos/109-notification-center.md](../../todos/109-notification-center.md)
                 let center = NotificationCenter.default
                 let name = Notification.Name("DTAlert")
 
-                // TODO: [todos/notification-center.md](../../todos/notification-center.md)
+                // TODO: [todos/109-notification-center.md](../../todos/109-notification-center.md)
                 let course = DTCourse(
                     name: "Practical SwiftData in SwiftUI",
                     author: "DevTechie.com"
@@ -90,7 +90,7 @@ struct SenderView: View {
                     "Course": course
                 ]
 
-                // TODO: [todos/notification-center.md](../../todos/notification-center.md)
+                // TODO: [todos/109-notification-center.md](../../todos/109-notification-center.md)
                 center.post(
                     name: name,
                     object: nil,
@@ -112,7 +112,7 @@ enum DTOrientation {
 }
 
 @Observable
-// TODO: [todos/final-keyword.md](../../todos/final-keyword.md)
+// TODO: [todos/018-final-keyword.md](../../todos/018-final-keyword.md)
 final class SystemNotificationExample {
     let center = NotificationCenter.default
     var orientation: DTOrientation = DTOrientation.portrait

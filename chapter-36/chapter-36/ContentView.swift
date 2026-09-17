@@ -38,7 +38,7 @@ struct ContentView: View {
                     //     }
                     // )
                     // .buttonStyle(.bordered)
-                    // TODO: [todos/closures-and-view-builders.md](../../todos/closures-and-view-builders.md)
+                    // TODO: [todos/040-closures-and-view-builders.md](../../todos/040-closures-and-view-builders.md)
                     Button(role: .confirm) {
                         increaseCount()
                     } label: {
@@ -74,7 +74,7 @@ struct ContentView: View {
         counter -= 1
     }
 
-    // TODO: [todos/viewbuilder-vs-view-struct.md](../../todos/viewbuilder-vs-view-struct.md)
+    // TODO: [todos/041-viewbuilder-vs-view-struct.md](../../todos/041-viewbuilder-vs-view-struct.md)
     @ViewBuilder
     func buttonBody(isUp: Bool) -> some View {
         VStack {

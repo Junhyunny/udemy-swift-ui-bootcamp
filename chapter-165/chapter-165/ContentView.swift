@@ -52,7 +52,7 @@ struct StarRatingView: View {
                         endPoint: .trailing
                     )
                 )
-                // TODO: [todos/mask-and-alpha-channel.md](../../todos/mask-and-alpha-channel.md)
+                // TODO: [todos/071-mask-and-alpha-channel.md](../../todos/071-mask-and-alpha-channel.md)
                 .mask {
                     GeometryReader { geometry in
                         Rectangle()

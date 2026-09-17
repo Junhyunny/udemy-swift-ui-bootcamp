@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
-            // TODO: [todos/asset-catalog-universal-scale.md](../../todos/asset-catalog-universal-scale.md)
+            // TODO: [todos/055-asset-catalog-universal-scale.md](../../todos/055-asset-catalog-universal-scale.md)
             Image(.photo1)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
@@ -24,6 +24,6 @@ struct ContentView: View {
 }
 
 #Preview {
-    // TODO: [todos/image-layout-and-preview-bounds.md](../../todos/image-layout-and-preview-bounds.md)
+    // TODO: [todos/056-image-layout-and-preview-bounds.md](../../todos/056-image-layout-and-preview-bounds.md)
     ContentView()
 }

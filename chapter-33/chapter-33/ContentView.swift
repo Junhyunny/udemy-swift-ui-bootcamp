@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        // TODO: [todos/closures-and-view-builders.md](../../todos/closures-and-view-builders.md)
+        // TODO: [todos/040-closures-and-view-builders.md](../../todos/040-closures-and-view-builders.md)
         ScrollView {
             VStack(spacing: 15) {
                 Text("junhyunny.github.io")

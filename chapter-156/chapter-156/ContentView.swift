@@ -40,7 +40,7 @@ enum AppTab: String, SegmentItem {
 
 struct SegmentedControlSwiftUI: View {
     @State private var selectedTab: AppTab = .swiftUI
-    // TODO: [todos/namespace-and-matched-geometry-effect.md](../../todos/namespace-and-matched-geometry-effect.md)
+    // TODO: [todos/097-namespace-and-matched-geometry-effect.md](../../todos/097-namespace-and-matched-geometry-effect.md)
     @Namespace private var animation
 
     var body: some View {
@@ -123,10 +123,10 @@ struct ContentView: View {
     ContentView()
 }
 
-// TODO: [todos/protocol-composition-and-type-combining.md](../../todos/protocol-composition-and-type-combining.md)
+// TODO: [todos/033-protocol-composition-and-type-combining.md](../../todos/033-protocol-composition-and-type-combining.md)
 struct ReusableSegmentedControl<T: SegmentItem>:
     View
-// TODO: [todos/where-clause-usages.md](../../todos/where-clause-usages.md)
+// TODO: [todos/031-where-clause-usages.md](../../todos/031-where-clause-usages.md)
 where T.RawValue == String {
     @Binding var selection: T
     // FIXME: [Best Practice] as! 강제 캐스팅으로 AllCases 를 배열로 바꾸고 있다.
@@ -142,7 +142,7 @@ where T.RawValue == String {
         HStack(spacing: 0) {
             ForEach(items, id: \.self) { item in
                 HStack(spacing: 8) {
-                    // TODO: [todos/type-checker-timeout-error.md](../../todos/type-checker-timeout-error.md)
+                    // TODO: [todos/038-type-checker-timeout-error.md](../../todos/038-type-checker-timeout-error.md)
                     Image(systemName: item.icon)
                     Text(item.rawValue)
                 }

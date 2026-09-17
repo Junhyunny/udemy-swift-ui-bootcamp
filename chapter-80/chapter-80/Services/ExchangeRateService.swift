@@ -21,7 +21,7 @@ final class ExchangeRateService {
     static let shared = ExchangeRateService()
     private init() {}
 
-    // TODO: [todos/combine.md](../../todos/combine.md)
+    // TODO: [todos/111-combine.md](../../../todos/111-combine.md)
     func getExchangeRate() -> AnyPublisher<ExchangeRate, Error> {
         return urlSession(ExchangeRate.self, with: Endpoint.withSymbols.url!)
     }
@@ -32,11 +32,11 @@ final class ExchangeRateService {
     ) -> AnyPublisher<T, Error> {
         URLSession
             .shared
-            // TODO: [todos/combine-vs-async-await.md](../../todos/combine-vs-async-await.md)
+            // TODO: [todos/114-combine-vs-async-await.md](../../../todos/114-combine-vs-async-await.md)
             .dataTaskPublisher(for: url)
             .map(\.data)
             .decode(type: type.self, decoder: JSONDecoder())
-            // TODO: [todos/combine-operators.md](../../todos/combine-operators.md)
+            // TODO: [todos/113-combine-operators.md](../../../todos/113-combine-operators.md)
             // FIXME: [Best Practice] RunLoop.main 은 스크롤 중(tracking mode)에 이벤트 전달이 지연된다.
             // - 개선: .receive(on: DispatchQueue.main) 을 쓴다. 바로 아래 .print() 는 디버깅 흔적이므로
             //         제품 코드에서는 제거하거나 #if DEBUG 로 감싼다.

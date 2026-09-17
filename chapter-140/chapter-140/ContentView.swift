@@ -152,7 +152,7 @@ private struct KeyboardMetrics {
     /// 검은 건반이 흰 건반 위에 겹쳐 있으므로 검은 건반을 먼저 판정한다.
     func note(at location: CGPoint) -> PianoNote? {
         for index in PianoNote.blackKeys.indices
-        // TODO: [todos/where-clause-usages.md](../../todos/where-clause-usages.md)
+        // TODO: [todos/031-where-clause-usages.md](../../todos/031-where-clause-usages.md)
         where blackKeyRect(at: index).contains(location) {
             return PianoNote.blackKeys[index]
         }

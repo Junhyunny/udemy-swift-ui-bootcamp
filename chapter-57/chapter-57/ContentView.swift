@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    // TODO: [todos/navigation-path-and-typed-array.md](../../todos/navigation-path-and-typed-array.md)
+    // TODO: [todos/075-navigation-path-and-typed-array.md](../../todos/075-navigation-path-and-typed-array.md)
     @State private var path: [DevTechieCourse] = [
         DevTechieCourse.exampleData[0],
         DevTechieCourse.exampleData[1],
@@ -27,9 +27,9 @@ struct ContentView: View {
 }
 
 struct NavigationStateExample: View {
-    // TODO: [todos/navigation-stack-vs-navigation-view.md](../../todos/navigation-stack-vs-navigation-view.md)
-    // TODO: [todos/swift-ios-device-compatibility.md](../../todos/swift-ios-device-compatibility.md)
-    // TODO: [todos/navigation-path-and-typed-array.md](../../todos/navigation-path-and-typed-array.md)
+    // TODO: [todos/073-navigation-stack-vs-navigation-view.md](../../todos/073-navigation-stack-vs-navigation-view.md)
+    // TODO: [todos/074-swift-ios-device-compatibility.md](../../todos/074-swift-ios-device-compatibility.md)
+    // TODO: [todos/075-navigation-path-and-typed-array.md](../../todos/075-navigation-path-and-typed-array.md)
     @State private var path = NavigationPath()
     var body: some View {
         // NavigationView {
@@ -41,7 +41,7 @@ struct NavigationStateExample: View {
         // }
         NavigationStack(path: $path) {
             List {
-                // TODO: [todos/navigation-link-value-and-destination.md](../../todos/navigation-link-value-and-destination.md)
+                // TODO: [todos/076-navigation-link-value-and-destination.md](../../todos/076-navigation-link-value-and-destination.md)
                 NavigationLink(value: "Mastering iOS and UIKit") {
                     Text("Mastering iOS and UIKit")
                 }
@@ -78,7 +78,7 @@ struct DevTechieCourse: Identifiable, Hashable {
 }
 
 extension DevTechieCourse {
-    // TODO: [todos/static-stored-vs-computed-property.md](../../todos/static-stored-vs-computed-property.md)
+    // TODO: [todos/016-static-stored-vs-computed-property.md](../../todos/016-static-stored-vs-computed-property.md)
     // FIXME: [Best Practice] 계산 프로퍼티라서 접근할 때마다 새 UUID 를 가진 배열이 만들어진다.
     // - 문제: 위 ContentView 의 path 초기값 exampleData[0], [1] 과 List 가 그리는
     //         exampleData 는 서로 다른 인스턴스다. DevTechieCourse 의 Hashable 합성에는

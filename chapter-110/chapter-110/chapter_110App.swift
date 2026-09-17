@@ -14,8 +14,8 @@ struct chapter_110App: App {
         WindowGroup {
             ContentView()
         }
-        // TODO: [todos/swiftdata-container-context-and-configuration.md](../../todos/swiftdata-container-context-and-configuration.md)
-        // TODO: [todos/swiftdata-storage-security-and-performance.md](../../todos/swiftdata-storage-security-and-performance.md)
+        // TODO: [todos/127-swiftdata-container-context-and-configuration.md](../../todos/127-swiftdata-container-context-and-configuration.md)
+        // TODO: [todos/131-swiftdata-storage-security-and-performance.md](../../todos/131-swiftdata-storage-security-and-performance.md)
         .modelContainer(for: Grocery.self)
     }
 }

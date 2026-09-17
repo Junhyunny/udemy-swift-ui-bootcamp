@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-// TODO: [todos/preference-key-and-onpreferencechange.md](../../todos/preference-key-and-onpreferencechange.md)
+// TODO: [todos/067-preference-key-and-onpreferencechange.md](../../todos/067-preference-key-and-onpreferencechange.md)
 struct SizePreferenceKey: PreferenceKey {
-    // TODO: [todos/typealias-and-associated-type.md](../../todos/typealias-and-associated-type.md)
+    // TODO: [todos/032-typealias-and-associated-type.md](../../todos/032-typealias-and-associated-type.md)
     typealias Value = CGSize
 
     static let defaultValue: Value = .zero
@@ -19,15 +19,15 @@ struct SizePreferenceKey: PreferenceKey {
     }
 }
 
-// TODO: [todos/view-modifier-protocol.md](../../todos/view-modifier-protocol.md)
+// TODO: [todos/042-view-modifier-protocol.md](../../todos/042-view-modifier-protocol.md)
 struct MeasuringSizeModifier: ViewModifier {
     func body(content: Content) -> some View {
         content.background(
             GeometryReader { proxy in
                 Color.clear
                     .preference(
-                        // TODO: [todos/metatype-and-self.md](../../todos/metatype-and-self.md)
-                        // TODO: [todos/swift-memory-model.md](../../todos/swift-memory-model.md)
+                        // TODO: [todos/035-metatype-and-self.md](../../todos/035-metatype-and-self.md)
+                        // TODO: [todos/022-swift-memory-model.md](../../todos/022-swift-memory-model.md)
                         key: SizePreferenceKey.self,
                         value: proxy.size
                     )
@@ -36,15 +36,15 @@ struct MeasuringSizeModifier: ViewModifier {
     }
 }
 
-// TODO: [todos/extension-keyword.md](../../todos/extension-keyword.md)
+// TODO: [todos/014-extension-keyword.md](../../todos/014-extension-keyword.md)
 extension View {
-    // TODO: [todos/closures-and-view-builders.md](../../todos/closures-and-view-builders.md)
+    // TODO: [todos/040-closures-and-view-builders.md](../../todos/040-closures-and-view-builders.md)
     // FIXME: [Best Practice] 공개 API 이름에 오타가 있다(measureSzie -> measureSize).
     // - 이유: 한 번 노출된 modifier 이름은 호출부 전체에 퍼지므로 오타는 계속 복사된다.
     // - 개선: 이름을 measureSize 로 고치고 호출부도 함께 정리한다.
     //         iOS 17+ 라면 PreferenceKey 조합 대신 .onGeometryChange(for:of:action:) 가 더 간단하다.
     func measureSzie(perform action: @escaping (CGSize) -> Void) -> some View {
-        // TODO: [todos/view-modifier-protocol.md](../../todos/view-modifier-protocol.md)
+        // TODO: [todos/042-view-modifier-protocol.md](../../todos/042-view-modifier-protocol.md)
         modifier(MeasuringSizeModifier())
             .onPreferenceChange(SizePreferenceKey.self, perform: action)
     }
@@ -55,7 +55,7 @@ struct ContentView: View {
     @State private var lastSize: CGSize = CGSize(width: 200, height: 50)
 
     var body: some View {
-        // TODO: [todos/geometry-reader-performance.md](../../todos/geometry-reader-performance.md)
+        // TODO: [todos/068-geometry-reader-performance.md](../../todos/068-geometry-reader-performance.md)
         VStack {
             ZStack(alignment: .bottomTrailing) {
                 Text("This view knows its own size.")

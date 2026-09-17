@@ -19,7 +19,7 @@ struct CourseDetailView: View {
     //         필요한 화면만 @EnvironmentObject var cart: Cart 로 꺼내 쓴다.
     //         iOS 17+ 라면 @Observable + .environment(cart) / @Environment(Cart.self) 조합을 쓴다.
     var cart: Cart
-    // TODO: [todos/presentation-mode-vs-dismiss.md](../../todos/presentation-mode-vs-dismiss.md)
+    // TODO: [todos/079-presentation-mode-vs-dismiss.md](../../todos/079-presentation-mode-vs-dismiss.md)
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {

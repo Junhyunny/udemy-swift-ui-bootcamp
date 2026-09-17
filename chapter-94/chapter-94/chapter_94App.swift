@@ -11,14 +11,14 @@ import SwiftUI
 struct chapter_94App: App {
 
     @StateObject var viewModel = TimerViewModel()
-    // TODO: [todos/environment-property-wrapper.md](../../todos/environment-property-wrapper.md)
+    // TODO: [todos/048-environment-property-wrapper.md](../../todos/048-environment-property-wrapper.md)
     @Environment(\.scenePhase) var scene
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                // TODO: [todos/state-wrapper-decision-guide.md](../../todos/state-wrapper-decision-guide.md)
-                // TODO: [todos/dependency-injection-for-testing.md](../../todos/dependency-injection-for-testing.md)
+                // TODO: [todos/049-state-wrapper-decision-guide.md](../../todos/049-state-wrapper-decision-guide.md)
+                // TODO: [todos/123-dependency-injection-for-testing.md](../../todos/123-dependency-injection-for-testing.md)
                 .environmentObject(viewModel)
         }
         // FIXME: [Architecture] 앱 진입점이 도메인 계산을 직접 수행한다.
@@ -31,7 +31,7 @@ struct chapter_94App: App {
         //         func applicationWillEnterForeground(at: Date) 를 두고 App 은 호출만 한다.
         //         Date 를 인자로 받으면 시간 흐름을 주입할 수 있어 단위 테스트가 가능해진다.
         .onChange(of: scene) { _, newValue in
-            // TODO: [todos/simulator-vs-device-behavior.md](../../todos/simulator-vs-device-behavior.md)
+            // TODO: [todos/124-simulator-vs-device-behavior.md](../../todos/124-simulator-vs-device-behavior.md)
             // FIXME: [Best Practice] 백그라운드 복귀 로직 전체를 시뮬레이터에서만 제외하고 있다.
             // - 문제: 시뮬레이터에서는 이 코드가 아예 컴파일되지 않아 검증할 수 없고,
             //         실기기에서만 동작하는 "테스트되지 않는 경로"가 된다.

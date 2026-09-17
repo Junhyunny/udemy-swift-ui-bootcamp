@@ -12,7 +12,7 @@ struct OnboardingView: View {
     @Environment(\.dismiss) private var dismiss
 
     init(steps: [OnboardingStep], onComplete: @escaping () -> Void = {}) {
-        // TODO: [todos/state-property-wrapper-backing-storage.md](../../../todos/state-property-wrapper-backing-storage.md)
+        // TODO: [todos/046-state-property-wrapper-backing-storage.md](../../../todos/046-state-property-wrapper-backing-storage.md)
         self._viewModel = State(
             wrappedValue: .init(steps: steps, onComplete: onComplete)
         )
@@ -78,7 +78,7 @@ struct OnboardingView: View {
         .scrollDisabled(false)
         .onScrollTargetVisibilityChange(idType: Int.self) { visibleIds in
             print("currentIndex \(viewModel.currentIndex)")
-            // TODO: [todos/scroll-position-binding.md](../../../todos/scroll-position-binding.md)
+            // TODO: [todos/081-scroll-position-binding.md](../../../todos/081-scroll-position-binding.md)
             //            if let lastVisibleId = visibleIds.last {
             //                viewModel.updateCurrentIndex(lastVisibleId)
             //            }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// TODO: [todos/caseiterable-and-sequence.md](../../todos/caseiterable-and-sequence.md)
+// TODO: [todos/029-caseiterable-and-sequence.md](../../todos/029-caseiterable-and-sequence.md)
 enum Move: String, CaseIterable {
     case rock = "🪨"
     case paper = "📝"

@@ -6,10 +6,10 @@
 //
 
 import SwiftUI
-// TODO: [todos/uiviewrepresentable-and-uikit-bridge.md](../../todos/uiviewrepresentable-and-uikit-bridge.md)
+// TODO: [todos/087-uiviewrepresentable-and-uikit-bridge.md](../../todos/087-uiviewrepresentable-and-uikit-bridge.md)
 import WebKit
 
-// TODO: [todos/api-key-security-and-environment-variables.md](../../todos/api-key-security-and-environment-variables.md)
+// TODO: [todos/120-api-key-security-and-environment-variables.md](../../todos/120-api-key-security-and-environment-variables.md)
 enum AppConfig {
     static let apiKey: String = {
         guard
@@ -23,7 +23,7 @@ enum AppConfig {
     }()
 }
 
-// TODO: [todos/api-key-security-and-environment-variables.md](../../todos/api-key-security-and-environment-variables.md)
+// TODO: [todos/120-api-key-security-and-environment-variables.md](../../todos/120-api-key-security-and-environment-variables.md)
 // FIXME: [Best Practice] 이 파일 하나에 View, 모델(News/Article/Source), 네트워크 계층,
 //        에러 타입, 설정(AppConfig)이 전부 들어 있다(266줄).
 // - 문제: 관심사가 섞여 재사용/테스트가 불가능하고, 어떤 변경이든 이 파일을 건드리게 된다.
@@ -45,7 +45,7 @@ struct ContentView: View {
         NavigationStack {
             List(news.articles) { article in
                 ZStack {
-                    // TODO: [todos/swiftui-hit-testing-vs-dom-events.md](../../todos/swiftui-hit-testing-vs-dom-events.md)
+                    // TODO: [todos/084-swiftui-hit-testing-vs-dom-events.md](../../todos/084-swiftui-hit-testing-vs-dom-events.md)
                     NavigationLink(value: article.url) {
                         EmptyView()
                     }
@@ -76,7 +76,7 @@ struct ContentView: View {
                 }
             )
         }
-        // TODO: [todos/task-modifier-and-async-lifecycle.md](../../todos/task-modifier-and-async-lifecycle.md)
+        // TODO: [todos/103-task-modifier-and-async-lifecycle.md](../../todos/103-task-modifier-and-async-lifecycle.md)
         .task {
             print("fetching news")
             // print(await News.fetchNews())
@@ -85,7 +85,7 @@ struct ContentView: View {
     }
 
     func fetchNews() {
-        // TODO: [todos/task-modifier-and-async-lifecycle.md](../../todos/task-modifier-and-async-lifecycle.md)
+        // TODO: [todos/103-task-modifier-and-async-lifecycle.md](../../todos/103-task-modifier-and-async-lifecycle.md)
         Task {
             news =
                 await News.fetchNews()
@@ -98,7 +98,7 @@ struct ContentView: View {
     }
 }
 
-// TODO: [todos/uiviewrepresentable-and-uikit-bridge.md](../../todos/uiviewrepresentable-and-uikit-bridge.md)
+// TODO: [todos/087-uiviewrepresentable-and-uikit-bridge.md](../../todos/087-uiviewrepresentable-and-uikit-bridge.md)
 struct WebView: UIViewRepresentable {
     var url: URL
 
@@ -119,7 +119,7 @@ struct CardView: View {
 
     var body: some View {
         VStack {
-            // TODO: [todos/async-image.md](../../todos/async-image.md)
+            // TODO: [todos/121-async-image.md](../../todos/121-async-image.md)
             // FIXME: [Best Practice] 같은 강제 언래핑 문제. urlToImage 는 원래 옵셔널이었는데
             //        호출부에서 ?? "" 로 빈 문자열을 넘기고, 여기서 다시 ! 로 풀고 있다.
             // - 개선: imageURL 을 URL? 로 받아 AsyncImage(url:) 에 그대로 넘긴다.
@@ -157,7 +157,7 @@ struct CardView: View {
     }
 }
 
-// TODO: [todos/codable-and-codingkey.md](../../todos/codable-and-codingkey.md)
+// TODO: [todos/117-codable-and-codingkey.md](../../todos/117-codable-and-codingkey.md)
 // FIXME: [Best Practice] Codable 타입에 let id = UUID() 기본값을 넣었다.
 // - 문제: 디코딩할 때마다 새 id 가 생겨 "같은 기사"를 다시 받아도 다른 항목으로 취급된다.
 //         리스트가 통째로 다시 그려지고 스크롤 위치가 튄다. Equatable 을 붙이면 영원히 불일치한다.
@@ -168,8 +168,8 @@ struct News: Codable, Identifiable {
     let totalResults: Int
     let articles: [Article]
 
-    // TODO: [todos/enum-raw-values.md](../../todos/enum-raw-values.md)
-    // TODO: [todos/codable-and-codingkey.md](../../todos/codable-and-codingkey.md)
+    // TODO: [todos/011-enum-raw-values.md](../../todos/011-enum-raw-values.md)
+    // TODO: [todos/117-codable-and-codingkey.md](../../todos/117-codable-and-codingkey.md)
     enum CodingKeys: String, CodingKey {
         case status
         case totalResults
@@ -232,7 +232,7 @@ struct NetworkingManager {
     static let shared = NetworkingManager()
     private init() {}
 
-    // TODO: [todos/swift-generics.md](../../todos/swift-generics.md)
+    // TODO: [todos/030-swift-generics.md](../../todos/030-swift-generics.md)
     func request<T: Decodable>(
         // FIXME: [Best Practice] 엔드포인트를 String 으로 받아 매번 URL(string:) 으로 파싱한다.
         // - 문제: 쿼리 인코딩, 경로 조합, 키 주입을 호출부가 문자열 보간으로 직접 해야 한다.
@@ -244,10 +244,10 @@ struct NetworkingManager {
         parameters: [String: Any]? = nil,
         headers: [String: String]? = nil,
         responseType: T.Type,
-        // TODO: [todos/async-throws-and-custom-errors.md](../../todos/async-throws-and-custom-errors.md)
+        // TODO: [todos/102-async-throws-and-custom-errors.md](../../todos/102-async-throws-and-custom-errors.md)
     ) async throws -> T {
         guard let url = URL(string: endpoint) else {
-            // TODO: [todos/async-throws-and-custom-errors.md](../../todos/async-throws-and-custom-errors.md)
+            // TODO: [todos/102-async-throws-and-custom-errors.md](../../todos/102-async-throws-and-custom-errors.md)
             throw NetworkError.invalidURL
         }
         var request = URLRequest(url: url)
@@ -255,7 +255,7 @@ struct NetworkingManager {
         headers?.forEach({ key, value in
             request.setValue(value, forHTTPHeaderField: key)
         })
-        // TODO: [todos/if-conditions-and-optional-binding.md](../../todos/if-conditions-and-optional-binding.md)
+        // TODO: [todos/003-if-conditions-and-optional-binding.md](../../todos/003-if-conditions-and-optional-binding.md)
         if let parameters = parameters, method != .get {
             request.httpBody = try JSONSerialization.data(
                 withJSONObject: parameters,
@@ -267,7 +267,7 @@ struct NetworkingManager {
             )
         }
         let (data, response) = try await URLSession.shared.data(for: request)
-        // TODO: [todos/if-conditions-and-optional-binding.md](../../todos/if-conditions-and-optional-binding.md)
+        // TODO: [todos/003-if-conditions-and-optional-binding.md](../../todos/003-if-conditions-and-optional-binding.md)
         if let httpResponse = response as? HTTPURLResponse,
             !(200...299).contains(httpResponse.statusCode)
         {

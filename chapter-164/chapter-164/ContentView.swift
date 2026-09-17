@@ -37,18 +37,18 @@ struct ContentView: View {
     ContentView()
 }
 
-// TODO: [todos/animatable-macro.md](../../todos/animatable-macro.md)
+// TODO: [todos/099-animatable-macro.md](../../todos/099-animatable-macro.md)
 @Animatable
 @MainActor
 struct CircleShape: Shape {
     var radius: CGFloat
     var startAngle: Double
     var endAngle: Double
-    // TODO: [todos/animatable-macro.md](../../todos/animatable-macro.md)
+    // TODO: [todos/099-animatable-macro.md](../../todos/099-animatable-macro.md)
     @AnimatableIgnored
     var isClockWise: Bool // Boolean은 인터폴레이트 애니메이션 처리가 안된다.
 
-    // TODO: [todos/animatable-data-and-interpolation.md](../../todos/animatable-data-and-interpolation.md)
+    // TODO: [todos/098-animatable-data-and-interpolation.md](../../todos/098-animatable-data-and-interpolation.md)
     // var animatableData: CGFloat {
     //     get { radius }
     //     set { radius = newValue }
@@ -62,7 +62,7 @@ struct CircleShape: Shape {
     //     }
     // }
 
-    // TODO: [todos/nonisolated-keyword.md](../../todos/nonisolated-keyword.md)
+    // TODO: [todos/108-nonisolated-keyword.md](../../todos/108-nonisolated-keyword.md)
     nonisolated func path(in rect: CGRect) -> Path {
         Path { path in
             path.addArc(

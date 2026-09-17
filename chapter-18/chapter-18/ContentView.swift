@@ -32,7 +32,7 @@ struct PhotoGalleryApp: View {
                 } else {
                     ScrollView {
                         VStack {
-                            // TODO: [todos/foreach-id-and-identity-keypath.md](../../todos/foreach-id-and-identity-keypath.md)
+                            // TODO: [todos/053-foreach-id-and-identity-keypath.md](../../todos/053-foreach-id-and-identity-keypath.md)
                             ForEach(images, id: \.self) {
                                 image in
                                 Image(image)

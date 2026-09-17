@@ -9,7 +9,7 @@ import SwiftData
 import SwiftUI
 
 struct ContentView: View {
-    // TODO: [todos/swiftdata-preview-mock-container.md](../../todos/swiftdata-preview-mock-container.md)
+    // TODO: [todos/133-swiftdata-preview-mock-container.md](../../todos/133-swiftdata-preview-mock-container.md)
     @Environment(\.modelContext) var modelContext
     @Query var todos: [Todo]
     var body: some View {
@@ -35,6 +35,6 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        // TODO: [todos/swiftdata-preview-mock-container.md](../../todos/swiftdata-preview-mock-container.md)
+        // TODO: [todos/133-swiftdata-preview-mock-container.md](../../todos/133-swiftdata-preview-mock-container.md)
         .modelContainer(Todo.mock)
 }

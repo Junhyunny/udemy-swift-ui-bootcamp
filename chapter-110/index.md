@@ -1,6 +1,6 @@
 # Chapter 110. Core Data와 SwiftData 선택 기준
 
-이 문서는 두 persistence framework의 특징, 장단점, 사용 시점과 용량·성능 제약을 빠르게 판단하기 위한 요약이다. 기초 구조부터 migration까지 학습하려면 [Core Data와 SwiftData TODO](../todos/core-data-vs-swiftdata.md)를 보고, `Grocery` model의 class와 `final` 질문은 [SwiftData model TODO](../todos/swiftdata-model-class-and-final.md)를 본다.
+이 문서는 두 persistence framework의 특징, 장단점, 사용 시점과 용량·성능 제약을 빠르게 판단하기 위한 요약이다. 기초 구조부터 migration까지 학습하려면 [Core Data와 SwiftData TODO](../todos/125-core-data-vs-swiftdata.md)를 보고, `Grocery` model의 class와 `final` 질문은 [SwiftData model TODO](../todos/126-swiftdata-model-class-and-final.md)를 본다.
 
 ## 한 문장으로 구분
 
@@ -208,12 +208,12 @@ Core Data나 SwiftData를 쓴다고 서버 database를 대체하거나 여러 �
 
 ## 관련 학습 문서
 
-- [Core Data와 SwiftData — 구조, query, 관계, 동시성, migration](../todos/core-data-vs-swiftdata.md)
-- [SwiftData `@Model`은 왜 class이고 `final`은 필수인가](../todos/swiftdata-model-class-and-final.md)
-- [SwiftData `@Query` — 실행 시점, 조건·정렬과 query 디버깅](../todos/swiftdata-query-and-debugging.md)
-- [SwiftData container, context, configuration과 in-memory 저장소](../todos/swiftdata-container-context-and-configuration.md)
-- [SwiftData 저장 위치, 보안, 용량과 성능](../todos/swiftdata-storage-security-and-performance.md)
-- [SwiftData relationship과 연관 데이터 조회](../todos/swiftdata-relationships-and-fetching.md)
+- [Core Data와 SwiftData — 구조, query, 관계, 동시성, migration](../todos/125-core-data-vs-swiftdata.md)
+- [SwiftData `@Model`은 왜 class이고 `final`은 필수인가](../todos/126-swiftdata-model-class-and-final.md)
+- [SwiftData `@Query` — 실행 시점, 조건·정렬과 query 디버깅](../todos/128-swiftdata-query-and-debugging.md)
+- [SwiftData container, context, configuration과 in-memory 저장소](../todos/127-swiftdata-container-context-and-configuration.md)
+- [SwiftData 저장 위치, 보안, 용량과 성능](../todos/131-swiftdata-storage-security-and-performance.md)
+- [SwiftData relationship과 연관 데이터 조회](../todos/130-swiftdata-relationships-and-fetching.md)
 
 ## 공식 참고 자료
 

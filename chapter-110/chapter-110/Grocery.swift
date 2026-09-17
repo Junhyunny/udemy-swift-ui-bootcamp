@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-// TODO: [todos/swiftdata-model-class-and-final.md](../../todos/swiftdata-model-class-and-final.md)
+// TODO: [todos/126-swiftdata-model-class-and-final.md](../../todos/126-swiftdata-model-class-and-final.md)
 @Model
 final class Grocery {
     var name: String

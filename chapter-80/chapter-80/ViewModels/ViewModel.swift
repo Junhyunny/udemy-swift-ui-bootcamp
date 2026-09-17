@@ -22,7 +22,7 @@ import Observation
 @Observable
 final class ViewModel {
     var exchangeRate: ExchangeRate? = nil
-    // TODO: [todos/combine-cancellable-and-store.md](../../todos/combine-cancellable-and-store.md)
+    // TODO: [todos/112-combine-cancellable-and-store.md](../../../todos/112-combine-cancellable-and-store.md)
     private var cancellableSet: Set<AnyCancellable> = []
 
     // FIXME: [Best Practice] init 에서 곧바로 네트워크 호출을 시작한다.
@@ -36,23 +36,23 @@ final class ViewModel {
 
     func fetchRates() {
         ExchangeRateService.shared.getExchangeRate()
-            // TODO: [todos/combine-operators.md](../../todos/combine-operators.md)
+            // TODO: [todos/113-combine-operators.md](../../../todos/113-combine-operators.md)
             // FIXME: [Best Practice] 모든 에러를 빈 placeholder 로 바꿔 실패를 감춘다.
             // - 문제: 네트워크 실패, 인증 실패, 디코딩 실패가 전부 "빈 화면"으로 보인다.
             //         사용자도 개발자도 무엇이 잘못됐는지 알 수 없다.
             // - 개선: sink(receiveCompletion:receiveValue:) 로 실패를 받아 errorMessage 상태에 담고
             //         화면에 재시도 UI 를 노출한다.
             .replaceError(with: ExchangeRate.placeholder)
-            // TODO: [todos/weak-self-and-deinit.md](../../todos/weak-self-and-deinit.md)
+            // TODO: [todos/023-weak-self-and-deinit.md](../../../todos/023-weak-self-and-deinit.md)
             .sink { [weak self] in
                 print($0)
                 self?.exchangeRate = $0
             }
-            // TODO: [todos/combine-cancellable-and-store.md](../../todos/combine-cancellable-and-store.md)
+            // TODO: [todos/112-combine-cancellable-and-store.md](../../../todos/112-combine-cancellable-and-store.md)
             .store(in: &cancellableSet)
     }
 
-    // TODO: [todos/weak-self-and-deinit.md](../../todos/weak-self-and-deinit.md)
+    // TODO: [todos/023-weak-self-and-deinit.md](../../../todos/023-weak-self-and-deinit.md)
     deinit {
         cancellableSet.forEach { $0.cancel() }
     }
@@ -70,7 +70,7 @@ extension ViewModel {
         guard let country = Country.getCountryBy(currencyCode: currencyCode)
         else {
             return
-                // TODO: [todos/flag-emoji-from-unicode-scalars.md](../../todos/flag-emoji-from-unicode-scalars.md)
+                // TODO: [todos/138-flag-emoji-from-unicode-scalars.md](../../../todos/138-flag-emoji-from-unicode-scalars.md)
                 currencyCode
                 .dropLast()
                 .unicodeScalars
@@ -97,7 +97,7 @@ extension ViewModel {
     func formatRateForLocale(for key: String) -> String {
         guard let mainRates = exchangeRate?.rates else { return "" }
         let rate = mainRates[key] ?? 1.0
-        // TODO: [todos/computed-property-with-closure-body.md](../../todos/computed-property-with-closure-body.md)
+        // TODO: [todos/010-computed-property-with-closure-body.md](../../../todos/010-computed-property-with-closure-body.md)
         var formatter: NumberFormatter {
             let fm = NumberFormatter()
             fm.numberStyle = .currency

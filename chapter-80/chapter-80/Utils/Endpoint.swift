@@ -26,7 +26,7 @@ enum AppConfig {
 }
 
 enum Endpoint {
-    // TODO: [todos/backtick-reserved-keywords.md](../../todos/backtick-reserved-keywords.md)
+    // TODO: [todos/012-backtick-reserved-keywords.md](../../../todos/012-backtick-reserved-keywords.md)
     case `default`
     case withSymbols
 

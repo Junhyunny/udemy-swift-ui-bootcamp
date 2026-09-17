@@ -13,7 +13,7 @@ struct ContentView: View {
             .resizable()
             .scaledToFit()
             .padding()
-            // TODO: [todos/symbol-rendering-mode.md](../../todos/symbol-rendering-mode.md)
+            // TODO: [todos/057-symbol-rendering-mode.md](../../todos/057-symbol-rendering-mode.md)
             // .symbolRenderingMode(.multicolor)
             .symbolRenderingMode(.palette)
             .foregroundStyle(.indigo, .mint)

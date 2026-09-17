@@ -15,10 +15,10 @@ struct ContentView: View {
 }
 
 struct GeometryReaderExample1: View {
-    // TODO: [todos/closure-shorthand-argument-names.md](../../todos/closure-shorthand-argument-names.md)
+    // TODO: [todos/007-closure-shorthand-argument-names.md](../../todos/007-closure-shorthand-argument-names.md)
     let items = Array(1...20).map { "Item \($0)" }
     let columns = 3
-    // TODO: [todos/coregraphics-types-and-cgfloat.md](../../todos/coregraphics-types-and-cgfloat.md)
+    // TODO: [todos/061-coregraphics-types-and-cgfloat.md](../../todos/061-coregraphics-types-and-cgfloat.md)
     let spacing: CGFloat = 10
     
     var body: some View {

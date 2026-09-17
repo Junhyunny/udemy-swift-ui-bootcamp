@@ -23,7 +23,7 @@ struct CourseCardView: View {
                 Text(course.duration)
                 Circle()
                     .frame(width: 10, height: 10)
-                // TODO: [todos/enum-raw-values.md](../../todos/enum-raw-values.md)
+                // TODO: [todos/011-enum-raw-values.md](../../todos/011-enum-raw-values.md)
                 Text(course.category.rawValue)
                     .lineLimit(1)
                 Circle()

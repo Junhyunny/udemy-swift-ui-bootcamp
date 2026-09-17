@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-// TODO: [todos/identifiable-protocol.md](../../todos/identifiable-protocol.md)
-// TODO: [todos/swift-type-system-and-inheritance.md](../../todos/swift-type-system-and-inheritance.md)
+// TODO: [todos/025-identifiable-protocol.md](../../todos/025-identifiable-protocol.md)
+// TODO: [todos/020-swift-type-system-and-inheritance.md](../../todos/020-swift-type-system-and-inheritance.md)
 struct Courses: Identifiable {
     let id = UUID()
     var title: String
@@ -16,13 +16,13 @@ struct Courses: Identifiable {
 }
 
 struct ContentView: View {
-    // TODO: [todos/state-wrapper-type-and-binding.md](../../todos/state-wrapper-type-and-binding.md)
+    // TODO: [todos/043-state-wrapper-type-and-binding.md](../../todos/043-state-wrapper-type-and-binding.md)
     @State var courses = [
         Courses(title: "Mastering CoreImage", numberOfLessons: 15),
         Courses(title: "Mastering WidgetKit", numberOfLessons: 18)
     ]
     var body: some View {
-        // TODO: [todos/navigation-stack-and-title.md](../../todos/navigation-stack-and-title.md)
+        // TODO: [todos/072-navigation-stack-and-title.md](../../todos/072-navigation-stack-and-title.md)
         NavigationStack {
             List($courses, editActions: .delete) { $course in
                 HStack(alignment: .center) {
@@ -46,15 +46,15 @@ struct ContentView: View {
                             .font(.subheadline)
                     }
                 }
-                // TODO: [todos/argument-labels-and-indexset.md](../../todos/argument-labels-and-indexset.md)
+                // TODO: [todos/008-argument-labels-and-indexset.md](../../todos/008-argument-labels-and-indexset.md)
                 .onDelete(perform: delete(at:))
             }
             .navigationTitle("Junhyunny's Second Courses")
         }
     }
     
-    // TODO: [todos/argument-labels-and-indexset.md](../../todos/argument-labels-and-indexset.md)
-    // TODO: [todos/mutating-and-state-mutation.md](../../todos/mutating-and-state-mutation.md)
+    // TODO: [todos/008-argument-labels-and-indexset.md](../../todos/008-argument-labels-and-indexset.md)
+    // TODO: [todos/045-mutating-and-state-mutation.md](../../todos/045-mutating-and-state-mutation.md)
     func delete(at offsets: IndexSet) {
         print("deleting this offset: ", offsets)
         courses.remove(atOffsets: offsets)

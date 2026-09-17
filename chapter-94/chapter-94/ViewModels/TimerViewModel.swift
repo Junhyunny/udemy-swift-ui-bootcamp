@@ -10,8 +10,8 @@ import Foundation
 import SwiftUI
 import UserNotifications
 
-// TODO: [todos/state-wrapper-decision-guide.md](../../todos/state-wrapper-decision-guide.md)
-// TODO: [todos/user-notifications-framework.md](../../todos/user-notifications-framework.md)
+// TODO: [todos/049-state-wrapper-decision-guide.md](../../../todos/049-state-wrapper-decision-guide.md)
+// TODO: [todos/135-user-notifications-framework.md](../../../todos/135-user-notifications-framework.md)
 // FIXME: [Architecture] 한 ViewModel 이 서로 다른 4가지 책임을 모두 지고 있다.
 //   (1) 타이머 도메인 상태      : time, selectedTime
 //   (2) 레이아웃 수치          : timerViewOffset, timerHeightChange (UIScreen 값까지 직접 읽는다)
@@ -32,7 +32,7 @@ final class TimerViewModel: NSObject, UNUserNotificationCenterDelegate,
     @Published var time: Int = 0
     @Published var selectedTime: Int = 0
     @Published var buttonAnimation: Bool = false
-    // TODO: [todos/uiscreen-main-deprecated.md](../../todos/uiscreen-main-deprecated.md)
+    // TODO: [todos/070-uiscreen-main-deprecated.md](../../../todos/070-uiscreen-main-deprecated.md)
     // FIXME: [Best Practice] UIScreen.main 은 iOS 16 부터 deprecated 이고, 멀티윈도우/분할화면에서 틀린 값을 준다.
     // - 문제: ViewModel 이 화면 크기를 직접 아는 것 자체가 계층 위반이다.
     //         회전이나 Stage Manager 크기 변경에도 반응하지 못한다.
@@ -40,7 +40,7 @@ final class TimerViewModel: NSObject, UNUserNotificationCenterDelegate,
     //         오프셋을 "숨김/표시" 같은 의미 있는 상태(enum)로 모델링한다.
     @Published var timerViewOffset: CGFloat = UIScreen.main.bounds.height
     @Published var timerHeightChange: CGFloat = 0
-    // TODO: [todos/implicitly-unwrapped-optional.md](../../todos/implicitly-unwrapped-optional.md)
+    // TODO: [todos/005-implicitly-unwrapped-optional.md](../../../todos/005-implicitly-unwrapped-optional.md)
     // FIXME: [Best Practice] 암묵적 언래핑 옵셔널(Date!)은 nil 접근 시 크래시한다.
     // - 문제: resetView() 에서 실제로 nil 을 대입하는데도 타입은 "항상 값이 있다"고 선언한다.
     //         옵셔널의 안전장치를 스스로 꺼둔 셈이다.
@@ -87,7 +87,7 @@ final class TimerViewModel: NSObject, UNUserNotificationCenterDelegate,
         }
     }
     
-    // TODO: [todos/user-notifications-framework.md](../../todos/user-notifications-framework.md)
+    // TODO: [todos/135-user-notifications-framework.md](../../../todos/135-user-notifications-framework.md)
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification,
@@ -97,7 +97,7 @@ final class TimerViewModel: NSObject, UNUserNotificationCenterDelegate,
         completionHandler([.banner, .sound])
     }
 
-    // TODO: [todos/user-notifications-framework.md](../../todos/user-notifications-framework.md)
+    // TODO: [todos/135-user-notifications-framework.md](../../../todos/135-user-notifications-framework.md)
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         didReceive response: UNNotificationResponse,

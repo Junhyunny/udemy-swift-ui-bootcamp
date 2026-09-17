@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         ScrollView {
-            // TODO: [todos/lazy-stack-rendering.md](../../todos/lazy-stack-rendering.md)
+            // TODO: [todos/062-lazy-stack-rendering.md](../../todos/062-lazy-stack-rendering.md)
             LazyVStack(spacing: 10) {
                 ForEach(0..<200, id: \.self) { _ in
                     Text(

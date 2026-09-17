@@ -1,6 +1,6 @@
 # Chapter 109. SwiftData와 Core Data
 
-원래 메모의 사실 여부를 Apple 공식 문서와 WWDC 세션을 기준으로 다시 확인했다. 자세한 개념, 비교 예제, 선택 기준과 학습 자료는 [Core Data와 SwiftData 학습 TODO](../todos/core-data-vs-swiftdata.md)에 정리했다.
+원래 메모의 사실 여부를 Apple 공식 문서와 WWDC 세션을 기준으로 다시 확인했다. 자세한 개념, 비교 예제, 선택 기준과 학습 자료는 [Core Data와 SwiftData 학습 TODO](../todos/125-core-data-vs-swiftdata.md)에 정리했다.
 
 ## 원래 메모 검증
 

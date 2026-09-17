@@ -92,7 +92,7 @@ struct CustomLabelStyle: LabelStyle {
          typealias Configuration = LabelStyleConfiguration
      }
      */
-    // TODO: [todos/protocol-requirements-and-style-protocols.md](../../todos/protocol-requirements-and-style-protocols.md)
+    // TODO: [todos/036-protocol-requirements-and-style-protocols.md](../../todos/036-protocol-requirements-and-style-protocols.md)
     func makeBody(configuration: Configuration) -> some View {
         HStack(alignment: .center) {
             configuration.icon

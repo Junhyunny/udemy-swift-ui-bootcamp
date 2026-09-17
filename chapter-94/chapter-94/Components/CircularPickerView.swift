@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CircularPickerView: View {
-    // TODO: [todos/state-wrapper-decision-guide.md](../../todos/state-wrapper-decision-guide.md)
+    // TODO: [todos/049-state-wrapper-decision-guide.md](../../../todos/049-state-wrapper-decision-guide.md)
     @EnvironmentObject var timerVM: TimerViewModel
     // FIXME: [Architecture] 같은 값이 두 곳에 저장되어 진실의 출처가 둘이다.
     // - 현상: 선택값을 CircularPickerViewModel.selectedValue 에 저장하면서,

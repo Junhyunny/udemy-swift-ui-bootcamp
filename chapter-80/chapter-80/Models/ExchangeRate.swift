@@ -7,7 +7,7 @@
 
 import Foundation
 
-// TODO: [todos/optional-in-api-models.md](../../todos/optional-in-api-models.md)
+// TODO: [todos/118-optional-in-api-models.md](../../../todos/118-optional-in-api-models.md)
 // FIXME: [Best Practice] Equatable 인데 매번 새로 생성되는 UUID 를 프로퍼티로 갖고 있다.
 // - 문제: 내용이 완전히 같은 두 응답도 id 가 달라 항상 != 로 판정된다.
 //         Equatable 을 붙인 의미가 사라지고, 불필요한 View 갱신을 유발한다.
@@ -25,7 +25,7 @@ struct ExchangeRate: Codable, Identifiable, Equatable {
 
 extension ExchangeRate {
     static var placeholder: ExchangeRate {
-        // TODO: [todos/metatype-and-self.md](../../todos/metatype-and-self.md)
+        // TODO: [todos/035-metatype-and-self.md](../../../todos/035-metatype-and-self.md)
         Self(date: nil, rates: nil)
     }
 }

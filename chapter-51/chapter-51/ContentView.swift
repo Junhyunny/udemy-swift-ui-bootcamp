@@ -5,17 +5,17 @@
 //  Created by 강준현 on 9/8/26.
 //
 
-// TODO: [todos/observation-framework-and-observable.md](../../todos/observation-framework-and-observable.md)
+// TODO: [todos/050-observation-framework-and-observable.md](../../todos/050-observation-framework-and-observable.md)
 import Observation
 import SwiftUI
 
-// TODO: [todos/enum-hashable-conformance.md](../../todos/enum-hashable-conformance.md)
+// TODO: [todos/028-enum-hashable-conformance.md](../../todos/028-enum-hashable-conformance.md)
 enum Route: Hashable {
     case test
     case support
 }
 
-// TODO: [todos/observation-framework-and-observable.md](../../todos/observation-framework-and-observable.md)
+// TODO: [todos/050-observation-framework-and-observable.md](../../todos/050-observation-framework-and-observable.md)
 @Observable
 final class NavigationCoordinator {
     var path = NavigationPath()
@@ -132,8 +132,8 @@ struct DeepLinkExample1: View {
                 .onChange(of: text) { _, _ in
                     detectedURL = extractFirstURL(from: text)
                 }
-                // TODO: [todos/deep-link-and-url-scheme.md](../../todos/deep-link-and-url-scheme.md)
-                // TODO: [todos/url-scheme-resolution-and-conflicts.md](../../todos/url-scheme-resolution-and-conflicts.md)
+                // TODO: [todos/085-deep-link-and-url-scheme.md](../../todos/085-deep-link-and-url-scheme.md)
+                // TODO: [todos/086-url-scheme-resolution-and-conflicts.md](../../todos/086-url-scheme-resolution-and-conflicts.md)
                 .onOpenURL { url in
                     text += "\nOpened URL: \(url.absoluteString)"
                 }

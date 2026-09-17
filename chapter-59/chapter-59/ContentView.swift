@@ -19,7 +19,7 @@ struct NavigationLinkExample: View {
                 NavigationLink("second page") {
                     Text("Next View")
                 }
-                // TODO: [todos/navigation-link-two-styles-mixed.md](../../todos/navigation-link-two-styles-mixed.md)
+                // TODO: [todos/078-navigation-link-two-styles-mixed.md](../../todos/078-navigation-link-two-styles-mixed.md)
                 NavigationLink(value: "New Page") {
                     Text("third page")
                 }

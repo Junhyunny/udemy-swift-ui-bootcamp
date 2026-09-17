@@ -49,7 +49,7 @@ struct CardView: View {
             }
         }
         .clipShape(.rect(cornerRadius: 20))
-        // TODO: [todos/overlay-and-shape-fill.md](../../todos/overlay-and-shape-fill.md)
+        // TODO: [todos/060-overlay-and-shape-fill.md](../../todos/060-overlay-and-shape-fill.md)
         .overlay(
             content: {
                 RoundedRectangle(cornerRadius: 20)
@@ -69,9 +69,9 @@ struct DTCourse: Identifiable {
     var courseDetail: String
 }
 
-// TODO: [todos/extension-keyword.md](../../todos/extension-keyword.md)
+// TODO: [todos/014-extension-keyword.md](../../todos/014-extension-keyword.md)
 extension DTCourse {
-    // TODO: [todos/static-type-properties-and-implicit-init.md](../../todos/static-type-properties-and-implicit-init.md)
+    // TODO: [todos/015-static-type-properties-and-implicit-init.md](../../todos/015-static-type-properties-and-implicit-init.md)
     static var sample: [DTCourse] {
         [
             .init(

@@ -32,7 +32,7 @@ struct HomeView: View {
         withAnimation(Animation.easeInOut(duration: 0.65)) {
             viewModel.buttonAnimation.toggle()
         }
-        // TODO: [todos/animation-delay-scheduling.md](../../todos/animation-delay-scheduling.md)
+        // TODO: [todos/093-animation-delay-scheduling.md](../../todos/093-animation-delay-scheduling.md)
         withAnimation(Animation.easeIn.delay(0.6)) {
             viewModel.timerViewOffset = 0
         }
@@ -93,11 +93,11 @@ struct HomeView: View {
     // - 추가: View 가 UNUserNotificationCenter.delegate 를 직접 설정하는 것도 계층 위반이다.
     //         delegate 등록은 앱 시작 지점(App 또는 AppDelegate)에서 한 번만 한다.
     private func publishNotification() {
-        // TODO: [todos/user-notifications-framework.md](../../todos/user-notifications-framework.md)
+        // TODO: [todos/135-user-notifications-framework.md](../../todos/135-user-notifications-framework.md)
         UNUserNotificationCenter.current().requestAuthorization(options: [
             .alert, .sound, .badge,
         ]) { granted, error in }
-        // TODO: [todos/user-notifications-framework.md](../../todos/user-notifications-framework.md)
+        // TODO: [todos/135-user-notifications-framework.md](../../todos/135-user-notifications-framework.md)
         UNUserNotificationCenter.current().delegate = viewModel
 
     }
@@ -118,8 +118,8 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(.black.opacity(0.8))
                 .ignoresSafeArea()
-                // TODO: [todos/timer-publisher-and-onreceive.md](../../todos/timer-publisher-and-onreceive.md)
-                // TODO: [todos/timer-publisher-and-onreceive.md](../../todos/timer-publisher-and-onreceive.md)
+                // TODO: [todos/110-timer-publisher-and-onreceive.md](../../todos/110-timer-publisher-and-onreceive.md)
+                // TODO: [todos/110-timer-publisher-and-onreceive.md](../../todos/110-timer-publisher-and-onreceive.md)
                 // FIXME: [Best Practice] body 안에서 Timer publisher 를 직접 생성하고 있다.
                 // - 문제: body 가 재평가될 때마다 새 publisher 가 만들어져 구독이 갈아끼워지고,
                 //         기존 타이머는 정리 시점이 불분명해진다. 타이머는 화면이 필요 없을 때도 계속 돈다.

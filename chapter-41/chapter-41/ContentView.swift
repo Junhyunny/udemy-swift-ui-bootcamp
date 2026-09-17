@@ -18,11 +18,11 @@ struct ContentView: View {
                     Text("Junhyunny")
                 }
                 .offset(y: flag ? 400 : 0)
-            // TODO: [todos/animation-value-trigger.md](../../todos/animation-value-trigger.md)
+            // TODO: [todos/089-animation-value-trigger.md](../../todos/089-animation-value-trigger.md)
             // .animation(.easeInOut(duration: 2), value: flag)
             Spacer()
             Button("Toggle") {
-                // TODO: [todos/implicit-vs-explicit-animation.md](../../todos/implicit-vs-explicit-animation.md)
+                // TODO: [todos/090-implicit-vs-explicit-animation.md](../../todos/090-implicit-vs-explicit-animation.md)
                 withAnimation(
                     // .bouncy().repeatForever()
                     .bouncy().repeatCount(3, autoreverses: true)

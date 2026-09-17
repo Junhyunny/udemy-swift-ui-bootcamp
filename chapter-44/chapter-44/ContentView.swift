@@ -16,8 +16,8 @@ struct ContentView: View {
 
 struct GeometryReaderExample1: View {
     var body: some View {
-        // TODO: [todos/geometry-reader-use-cases.md](../../todos/geometry-reader-use-cases.md)
-        // TODO: [todos/coordinate-space-local-global-named.md](../../todos/coordinate-space-local-global-named.md)
+        // TODO: [todos/065-geometry-reader-use-cases.md](../../todos/065-geometry-reader-use-cases.md)
+        // TODO: [todos/066-coordinate-space-local-global-named.md](../../todos/066-coordinate-space-local-global-named.md)
          GeometryReader { geometry in
              VStack {
                  Text("Width: \(Int(geometry.size.width))")

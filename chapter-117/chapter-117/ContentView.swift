@@ -24,7 +24,7 @@ struct ContentView: View {
     }
 }
 
-// TODO: [todos/preview-modifier-and-shared-context.md](../../todos/preview-modifier-and-shared-context.md)
+// TODO: [todos/134-preview-modifier-and-shared-context.md](../../todos/134-preview-modifier-and-shared-context.md)
 #Preview(traits: .modifier(FriendModelPreviewModifier())) {
     ContentView()
 }

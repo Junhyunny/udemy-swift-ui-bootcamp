@@ -11,12 +11,12 @@ import SwiftUI
 struct ContentView: View {
 
     @Environment(\.modelContext) var modelContext
-    // TODO: [todos/swiftdata-query-and-debugging.md](../../todos/swiftdata-query-and-debugging.md)
-    // TODO: [todos/swiftdata-relationships-and-fetching.md](../../todos/swiftdata-relationships-and-fetching.md)
+    // TODO: [todos/128-swiftdata-query-and-debugging.md](../../todos/128-swiftdata-query-and-debugging.md)
+    // TODO: [todos/130-swiftdata-relationships-and-fetching.md](../../todos/130-swiftdata-relationships-and-fetching.md)
     @Query private var groceries: [Grocery]
 
     var body: some View {
-        // TODO: [todos/swiftdata-container-context-and-configuration.md](../../todos/swiftdata-container-context-and-configuration.md)
+        // TODO: [todos/127-swiftdata-container-context-and-configuration.md](../../todos/127-swiftdata-container-context-and-configuration.md)
         // Text(modelContext.container.configurations.debugDescription)
         CreateNewGroceryView()
         List(groceries) { grocery in

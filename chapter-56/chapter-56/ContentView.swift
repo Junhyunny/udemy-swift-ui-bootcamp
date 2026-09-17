@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    // TODO: [todos/image-resource-and-asset-symbols.md](../../todos/image-resource-and-asset-symbols.md)
+    // TODO: [todos/058-image-resource-and-asset-symbols.md](../../todos/058-image-resource-and-asset-symbols.md)
     let photoCollection: [ImageResource] = [
         .pic1, .pic2, .pic3, .pic4, .pic5, .pic6,
     ]
@@ -23,7 +23,7 @@ struct ContentView: View {
                     Image(imageResource)
                         .resizable()
                         .scaledToFill()
-                        // TODO: [todos/scaled-to-fill-and-clipped.md](../../todos/scaled-to-fill-and-clipped.md)
+                        // TODO: [todos/059-scaled-to-fill-and-clipped.md](../../todos/059-scaled-to-fill-and-clipped.md)
                         .clipped()
                         .ignoresSafeArea()
                 } animation: { _ in
