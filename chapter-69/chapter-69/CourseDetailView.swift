@@ -10,6 +10,14 @@ import SwiftUI
 struct CourseDetailView: View {
 
     var course: Course
+    // FIXME: [Architecture] 공유 상태를 화면 계층마다 손으로 넘겨주는 prop drilling 구조다.
+    // - 현상: CourseHome 이 만든 Cart 를 CourseDetailView, CartView, CheckoutView 까지
+    //         생성자 인자로 계속 전달한다. 중간 화면은 Cart 가 필요 없어도 통로 역할을 해야 한다.
+    // - 문제: 화면이 하나 늘 때마다 모든 중간 단계의 시그니처가 바뀐다.
+    //         게다가 여기서는 @ObservedObject 없이 받아서 변경 알림도 못 받는다.
+    // - 개선: 앱 전역에서 하나만 존재하는 상태이므로 .environmentObject(cart) 로 주입하고
+    //         필요한 화면만 @EnvironmentObject var cart: Cart 로 꺼내 쓴다.
+    //         iOS 17+ 라면 @Observable + .environment(cart) / @Environment(Cart.self) 조합을 쓴다.
     var cart: Cart
     // TODO: [todos/presentation-mode-vs-dismiss.md](../../todos/presentation-mode-vs-dismiss.md)
     @Environment(\.presentationMode) var presentationMode

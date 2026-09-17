@@ -36,6 +36,10 @@ struct CartView: View {
                         .contentShape(Rectangle())
                 }
                 // TODO: [todos/sheet-ondismiss-and-result.md](../../todos/sheet-ondismiss-and-result.md)
+                // FIXME: [Best Practice] onDismiss 에서 결제 성공 여부와 무관하게 장바구니를 비운다.
+                // - 문제: 사용자가 결제를 취소하고 시트를 내려도(스와이프 포함) 담아둔 강의가 전부 날아간다.
+                // - 개선: CheckoutView 가 결제 결과를 @Binding 이나 콜백으로 돌려주게 하고,
+                //         성공일 때만 cart.courses 를 비운다.
                 .sheet(isPresented: $isPresented) {
                     cart.courses = []
                 } content: {

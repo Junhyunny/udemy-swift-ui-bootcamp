@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct CheckoutView: View {
+    // FIXME: [Best Practice] presentationMode 는 iOS 15 부터 dismiss 로 대체되었다.
+    // - 개선: @Environment(\.dismiss) private var dismiss 로 바꾸고 dismiss() 를 호출한다.
+    //         (CourseDetailView.swift 에도 같은 패턴이 있다)
     @Environment(\.presentationMode) var presentationMode
     var cart: Cart
     let paymentTypes = ["Cash", "Card", "Paypal"]
@@ -27,6 +30,10 @@ struct CheckoutView: View {
                         }
                     }
                 }
+                // FIXME: [Best Practice] 합계 계산 로직(reduce)이 body 안에 두 번 중복되어 있다.
+                //        (여기와 아래 alert message)
+                // - 문제: 계산식이 갈라지면 화면에 보이는 금액과 안내 문구의 금액이 달라진다.
+                // - 개선: Cart 에 var totalPrice: Double { courses.reduce(0) { $0 + $1.price } } 를 두고 공유한다.
                 Section("Total") {
                     HStack {
                         Text("Total amount")
