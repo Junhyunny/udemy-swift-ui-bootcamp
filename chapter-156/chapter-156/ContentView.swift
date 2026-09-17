@@ -129,6 +129,10 @@ struct ReusableSegmentedControl<T: SegmentItem>:
 // TODO: [todos/where-clause-usages.md](../../todos/where-clause-usages.md)
 where T.RawValue == String {
     @Binding var selection: T
+    // FIXME: [Best Practice] as! 강제 캐스팅으로 AllCases 를 배열로 바꾸고 있다.
+    // - 문제: T.AllCases 가 Array<T> 가 아닌 타입(예: 커스텀 Collection)이면 런타임 크래시다.
+    //         제네릭 제약으로 이미 Element == T 가 보장되므로 캐스팅 자체가 불필요하다.
+    // - 개선: private let items: [T] = Array(T.allCases) 로 바꾼다.
     private let items: [T] = T.allCases as! [T]
     @Namespace private var animation
 
