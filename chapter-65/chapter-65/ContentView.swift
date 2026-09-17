@@ -13,6 +13,8 @@ struct ContentView: View {
     
     
     var body: some View {
+        // FIXME: [Best Practice] body 안에서 var 로 선언했지만 재대입이 없다(컴파일 경고).
+        // - 개선: let layout = ... 으로 바꾸거나, 아예 computed property 로 빼서 body 를 가볍게 한다.
         var layout = systemNotification.orientation == .portrait ? AnyLayout(VStackLayout()) : AnyLayout(HStackLayout())
         NavigationStack {
             layout {
@@ -136,6 +138,13 @@ final class SystemNotificationExample {
     }
 }
 
+// FIXME: [Best Practice] 내가 소유하지 않은 타입에 @unchecked Sendable 을 붙이는 소급 적합성(retroactive conformance).
+// - 문제: 컴파일러 경고를 끄는 것일 뿐 실제 스레드 안전성은 아무것도 보장하지 않는다.
+//         애플이 나중에 같은 conformance 를 추가하면 중복 선언으로 빌드가 깨지고,
+//         다른 모듈이 같은 선언을 하면 충돌한다.
+// - 개선: 이 줄을 지우고, NotificationCenter 를 actor 경계 밖으로 넘기지 않도록 설계한다.
+//         필요하면 for await 루프를 도는 메서드 자체를 @MainActor 로 고정하고
+//         center 는 그 안에서 지역 변수로 얻는다.
 extension NotificationCenter: @unchecked Sendable {}
 
 #Preview {
