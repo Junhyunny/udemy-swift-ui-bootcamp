@@ -22,6 +22,10 @@ struct StarRatingView: View {
                 animatedRating = rating
             }
         }
+        // FIXME: [Best Practice] newRating 을 받아놓고 클로저 안에서는 rating 을 다시 읽는다.
+        // - 문제: 지금은 값이 같아 동작하지만, onChange 의 계약(새 값은 파라미터로 받는다)을 어긴다.
+        //         읽지 않는 파라미터가 남아 의도가 모호해진다.
+        // - 개선: animatedRating = newRating 으로 파라미터를 사용한다.
         .onChange(of: rating) { _, newRating in
             withAnimation(.easeInOut(duration: 0.6)) {
                 animatedRating = rating
