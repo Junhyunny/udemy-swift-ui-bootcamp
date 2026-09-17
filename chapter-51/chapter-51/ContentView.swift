@@ -89,6 +89,12 @@ struct ContentView: View {
                 }
             }
         }
+        // FIXME: [Best Practice] 하나의 딥링크를 두 곳에서 따로 해석한다.
+        // - 문제: onOpenURL 에서 coordinator.handleDeepLinkURL(url) 로 한 번,
+        //         여기 onChange 에서 handleURL(newValue) 로 또 한 번 scheme/host 를 분기한다.
+        //         라우팅 규칙이 늘어나면 두 곳이 반드시 어긋난다.
+        // - 개선: 파싱과 라우팅을 NavigationCoordinator 한 곳으로 모으고,
+        //         화면은 coordinator 가 노출하는 상태만 읽는다.
         .onChange(of: latestURL) { _, newValue in
             handleURL(newValue)
         }
