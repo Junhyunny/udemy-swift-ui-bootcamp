@@ -12,6 +12,11 @@ struct ContentView: View {
     @State private var triggerAnimation = false
     @State private var selected: Int? = 0
     var body: some View {
+        // FIXME: [Best Practice] NavigationView 는 iOS 16 에서 deprecated 되었다.
+        // - 개선: NavigationStack(path:) + navigationDestination(for:) 으로 옮긴다.
+        //         아래의 NavigationLink(_:destination:isActive:) 와
+        //         NavigationLink(_:destination:tag:selection:) 도 같은 시점에 deprecated 되었으며,
+        //         상태 기반 이동은 path 배열에 값을 append/remove 하는 방식으로 대체한다.
         NavigationView {
             VStack {
                 Text("Hello World")
