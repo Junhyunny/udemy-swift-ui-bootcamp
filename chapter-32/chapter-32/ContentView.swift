@@ -63,6 +63,12 @@ struct TodoListApp: View {
             List {
                 // TODO: [todos/hashable-id-and-collisions.md](../../todos/hashable-id-and-collisions.md)
                 // TODO: [todos/binding-in-foreach.md](../../todos/binding-in-foreach.md)
+                // FIXME: [Best Practice] Identifiable 을 이미 채택했는데 id: \.self 로 덮어쓰고 있다.
+                // - 문제: Todo 의 Hashable 합성 해시에 completed 가 포함되므로 체크박스를 토글하는 순간
+                //         "같은 행"의 식별자가 바뀐다. SwiftUI 는 삭제 후 재삽입으로 보고 애니메이션이
+                //         튀거나 포커스/스크롤 상태가 초기화된다.
+                // - 개선: ForEach($todos) { $todo in ... } 처럼 id 인자를 빼고 Identifiable 의 id(UUID)를 쓴다.
+                //         식별에 쓰일 값은 변하지 않아야 한다는 것이 핵심이다.
                 ForEach($todos, id: \.self) { $todo in
                     HStack {
                         CheckBox(isChecked: $todo.completed)
