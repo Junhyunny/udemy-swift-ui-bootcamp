@@ -40,6 +40,10 @@ struct OnboardingView: View {
     private var headerView: some View {
         HStack {
             Spacer()
+            // FIXME: [Best Practice] Skip 은 dismiss() 만 호출하고 onComplete 를 부르지 않는다.
+            // - 문제: 호출부(ContentView)가 "온보딩을 다시 보여주지 않음"을 기록하는 지점이 onComplete 인데,
+            //         Skip 경로만 그 기록을 건너뛴다. 앱을 다시 켜면 온보딩이 또 뜬다.
+            // - 개선: 완료 처리(viewModel.completeOnboarding)를 거쳐 한 경로로 모은다.
             Button("Skip") {
                 dismiss()
             }
