@@ -19,6 +19,10 @@ struct ContentView: View {
                 label: "wrong protocol"
             )
             ExternalLink(
+                // FIXME: [Best Practice] 스킴이 빠진 잘못된 URL 문자열을 강제 언래핑하고 있다.
+                // - 문제: "httpsgoogle.com" 은 스킴이 없어 상대 URL 로 만들어지고, Link 로 열리지 않는다.
+                //         문자열이 조금만 더 망가지면 URL(string:) 이 nil 을 돌려주고 즉시 크래시한다.
+                // - 개선: "https://google.com" 으로 고치고, if let / guard let 으로 옵셔널을 안전하게 푼다.
                 url: URL(string: "httpsgoogle.com")!,
                 label: "wrong url"
             )
