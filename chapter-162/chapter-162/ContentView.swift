@@ -30,6 +30,11 @@ struct ContentView: View {
                         .glassEffect(.clear)
                         .glassEffectID("pencil", in: namespace)
 
+                        // FIXME: [Best Practice] 위 pencil.tip 과 아래 widget / person 까지 3개 뷰가
+                        //        모두 glassEffectID("pencil") 로 같은 ID 를 공유한다.
+                        // - 문제: matchedGeometry 계열 ID 는 네임스페이스 안에서 고유해야 한다. 중복되면
+                        //         어떤 뷰가 전환의 주인인지 모호해져 모핑 애니메이션이 튀거나 사라진다.
+                        // - 개선: "pencil", "widget", "person" 처럼 뷰마다 다른 ID 를 준다.
                         Image(systemName: "widget.small.badge.plus")
                             .frame(width: 80, height: 80)
                             .font(.system(size: 36))
