@@ -10,6 +10,15 @@ import SwiftUI
 struct CircularPickerView: View {
     // TODO: [todos/state-wrapper-decision-guide.md](../../todos/state-wrapper-decision-guide.md)
     @EnvironmentObject var timerVM: TimerViewModel
+    // FIXME: [Architecture] 같은 값이 두 곳에 저장되어 진실의 출처가 둘이다.
+    // - 현상: 선택값을 CircularPickerViewModel.selectedValue 에 저장하면서,
+    //         동시에 드래그 제스처에서 timerVM.time 과 timerVM.selectedTime 에도 써 넣는다.
+    //         (selected * 5 라는 변환 규칙까지 View 의 제스처 안에 있다)
+    // - 문제: 두 상태가 어긋날 수 있고, 어느 쪽이 정답인지 코드만 봐서는 알 수 없다.
+    //         TimerViewModel.resetView() 가 time 을 0 으로 되돌려도 피커의 selectedValue 는 그대로다.
+    // - 개선: 재사용 컴포넌트는 상태를 소유하지 말고 @Binding var selection: Int 로 받는다.
+    //         소유는 상위(TimerViewModel)가 하고, '5분 단위' 같은 도메인 변환도 그쪽으로 옮긴다.
+    //         그러면 CircularPickerViewModel 자체가 필요 없어지고 컴포넌트는 순수 표현이 된다.
     @StateObject private var viewModel = CircularPickerViewModel()
     private let radius: CGFloat = 150
     private let centerPoint = CGPoint(x: 150, y: 150)
