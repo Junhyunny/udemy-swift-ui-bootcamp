@@ -39,6 +39,10 @@ struct MeasuringSizeModifier: ViewModifier {
 // TODO: [todos/extension-keyword.md](../../todos/extension-keyword.md)
 extension View {
     // TODO: [todos/closures-and-view-builders.md](../../todos/closures-and-view-builders.md)
+    // FIXME: [Best Practice] 공개 API 이름에 오타가 있다(measureSzie -> measureSize).
+    // - 이유: 한 번 노출된 modifier 이름은 호출부 전체에 퍼지므로 오타는 계속 복사된다.
+    // - 개선: 이름을 measureSize 로 고치고 호출부도 함께 정리한다.
+    //         iOS 17+ 라면 PreferenceKey 조합 대신 .onGeometryChange(for:of:action:) 가 더 간단하다.
     func measureSzie(perform action: @escaping (CGSize) -> Void) -> some View {
         // TODO: [todos/view-modifier-protocol.md](../../todos/view-modifier-protocol.md)
         modifier(MeasuringSizeModifier())
