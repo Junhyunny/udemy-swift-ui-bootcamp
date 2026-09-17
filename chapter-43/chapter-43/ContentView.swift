@@ -54,6 +54,13 @@ struct ContentView: View {
         }
     }
 
+    // FIXME: [Best Practice] onAppear 마다 눈송이 50개를 더 붙이고 타이머도 새로 만든다.
+    // - 문제1: 화면을 다시 들어올 때마다 snowflakes 가 50개씩 누적되고, 기존 timer 를
+    //          invalidate 하지 않은 채 새 타이머를 대입해 이전 타이머가 좀비로 남는다.
+    // - 문제2: 0.016초마다 @State 배열 전체를 갱신하면 매 프레임 View 트리가 무효화된다.
+    //          애니메이션 루프는 Timer 가 아니라 TimelineView(.animation) 안에서
+    //          Canvas 가 경과 시간으로 위치를 계산하게 하는 것이 SwiftUI 방식이다.
+    // - 개선: snowflakes 가 비었을 때만 생성하고, 타이머 대신 TimelineView 를 사용한다.
     func startSnowfall() {
         for _ in 0..<50 {
             snowflakes.append(
