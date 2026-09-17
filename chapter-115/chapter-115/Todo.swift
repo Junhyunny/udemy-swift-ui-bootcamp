@@ -25,6 +25,10 @@ extension Todo {
 
     @MainActor
     static var mock: ModelContainer {
+        // FIXME: [Best Practice] try! 는 실패 시 무조건 크래시다.
+        // - 참고: Preview 전용 코드라 실무 영향은 작지만, 같은 패턴이 앱 본체로 복사되기 쉽다.
+        // - 개선: do/catch 로 감싸고 실패 시 fatalError("...구체적 원인: \(error)") 처럼
+        //         원인을 남기거나, Preview 라면 빈 컨테이너로 폴백한다.
         let container = try! ModelContainer(
             for: Todo.self,
             // TODO: [todos/swiftdata-container-context-and-configuration.md](../../todos/swiftdata-container-context-and-configuration.md)
