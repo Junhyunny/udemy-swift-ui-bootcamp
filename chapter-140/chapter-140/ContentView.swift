@@ -9,6 +9,14 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var viewModel = PianoViewModel()
+    // FIXME: [Architecture] 눌린 건반 상태가 View 와 ViewModel 양쪽에 나뉘어 있다.
+    // - 현상: ViewModel 은 activeNotes(Set)를, View 는 currentDragNote 를 각각 관리하고
+    //         handleDrag/releaseCurrentNote 가 둘을 수동으로 동기화한다.
+    // - 문제: 두 상태가 어긋나면 화면상 눌린 건반과 실제로 울리는 소리가 달라진다.
+    //         동기화 코드가 곧 버그 가능 지점이다.
+    // - 개선: '현재 드래그 중인 음' 도 ViewModel 이 소유하게 하고
+    //         View 는 viewModel.dragMoved(to:) / dragEnded() 만 알린다.
+    //         좌표 -> 건반 판정(KeyboardMetrics)은 화면 지오메트리라 View 에 남겨도 좋다.
     @State private var currentDragNote: PianoNote?
 
     var body: some View {
