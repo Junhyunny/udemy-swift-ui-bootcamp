@@ -7,6 +7,15 @@
 
 import Foundation
 
+// FIXME: [Architecture] 모델이 데이터 소스 역할까지 겸하고 있다.
+// - 현상: Country 는 값 타입 모델인데, 확장에서 30개 고정 목록(sample)과
+//         조회 API(getCountryBy(name:/code:/currencyCode:))까지 제공한다.
+//         사실상 '저장소(Repository)'가 모델 안에 숨어 있는 구조다.
+// - 문제: 국가 목록을 나중에 서버/번들 JSON 에서 받아오게 바꾸려면 모델 정의를 고쳐야 한다.
+//         정적 메서드라 호출부가 이 구현에 컴파일 타임으로 묶여 테스트 대역도 넣을 수 없다.
+// - 개선: protocol CountryRepository { func country(forCurrency: String) -> Country? } 를 두고
+//         InMemoryCountryRepository 가 이 목록을 갖게 한다. ViewModel 은 저장소를 주입받는다.
+//         모델(Country)은 필드 정의만 남긴다.
 struct Country {
     let countryName: String
     let countryCode: String
@@ -201,6 +210,11 @@ extension Country {
     }
 
     // TODO: [todos/swift-function-overloading.md](../../todos/swift-function-overloading.md)
+    // FIXME: [Best Practice] 조회할 때마다 30개 배열을 새로 만들고(sample 이 계산 프로퍼티) 전체를 훑는다.
+    // - 문제: filter 는 조건을 만족하는 모든 원소를 다 모은 뒤 first 를 꺼내므로 조기 종료도 못 한다.
+    //         이 함수들은 List 의 모든 행에서 호출된다.
+    // - 개선: sample 을 static let 으로 바꾸고, 조회는 first(where:) 로,
+    //         반복 조회가 필요하면 static let byCurrencyCode: [String: Country] 딕셔너리를 만들어 O(1) 로 만든다.
     static func getCountryBy(name: String) -> Country? {
         sample.filter { country in
             country.countryName.lowercased() == name.lowercased()
