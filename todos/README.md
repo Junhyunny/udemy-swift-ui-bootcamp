@@ -154,6 +154,20 @@ SwiftUI의 제네릭 뷰, 식별자, 프로토콜 기반 API를 읽기 위한 �
 - [ ] [Combine 연산자 — `replaceError`, `receive(on:)`, `map`, `decode`](./113-combine-operators.md)
 - [ ] [액터 격리 — 격리 도메인, 전역 액터, `isolated` 파라미터](./139-actor-isolation-domains.md)
 
+### Swift Concurrency 집중 과정
+
+위 문서들이 개별 주제를 다룬다면, 아래 9개는 **하나의 실행 모델로 묶어 순서대로** 학습하는 과정이다. 로드맵부터 읽는다.
+
+- [ ] [Swift Concurrency 학습 로드맵 — 전체 지도와 순서](./142-swift-concurrency-roadmap.md)
+- [ ] [1단계 — 동기 vs 비동기, 중단(suspension)](./143-sync-vs-async-and-suspension.md)
+- [ ] [2단계 — `async` / `await` / `try await`](./144-async-await-basics.md)
+- [ ] [3단계 — `Task`와 취소](./145-task-basics-and-cancellation.md)
+- [ ] [4단계 — 구조적 동시성: `async let`과 `TaskGroup`](./146-structured-concurrency.md)
+- [ ] [5단계 — `actor`와 재진입](./147-actor-and-reentrancy.md)
+- [ ] [6단계 — `@MainActor`와 전역 액터](./148-main-actor-and-global-actors.md)
+- [ ] [7단계 — `Sendable`과 Swift 6 엄격 검사](./149-sendable-and-strict-concurrency.md)
+- [ ] [8단계 — SwiftUI와 연결하기](./150-swiftui-concurrency-integration.md)
+
 ## 8. 네트워크와 외부 데이터
 
 서버 데이터를 모델링하고 안전하게 요청하는 흐름을 익힌 뒤 테스트 가능한 구조까지 연결한다.
