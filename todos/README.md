@@ -106,6 +106,7 @@ SwiftUI의 제네릭 뷰, 식별자, 프로토콜 기반 API를 읽기 위한 �
 - [ ] [`NavigationLink`의 `value`와 `navigationDestination`의 `String.self`](./076-navigation-link-value-and-destination.md)
 - [ ] [deprecated된 `NavigationLink` 이니셜라이저와 최신 대안](./077-deprecated-navigation-link-initializers.md)
 - [ ] [`NavigationLink` 두 방식의 공존과 혼용](./078-navigation-link-two-styles-mixed.md)
+- [ ] [값 기반 네비게이션의 장단점 — 그리고 라우팅 값 설계](./140-value-based-navigation-tradeoffs.md)
 - [ ] [`presentationMode`와 `dismiss`의 차이](./079-presentation-mode-vs-dismiss.md)
 - [ ] [`sheet`의 `onDismiss`와 결과 전달](./080-sheet-ondismiss-and-result.md)
 - [ ] [`scrollPosition(id:)` — 무엇이 `currentIndex`를 바꾸고 있는가](./081-scroll-position-binding.md)
@@ -150,6 +151,7 @@ SwiftUI의 제네릭 뷰, 식별자, 프로토콜 기반 API를 읽기 위한 �
 - [ ] [Combine 프레임워크](./111-combine.md)
 - [ ] [`AnyCancellable`, `sink`, `store(in:)` — 구독의 수명 관리](./112-combine-cancellable-and-store.md)
 - [ ] [Combine 연산자 — `replaceError`, `receive(on:)`, `map`, `decode`](./113-combine-operators.md)
+- [ ] [액터 격리 — 격리 도메인, 전역 액터, `isolated` 파라미터](./139-actor-isolation-domains.md)
 
 ## 8. 네트워크와 외부 데이터
 
