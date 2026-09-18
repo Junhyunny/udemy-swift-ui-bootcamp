@@ -34,6 +34,9 @@ Swift Concurrency
     ├─ .task { } / .task(id:)
     ├─ @MainActor + @Observable
     └─ UI 갱신 흐름
+
+  (부록) 런타임 아키텍처 ────────────── 151
+    Task → Job → Executor → 협력 스레드 풀
 ```
 
 ## 학습 순서와 문서
@@ -48,6 +51,7 @@ Swift Concurrency
 | 6 | `@MainActor`와 전역 액터 | [148](./148-main-actor-and-global-actors.md) | [106](./106-main-actor-and-ios-threading.md), [108](./108-nonisolated-keyword.md), [139](./139-actor-isolation-domains.md) |
 | 7 | `Sendable`과 엄격 검사 | [149](./149-sendable-and-strict-concurrency.md) | — |
 | 8 | SwiftUI와 연결 | [150](./150-swiftui-concurrency-integration.md) | [103](./103-task-modifier-and-async-lifecycle.md), [050](./050-observation-framework-and-observable.md) |
+| 부록 | 런타임 아키텍처 | [151](./151-concurrency-runtime-architecture.md) | [101](./101-swift-async-await-model.md) |
 
 **5~7단계가 Swift 6에서 특히 중요해졌다.** 예전에는 경고도 없던 코드가 엄격 검사에서 다음 세 가지 에러를 만든다. 셋 다 149에서 읽는 법을 다룬다.
 
@@ -68,6 +72,8 @@ value of optional type ... (이건 옵셔널 — 141 참조)
 | `Task { }` 안의 액터 컨텍스트는 어떻게 정해지나 | [145](./145-task-basics-and-cancellation.md), [148](./148-main-actor-and-global-actors.md) |
 | `@MainActor`는 왜 붙이는가 | [148](./148-main-actor-and-global-actors.md) |
 | async 코드는 어떻게 테스트하나 | [146](./146-structured-concurrency.md), [123](./123-dependency-injection-for-testing.md) |
+| JavaScript 이벤트 루프 같은 구조가 있나 | [151](./151-concurrency-runtime-architecture.md) |
+| 스레드는 실제로 몇 개나 쓰이나 | [151](./151-concurrency-runtime-architecture.md) |
 | Combine과는 어떤 관계인가 | [114](./114-combine-vs-async-await.md) |
 | `Timer`·`NotificationCenter`를 async로 받으려면 | [105](./105-for-await-async-sequence.md), [110](./110-timer-publisher-and-onreceive.md) |
 
@@ -94,6 +100,7 @@ value of optional type ... (이건 옵셔널 — 141 참조)
 - [ ] 6단계 — [`@MainActor`와 전역 액터](./148-main-actor-and-global-actors.md)
 - [ ] 7단계 — [`Sendable`과 엄격 검사](./149-sendable-and-strict-concurrency.md)
 - [ ] 8단계 — [SwiftUI와 연결](./150-swiftui-concurrency-integration.md)
+- [ ] 부록 — [런타임 아키텍처](./151-concurrency-runtime-architecture.md) (1단계 직후에 읽어도 좋다)
 - [ ] 마무리 — 작은 예제 앱 하나에 1~8단계를 전부 연결해 본다
 
 ## 공식 참고 자료
