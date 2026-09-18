@@ -439,12 +439,12 @@ Task.detached(priority: .background) { ... }
 
 ## 공식 참고 자료
 
-- [Apple: view.task(priority:_:)](https://developer.apple.com/documentation/swiftui/view/task(priority:_:))
-- [Apple: view.task(id:priority:_:)](https://developer.apple.com/documentation/swiftui/view/task(id:priority:_:))
+- [Apple: view.task(priority:_:)](https://developer.apple.com/documentation/swiftui/view/task(id:name:executorpreference:priority:file:line:_:))
+- [Apple: view.task(id:priority:_:)](https://developer.apple.com/documentation/swiftui/view/task(id:name:executorpreference:priority:file:line:_:))
 - [Apple: view.onAppear(perform:)](https://developer.apple.com/documentation/swiftui/view/onappear(perform:))
 - [Apple: view.onDisappear(perform:)](https://developer.apple.com/documentation/swiftui/view/ondisappear(perform:))
 - [Apple: Task](https://developer.apple.com/documentation/swift/task)
-- [Apple: Task.detached(priority:operation:)](https://developer.apple.com/documentation/swift/task/detached(priority:operation:))
+- [Apple: Task.detached(priority:operation:)](https://developer.apple.com/documentation/swift/task/detached(name:priority:operation:)-795w1)
 - [Apple: Task.cancel()](https://developer.apple.com/documentation/swift/task/cancel())
 - [Apple: view.refreshable(action:)](https://developer.apple.com/documentation/swiftui/view/refreshable(action:))
 - [Apple: TaskPriority](https://developer.apple.com/documentation/swift/taskpriority)
