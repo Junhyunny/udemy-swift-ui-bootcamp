@@ -168,6 +168,7 @@ SwiftUI의 제네릭 뷰, 식별자, 프로토콜 기반 API를 읽기 위한 �
 - [ ] [7단계 — `Sendable`과 Swift 6 엄격 검사](./149-sendable-and-strict-concurrency.md)
 - [ ] [8단계 — SwiftUI와 연결하기](./150-swiftui-concurrency-integration.md)
 - [ ] [부록 — 동시성 런타임 아키텍처 (JavaScript 이벤트 루프와 비교)](./151-concurrency-runtime-architecture.md)
+- [ ] [부록 — 컴파일러가 `async` 함수를 무엇으로 바꾸는가](./152-async-function-compilation-model.md)
 
 ## 8. 네트워크와 외부 데이터
 

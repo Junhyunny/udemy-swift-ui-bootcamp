@@ -37,6 +37,8 @@ Swift Concurrency
 
   (부록) 런타임 아키텍처 ────────────── 151
     Task → Job → Executor → 협력 스레드 풀
+  (부록) 컴파일 모델 ───────────────── 152
+    async 함수 → 코루틴 분할 → 힙 프레임
 ```
 
 ## 학습 순서와 문서
@@ -52,6 +54,7 @@ Swift Concurrency
 | 7 | `Sendable`과 엄격 검사 | [149](./149-sendable-and-strict-concurrency.md) | — |
 | 8 | SwiftUI와 연결 | [150](./150-swiftui-concurrency-integration.md) | [103](./103-task-modifier-and-async-lifecycle.md), [050](./050-observation-framework-and-observable.md) |
 | 부록 | 런타임 아키텍처 | [151](./151-concurrency-runtime-architecture.md) | [101](./101-swift-async-await-model.md) |
+| 부록 | 컴파일 모델 | [152](./152-async-function-compilation-model.md) | [143](./143-sync-vs-async-and-suspension.md) |
 
 **5~7단계가 Swift 6에서 특히 중요해졌다.** 예전에는 경고도 없던 코드가 엄격 검사에서 다음 세 가지 에러를 만든다. 셋 다 149에서 읽는 법을 다룬다.
 
@@ -74,6 +77,7 @@ value of optional type ... (이건 옵셔널 — 141 참조)
 | async 코드는 어떻게 테스트하나 | [146](./146-structured-concurrency.md), [123](./123-dependency-injection-for-testing.md) |
 | JavaScript 이벤트 루프 같은 구조가 있나 | [151](./151-concurrency-runtime-architecture.md) |
 | 스레드는 실제로 몇 개나 쓰이나 | [151](./151-concurrency-runtime-architecture.md) |
+| `async` 함수는 어떤 코드로 컴파일되나 | [152](./152-async-function-compilation-model.md) |
 | Combine과는 어떤 관계인가 | [114](./114-combine-vs-async-await.md) |
 | `Timer`·`NotificationCenter`를 async로 받으려면 | [105](./105-for-await-async-sequence.md), [110](./110-timer-publisher-and-onreceive.md) |
 
@@ -101,6 +105,7 @@ value of optional type ... (이건 옵셔널 — 141 참조)
 - [ ] 7단계 — [`Sendable`과 엄격 검사](./149-sendable-and-strict-concurrency.md)
 - [ ] 8단계 — [SwiftUI와 연결](./150-swiftui-concurrency-integration.md)
 - [ ] 부록 — [런타임 아키텍처](./151-concurrency-runtime-architecture.md) (1단계 직후에 읽어도 좋다)
+- [ ] 부록 — [컴파일 모델](./152-async-function-compilation-model.md) (151 을 읽은 뒤)
 - [ ] 마무리 — 작은 예제 앱 하나에 1~8단계를 전부 연결해 본다
 
 ## 공식 참고 자료
