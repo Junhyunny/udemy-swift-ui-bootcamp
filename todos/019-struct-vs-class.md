@@ -12,11 +12,11 @@
 - class만 상속, type casting, `deinit`, reference counting을 지원한다.
 - SwiftUI의 `View`는 protocol이며 custom View는 보통 가벼운 값 타입인 struct로 선언한다. View 값은 UI의 영구 객체라기보다 현재 UI 구성을 표현한다.
 - Combine의 `ObservableObject`는 `AnyObject`를 상속하는 class 전용 protocol이다. 공유되는 하나의 상태와 identity를 여러 View가 관찰하는 용도에 참조 타입이 맞는다.
+- 값 동등성(`==`)과 인스턴스 identity(`===`)의 구분은 블로그 글 「스위프트(Swift) Equatable 프로토콜」로 정리를 마쳤다.
 
 ## 학습 체크리스트
 
 - [ ] value semantics와 reference semantics를 예제로 비교한다.
-- [ ] class 인스턴스의 identity 비교 연산자 `===`를 실습한다.
 - [ ] View struct가 다시 만들어져도 `@State` 값이 보존되는 이유를 확인한다.
 - [ ] “View는 항상 struct여야 한다”와 “`ObservableObject`는 class여야 한다”의 정확성 차이를 설명한다.
 

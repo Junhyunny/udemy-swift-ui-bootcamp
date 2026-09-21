@@ -6,12 +6,14 @@
 
 정리를 마쳐 블로그 글로 옮긴 주제는 이 목록에서 뺀다. 아래 주제는 더 이상 TODO로 남기지 않는다.
 
-| 정리한 주제 | 결과물 |
-| --- | --- |
-| 기본 타입, 정수 overflow와 `&+`, 부동소수점 오차와 `NaN`, `String`/`Character`/`String.Index`, `Substring`, 타입 추론 | 블로그 — 스위프트 원시 타입(Swift Primitive Types) |
-| `Equatable` — `==` 요구사항, 자동 합성, 값 동등성과 `===` | 블로그 — 스위프트(Swift) Equatable 프로토콜 |
-| `Comparable` — `<` 요구사항, 전체 순서 규칙, struct·class·enum 채택, `sorted()`/`min()`/`max()`, `Double.nan` | 블로그 — 스위프트(Swift) Comparable 프로토콜 |
-| `actor`, 재진입, `@MainActor`, 전역 액터, 격리 도메인, `nonisolated` | [Swift 액터 완전 정복](./153-swift-actor-complete-guide.md) |
+| 정리한 날짜 | 정리한 주제 | 결과물 |
+| --- | --- | --- |
+| 2026-09-17 | 기본 타입, 정수 overflow와 `&+`, 부동소수점 오차와 `NaN`, `String`/`Character`/`String.Index`, `Substring`, 타입 추론 | 블로그 — 스위프트 원시 타입(Swift Primitive Types) |
+| 2026-09-18 | `Equatable` — `==` 요구사항, struct·class·enum별 자동 합성, 값 동등성과 `===` | 블로그 — 스위프트(Swift) Equatable 프로토콜 |
+| 2026-09-18 | `Comparable` — `<` 요구사항, 전체 순서 규칙, struct·class·enum 채택, `sorted()`/`min()`/`max()`, `Double.nan` | 블로그 — 스위프트(Swift) Comparable 프로토콜 |
+| — | `actor`, 재진입, `@MainActor`, 전역 액터, 격리 도메인, `nonisolated` | [Swift 액터 완전 정복](./153-swift-actor-complete-guide.md) |
+
+`Hashable` 문서 셋([026](./026-hashable-id-and-collisions.md), [027](./027-hash-into-and-java-comparison.md), [028](./028-enum-hashable-conformance.md))은 `Equatable` 부분이 위 글로 빠졌으므로, 이제 `hash(into:)`와 신원(identity) 문제에만 집중해 읽는다.
 
 ## 1. Swift 문법과 실행 모델
 

@@ -2,6 +2,8 @@
 
 `id: \.self`가 무엇을 가리키는지는 [`ForEach`의 `id`와 `\.self` key path](./053-foreach-id-and-identity-keypath.md)에, `Identifiable`을 쓰는 이유는 [`Identifiable` 프로토콜을 쓰는 이유와 쓰는 경우](./025-identifiable-protocol.md)에 있다. 이 문서는 **`Hashable` 요구사항과 값이 같을 때 생기는 문제**를 다룬다.
 
+> `Hashable`이 상속하는 `Equatable` 쪽(`==` 요구사항, 타입별 자동 합성 조건, `==`와 `===`의 차이)은 블로그 글 「스위프트(Swift) Equatable 프로토콜」로 정리를 마쳤다. 이 문서는 **`Hashable`에 고유한 부분**만 다룬다.
+
 ## 질문이 나온 코드
 
 `chapter-32/chapter-32/ContentView.swift`의 `struct Todo: Identifiable, Hashable`과 `ForEach($todos, id: \.self)`

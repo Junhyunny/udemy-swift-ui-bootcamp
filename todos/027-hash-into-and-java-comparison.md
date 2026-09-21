@@ -2,6 +2,8 @@
 
 해시 충돌 걱정과 `id`의 신원 문제는 [별도 문서](./026-hashable-id-and-collisions.md)에, `enum`의 자동 합성 규칙은 [여기](./028-enum-hashable-conformance.md)에 정리했다. 이 문서는 **`hash(into:)` 함수 자체**를 다룬다.
 
+> `Hashable`이 상속하는 `Equatable` 쪽(`==` 요구사항, 타입별 자동 합성 조건, `==`와 `===`의 차이)은 블로그 글 「스위프트(Swift) Equatable 프로토콜」로 정리를 마쳤다. 이 문서는 **`Hashable`에 고유한 부분**만 다룬다.
+
 ## 질문이 나온 코드
 
 `chapter-60/chapter-60/ContentView.swift`

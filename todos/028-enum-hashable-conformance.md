@@ -2,6 +2,8 @@
 
 `id`에 쓰이는 `Hashable`과 해시 충돌 이야기는 [별도 문서](./026-hashable-id-and-collisions.md)에 있다. 이 문서는 **`enum`에 `Hashable`을 명시적으로 붙이는 이유**에 집중한다.
 
+> `Hashable`이 상속하는 `Equatable` 쪽(`==` 요구사항, 타입별 자동 합성 조건, `==`와 `===`의 차이)은 블로그 글 「스위프트(Swift) Equatable 프로토콜」로 정리를 마쳤다. 이 문서는 **`Hashable`에 고유한 부분**만 다룬다.
+
 ## 질문이 나온 코드
 
 `chapter-51/chapter-51/ContentView.swift`
