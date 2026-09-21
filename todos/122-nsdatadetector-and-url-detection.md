@@ -192,7 +192,7 @@ s.utf16.count      // 4  — 👋가 UTF-16에서 2개 유닛(surrogate pair)
 
 `text.count`를 쓰면 이모지가 포함된 순간 범위가 실제보다 짧아져 **뒷부분을 검사하지 못하거나 크래시**할 수 있다. `utf16.count`가 정답이다.
 
-이 불일치는 [Swift의 기본 타입과 비교 방법](./001-swift-fundamental-types-and-comparison.md)에서 다룬 `String`의 문자 모델과 이어지고, `NS` 접두사 API를 Swift에서 쓸 때 반복해서 만나는 문제다. 배경은 [NS 접두사 문서](./116-ns-prefix-foundation-classes.md)에 정리했다.
+이 불일치는 [Swift 문자열 심화와 컬렉션](./001-strings-collections-and-foundation-bridging.md)에서 다룬 `String`의 문자 모델과 이어지고, `NS` 접두사 API를 Swift에서 쓸 때 반복해서 만나는 문제다. 배경은 [NS 접두사 문서](./116-ns-prefix-foundation-classes.md)에 정리했다.
 
 전체 범위라면 더 안전한 표현도 있다.
 

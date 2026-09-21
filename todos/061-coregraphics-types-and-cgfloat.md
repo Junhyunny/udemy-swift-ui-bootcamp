@@ -1,6 +1,6 @@
 # `CG`로 시작하는 타입들 — `CGFloat`은 `Float`과 무엇이 다른가
 
-Swift의 기본 숫자 타입 자체는 [Swift의 기본 타입과 비교 방법](./001-swift-fundamental-types-and-comparison.md)에서 다뤘다. 이 문서는 **`CG` 접두사가 붙은 타입군**과 `CGFloat`의 정체를 파고든다.
+Swift의 기본 숫자 타입 자체는 블로그 글 「스위프트 원시 타입(Swift Primitive Types)」으로 정리를 마쳤다. 이 문서는 **`CG` 접두사가 붙은 타입군**과 `CGFloat`의 정체를 파고든다.
 
 ## 질문이 나온 코드
 

@@ -1,6 +1,6 @@
 # `var posts = [Post]()` — 이 문법은 무엇인가
 
-제네릭 타입 전반은 [별도 문서](./030-swift-generics.md)에, 기본 타입은 [여기](./001-swift-fundamental-types-and-comparison.md)에 정리했다. 이 문서는 **컬렉션을 초기화하는 여러 표기**를 다룬다.
+제네릭 타입 전반은 [별도 문서](./030-swift-generics.md)에, 컬렉션 선택 기준은 [여기](./001-strings-collections-and-foundation-bridging.md)에 정리했다. 이 문서는 **컬렉션을 초기화하는 여러 표기**를 다룬다.
 
 ## 질문이 나온 코드
 

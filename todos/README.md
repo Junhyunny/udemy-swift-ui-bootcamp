@@ -4,17 +4,24 @@
 
 각 단계 안에서도 번호가 작은 문서를 먼저 학습한다. 처음부터 모든 문서를 암기하기보다, 문서의 학습 체크리스트를 수행하고 해당 챕터 코드에서 개념을 다시 확인한 뒤 다음 항목으로 넘어간다.
 
+정리를 마쳐 블로그 글로 옮긴 주제는 이 목록에서 뺀다. 아래 주제는 더 이상 TODO로 남기지 않는다.
+
+| 정리한 주제 | 결과물 |
+| --- | --- |
+| 기본 타입, 정수 overflow와 `&+`, 부동소수점 오차, `String`/`Character`/`String.Index`, `Substring`, 타입 추론, `Equatable`·`Comparable` | 블로그 — 스위프트 원시 타입(Swift Primitive Types) |
+| `actor`, 재진입, `@MainActor`, 전역 액터, 격리 도메인, `nonisolated` | [Swift 액터 완전 정복](./153-swift-actor-complete-guide.md) |
+
 ## 1. Swift 문법과 실행 모델
 
 다른 모든 주제의 기반이다. 값과 타입, 제어 흐름, 함수, 객체의 수명 순서로 학습한다.
 
-- [ ] [Swift의 기본 타입과 비교 방법](./001-swift-fundamental-types-and-comparison.md)
 - [ ] [`let`과 `var`](./002-let-vs-var.md)
 - [ ] [`if`의 조건 결합과 옵셔널 바인딩](./003-if-conditions-and-optional-binding.md)
 - [ ] [`guard` 키워드 — 조기 탈출과 그 장점](./004-guard-keyword.md)
 - [ ] [타입에 붙는 `!` — 암시적 언래핑 옵셔널](./005-implicitly-unwrapped-optional.md)
 - [ ] [옵셔널 총정리 — 선언부터 언래핑, 강제 언래핑까지](./141-optional-complete-guide.md)
 - [ ] [`var posts = [Post]()` — 컬렉션 초기화 표기들](./006-array-literal-and-initialization.md)
+- [ ] [Swift 문자열 심화와 컬렉션 — Unicode 비교, `Substring` 저장 공간, Foundation bridge](./001-strings-collections-and-foundation-bridging.md)
 - [ ] [`$0`의 정체 — shorthand argument name과 클로저 축약 단계](./007-closure-shorthand-argument-names.md)
 - [ ] [`at:` 문법의 정체와 `IndexSet`](./008-argument-labels-and-indexset.md)
 - [ ] [Swift의 함수 오버로딩 — argument label이 시그니처의 일부다](./009-swift-function-overloading.md)
