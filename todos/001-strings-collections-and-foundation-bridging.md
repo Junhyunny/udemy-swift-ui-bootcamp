@@ -2,7 +2,8 @@
 
 이 문서에서 다루던 **기본 타입, 정수 overflow, 부동소수점 오차, `String`/`Character` 기초, `String.Index`, `Substring`의 저장 공간 공유, 타입 추론, `Equatable`·`Comparable`** 은 블로그 글로 정리를 마쳤다. 여기에는 **아직 정리하지 않은 주제만** 남긴다.
 
-- 블로그: 스위프트 원시 타입(Swift Primitive Types)
+- 블로그: 스위프트 원시 타입(Swift Primitive Types) — 기본 타입, overflow, 문자열, `Substring`, 타입 추론
+- 블로그: 스위프트(Swift) Equatable 프로토콜 / 스위프트(Swift) Comparable 프로토콜 — `==`, `<`, 자동 합성, 순서 규칙
 - 숫자 타입 중 `CG` 접두사 타입군은 [CoreGraphics 타입과 `CGFloat`](./061-coregraphics-types-and-cgfloat.md)에 있다.
 - 컬렉션 초기화 표기는 [컬렉션 초기화](./006-array-literal-and-initialization.md)에 있다.
 

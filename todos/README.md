@@ -8,7 +8,9 @@
 
 | 정리한 주제 | 결과물 |
 | --- | --- |
-| 기본 타입, 정수 overflow와 `&+`, 부동소수점 오차, `String`/`Character`/`String.Index`, `Substring`, 타입 추론, `Equatable`·`Comparable` | 블로그 — 스위프트 원시 타입(Swift Primitive Types) |
+| 기본 타입, 정수 overflow와 `&+`, 부동소수점 오차와 `NaN`, `String`/`Character`/`String.Index`, `Substring`, 타입 추론 | 블로그 — 스위프트 원시 타입(Swift Primitive Types) |
+| `Equatable` — `==` 요구사항, 자동 합성, 값 동등성과 `===` | 블로그 — 스위프트(Swift) Equatable 프로토콜 |
+| `Comparable` — `<` 요구사항, 전체 순서 규칙, struct·class·enum 채택, `sorted()`/`min()`/`max()`, `Double.nan` | 블로그 — 스위프트(Swift) Comparable 프로토콜 |
 | `actor`, 재진입, `@MainActor`, 전역 액터, 격리 도메인, `nonisolated` | [Swift 액터 완전 정복](./153-swift-actor-complete-guide.md) |
 
 ## 1. Swift 문법과 실행 모델
