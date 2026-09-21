@@ -339,7 +339,7 @@ struct ReceiverView: View {
 }
 ```
 
-`Task`, `MainActor.run`, `onAppear`가 모두 사라진다. `onReceive`가 메인 스레드를 보장하므로 상태를 직접 바꿔도 된다. [MainActor 문서](./106-main-actor-and-ios-threading.md)에서 이 부분을 다룬다.
+`Task`, `MainActor.run`, `onAppear`가 모두 사라진다. `onReceive`가 메인 스레드를 보장하므로 상태를 직접 바꿔도 된다. [Swift 액터 완전 정복](./153-swift-actor-complete-guide.md)에서 이 부분을 다룬다.
 
 **세 방식 비교**
 

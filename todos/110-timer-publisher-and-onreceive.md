@@ -60,7 +60,7 @@ static func publish(
 | `in` | 런루프 **모드**. 예제는 `.common` |
 | `options` | 스케줄러 옵션 (거의 안 씀) |
 
-**`on: .main`은 메인 런루프에서 발동한다는 뜻**이다. UI를 갱신하므로 메인이 맞다. [MainActor 문서](./106-main-actor-and-ios-threading.md)에서 다룬 규칙과 이어진다.
+**`on: .main`은 메인 런루프에서 발동한다는 뜻**이다. UI를 갱신하므로 메인이 맞다. [Swift 액터 완전 정복](./153-swift-actor-complete-guide.md)에서 다룬 규칙과 이어진다.
 
 **`in: .common`이 중요하다.** 런루프 모드는 "지금 무슨 일을 하는 중인가"를 나타낸다.
 

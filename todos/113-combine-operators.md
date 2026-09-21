@@ -156,7 +156,7 @@ publisher
 
 이 예제에서는 `.receive(on: RunLoop.main)` 아래에 `sink`가 있으므로, `sink` 안의 `self?.exchangeRate = $0`이 메인 스레드에서 실행된다.
 
-**왜 필요한가**는 [MainActor 문서](./106-main-actor-and-ios-threading.md)에서 다룬 그대로다. `exchangeRate`는 `@Observable` 프로퍼티이고 UI를 갱신하므로 메인 스레드여야 한다. `URLSession`은 백그라운드에서 응답을 주므로 경계를 넘겨야 한다.
+**왜 필요한가**는 [Swift 액터 완전 정복](./153-swift-actor-complete-guide.md)에서 다룬 그대로다. `exchangeRate`는 `@Observable` 프로퍼티이고 UI를 갱신하므로 메인 스레드여야 한다. `URLSession`은 백그라운드에서 응답을 주므로 경계를 넘겨야 한다.
 
 ### `RunLoop.main` vs `DispatchQueue.main`
 

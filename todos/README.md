@@ -144,27 +144,23 @@ SwiftUI의 제네릭 뷰, 식별자, 프로토콜 기반 API를 읽기 위한 �
 - [ ] [`.task`는 무엇인가 — 뷰 생명주기와 비동기 작업](./103-task-modifier-and-async-lifecycle.md)
 - [ ] [`TaskPriority` — 우선순위 값들과 실제 동작](./104-task-priority-and-scheduling.md)
 - [ ] [`for await` — 비동기 시퀀스를 반복하기](./105-for-await-async-sequence.md)
-- [ ] [`MainActor`는 왜 필요한가 — iOS의 스레드 모델](./106-main-actor-and-ios-threading.md)
-- [ ] [`actor` 타입 — 무엇이고, 어떤 용도로 왜 쓰는가](./107-swift-actor-type.md)
-- [ ] [`nonisolated` — "이 코드는 액터 밖에서도 안전하다"는 선언](./108-nonisolated-keyword.md)
+- [ ] [Swift 액터 완전 정복 — data race부터 격리 도메인까지](./153-swift-actor-complete-guide.md)
 - [ ] [`NotificationCenter` — 멀리 떨어진 컴포넌트끼리 통신하기](./109-notification-center.md)
 - [ ] [`Timer.publish` + `onReceive` — 주기적·외부 이벤트](./110-timer-publisher-and-onreceive.md)
 - [ ] [Combine 프레임워크](./111-combine.md)
 - [ ] [`AnyCancellable`, `sink`, `store(in:)` — 구독의 수명 관리](./112-combine-cancellable-and-store.md)
 - [ ] [Combine 연산자 — `replaceError`, `receive(on:)`, `map`, `decode`](./113-combine-operators.md)
-- [ ] [액터 격리 — 격리 도메인, 전역 액터, `isolated` 파라미터](./139-actor-isolation-domains.md)
 
 ### Swift Concurrency 집중 과정
 
-위 문서들이 개별 주제를 다룬다면, 아래 9개는 **하나의 실행 모델로 묶어 순서대로** 학습하는 과정이다. 로드맵부터 읽는다.
+위 문서들이 개별 주제를 다룬다면, 아래 문서들은 **하나의 실행 모델로 묶어 순서대로** 학습하는 과정이다. 로드맵부터 읽는다.
 
 - [ ] [Swift Concurrency 학습 로드맵 — 전체 지도와 순서](./142-swift-concurrency-roadmap.md)
 - [ ] [1단계 — 동기 vs 비동기, 중단(suspension)](./143-sync-vs-async-and-suspension.md)
 - [ ] [2단계 — `async` / `await` / `try await`](./144-async-await-basics.md)
 - [ ] [3단계 — `Task`와 취소](./145-task-basics-and-cancellation.md)
 - [ ] [4단계 — 구조적 동시성: `async let`과 `TaskGroup`](./146-structured-concurrency.md)
-- [ ] [5단계 — `actor`와 재진입](./147-actor-and-reentrancy.md)
-- [ ] [6단계 — `@MainActor`와 전역 액터](./148-main-actor-and-global-actors.md)
+- [ ] [5~6단계 — 액터와 전역 액터](./153-swift-actor-complete-guide.md)
 - [ ] [7단계 — `Sendable`과 Swift 6 엄격 검사](./149-sendable-and-strict-concurrency.md)
 - [ ] [8단계 — SwiftUI와 연결하기](./150-swiftui-concurrency-integration.md)
 - [ ] [부록 — 동시성 런타임 아키텍처 (JavaScript 이벤트 루프와 비교)](./151-concurrency-runtime-architecture.md)

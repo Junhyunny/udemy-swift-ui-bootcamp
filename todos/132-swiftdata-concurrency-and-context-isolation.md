@@ -27,7 +27,7 @@ extension Todo {
 - 스레드 구조, 동시성 이슈, 데이터 충돌, 메인 스레드, 동일 context는 각각 무엇인가?
 - 메서드 위의 `@MainActor`는 무슨 의미인가?
 
-iOS 스레드 모델과 `@MainActor`의 일반 개념은 [`MainActor`는 왜 필요한가 — iOS의 스레드 모델](./106-main-actor-and-ios-threading.md)에 정리되어 있다. 이 문서는 **SwiftData에 한정된 규칙**을 다룬다.
+iOS 스레드 모델과 `@MainActor`의 일반 개념은 [Swift 액터 완전 정복](./153-swift-actor-complete-guide.md)에 정리되어 있다. 이 문서는 **SwiftData에 한정된 규칙**을 다룬다.
 
 ## 공부할 내용
 

@@ -2,7 +2,7 @@
 
 [로드맵](./142-swift-concurrency-roadmap.md)의 7단계다. 5~6단계에서 격리 경계를 배웠다면, 여기서는 **그 경계를 넘어가는 값**을 다룬다.
 
-관련 기존 문서: [`MainActor`와 iOS 스레드 모델](./106-main-actor-and-ios-threading.md)의 `Sendable` 절, [액터 격리](./139-actor-isolation-domains.md)의 7부
+관련 기존 문서: [Swift 액터 완전 정복](./153-swift-actor-complete-guide.md)의 5.2절 `Sendable`
 
 ## `Sendable`은 "경계를 넘어도 안전하다"는 계약이다
 

@@ -108,7 +108,7 @@ private nonisolated var _animatableData = {
 
 - **`AnimatableValues(radius, startAngle, endAngle)`** — 세 값이 평평하게 묶였다. 손으로 썼다면 `AnimatablePair<CGFloat, AnimatablePair<Double, Double>>` 중첩을 감당해야 했다.
 - **`isClockWise`가 없다** — `@AnimatableIgnored`가 정확히 제외했다.
-- **`nonisolated`가 붙어 있다** — 매크로가 알아서 붙여 준다. 이 키워드의 의미는 [`nonisolated` 문서](./108-nonisolated-keyword.md)에 정리되어 있다.
+- **`nonisolated`가 붙어 있다** — 매크로가 알아서 붙여 준다. 이 키워드의 의미는 [Swift 액터 완전 정복](./153-swift-actor-complete-guide.md)의 `nonisolated` 절에 정리되어 있다.
 
 직접 확인하려면 이렇게 한다.
 
@@ -244,7 +244,7 @@ struct CoolShape: Shape {
 struct CircleShape: Shape {
 ```
 
-이 프로젝트는 빌드 설정이 `SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor`라 **아무것도 안 붙여도 이미 `@MainActor`**다. 즉 이 줄은 중복이고, 오히려 `path(in:)`에 `nonisolated`를 붙여야 하는 원인이 된다. 자세한 내용은 [`nonisolated` 문서](./108-nonisolated-keyword.md)에 정리했다.
+이 프로젝트는 빌드 설정이 `SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor`라 **아무것도 안 붙여도 이미 `@MainActor`**다. 즉 이 줄은 중복이고, 오히려 `path(in:)`에 `nonisolated`를 붙여야 하는 원인이 된다. 자세한 내용은 [Swift 액터 완전 정복](./153-swift-actor-complete-guide.md)의 `nonisolated` 절에 정리했다.
 
 ### 이 코드에 적용하면
 

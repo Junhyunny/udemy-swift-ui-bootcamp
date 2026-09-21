@@ -20,12 +20,10 @@ Swift Concurrency
 │   ├─ async let
 │   └─ TaskGroup
 │
-├─ Actor ──────────────────────────── 147
-│   ├─ actor isolation
-│   └─ reentrancy
-│
-├─ Global Actor ───────────────────── 148
-│   └─ @MainActor / MainActor.run / nonisolated
+├─ Actor / Global Actor ───────────── 153
+│   ├─ actor isolation / reentrancy
+│   ├─ @MainActor / MainActor.run / nonisolated
+│   └─ isolated 파라미터 / #isolation / @concurrent
 │
 ├─ Data race safety ───────────────── 149
 │   └─ Sendable / 영역 기반 격리 / Swift 6 에러
@@ -49,8 +47,7 @@ Swift Concurrency
 | 2 | `async` / `await` / `try await` | [144](./144-async-await-basics.md) | [102](./102-async-throws-and-custom-errors.md), [105](./105-for-await-async-sequence.md) |
 | 3 | `Task`와 취소 | [145](./145-task-basics-and-cancellation.md) | [103](./103-task-modifier-and-async-lifecycle.md), [104](./104-task-priority-and-scheduling.md) |
 | 4 | 구조적 동시성 | [146](./146-structured-concurrency.md) | — |
-| 5 | `actor`와 재진입 | [147](./147-actor-and-reentrancy.md) | [107](./107-swift-actor-type.md) |
-| 6 | `@MainActor`와 전역 액터 | [148](./148-main-actor-and-global-actors.md) | [106](./106-main-actor-and-ios-threading.md), [108](./108-nonisolated-keyword.md), [139](./139-actor-isolation-domains.md) |
+| 5~6 | 액터, 재진입, `@MainActor`, 전역 액터, 격리 도메인 | [153](./153-swift-actor-complete-guide.md) | — |
 | 7 | `Sendable`과 엄격 검사 | [149](./149-sendable-and-strict-concurrency.md) | — |
 | 8 | SwiftUI와 연결 | [150](./150-swiftui-concurrency-integration.md) | [103](./103-task-modifier-and-async-lifecycle.md), [050](./050-observation-framework-and-observable.md) |
 | 부록 | 런타임 아키텍처 | [151](./151-concurrency-runtime-architecture.md) | [101](./101-swift-async-await-model.md) |
@@ -72,8 +69,8 @@ value of optional type ... (이건 옵셔널 — 141 참조)
 | --- | --- |
 | `Task.yield()`는 왜 필요한가 | [145](./145-task-basics-and-cancellation.md) |
 | `withCheckedContinuation`은 왜 존재하는가 | [143](./143-sync-vs-async-and-suspension.md) |
-| `Task { }` 안의 액터 컨텍스트는 어떻게 정해지나 | [145](./145-task-basics-and-cancellation.md), [148](./148-main-actor-and-global-actors.md) |
-| `@MainActor`는 왜 붙이는가 | [148](./148-main-actor-and-global-actors.md) |
+| `Task { }` 안의 액터 컨텍스트는 어떻게 정해지나 | [145](./145-task-basics-and-cancellation.md), [153](./153-swift-actor-complete-guide.md) |
+| `@MainActor`는 왜 붙이는가 | [153](./153-swift-actor-complete-guide.md) |
 | async 코드는 어떻게 테스트하나 | [146](./146-structured-concurrency.md), [123](./123-dependency-injection-for-testing.md) |
 | JavaScript 이벤트 루프 같은 구조가 있나 | [151](./151-concurrency-runtime-architecture.md) |
 | 스레드는 실제로 몇 개나 쓰이나 | [151](./151-concurrency-runtime-architecture.md) |
@@ -100,8 +97,7 @@ value of optional type ... (이건 옵셔널 — 141 참조)
 - [ ] 2단계 — [`async`/`await` 기초](./144-async-await-basics.md)
 - [ ] 3단계 — [`Task`와 취소](./145-task-basics-and-cancellation.md)
 - [ ] 4단계 — [구조적 동시성](./146-structured-concurrency.md)
-- [ ] 5단계 — [`actor`와 재진입](./147-actor-and-reentrancy.md)
-- [ ] 6단계 — [`@MainActor`와 전역 액터](./148-main-actor-and-global-actors.md)
+- [ ] 5~6단계 — [Swift 액터 완전 정복](./153-swift-actor-complete-guide.md)
 - [ ] 7단계 — [`Sendable`과 엄격 검사](./149-sendable-and-strict-concurrency.md)
 - [ ] 8단계 — [SwiftUI와 연결](./150-swiftui-concurrency-integration.md)
 - [ ] 부록 — [런타임 아키텍처](./151-concurrency-runtime-architecture.md) (1단계 직후에 읽어도 좋다)

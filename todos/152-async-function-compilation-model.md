@@ -105,9 +105,9 @@ hop_to_executor 개수: 1
 
 `hop_to_executor`가 "지금 실행자를 저쪽으로 바꿔라"는 지시다. 151의 그림에서 **잡이 다른 실행자 큐로 옮겨지는 지점**이 이 명령어다.
 
-이 사실에서 성능 감각이 하나 생긴다. **격리 경계를 자주 넘나들면 `hop_to_executor`가 그만큼 늘어난다.** actor 메서드를 잘게 여러 번 호출하는 것보다 한 번에 묶는 편이 낫다는 [147 문서](./147-actor-and-reentrancy.md)의 조언이 여기서 근거를 얻는다.
+이 사실에서 성능 감각이 하나 생긴다. **격리 경계를 자주 넘나들면 `hop_to_executor`가 그만큼 늘어난다.** actor 메서드를 잘게 여러 번 호출하는 것보다 한 번에 묶는 편이 낫다는 [Swift 액터 완전 정복](./153-swift-actor-complete-guide.md)의 조언이 여기서 근거를 얻는다.
 
-Swift 6.2에서 비격리 async 함수의 기본이 `nonisolated(nonsending)`(호출자를 따라감)으로 바뀐 것도 **불필요한 hop을 줄이려는 변경**이다. [139 문서](./139-actor-isolation-domains.md) 3부의 측정 결과와 연결된다.
+Swift 6.2에서 비격리 async 함수의 기본이 `nonisolated(nonsending)`(호출자를 따라감)으로 바뀐 것도 **불필요한 hop을 줄이려는 변경**이다. [Swift 액터 완전 정복](./153-swift-actor-complete-guide.md) 3.8절의 측정 결과와 연결된다.
 
 ## 5부 — 이 층을 알면 설명되는 것들
 

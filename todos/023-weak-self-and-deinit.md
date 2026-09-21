@@ -232,7 +232,7 @@ deinit {
 
 **③ 실행 스레드가 보장되지 않는다**
 
-마지막 참조가 사라진 스레드에서 불린다. UI를 건드리면 안 된다. [MainActor 문서](./106-main-actor-and-ios-threading.md) 참조.
+마지막 참조가 사라진 스레드에서 불린다. UI를 건드리면 안 된다. [Swift 액터 완전 정복](./153-swift-actor-complete-guide.md) 참조.
 
 **④ 상속 관계에서는 자동으로 연쇄된다**
 
