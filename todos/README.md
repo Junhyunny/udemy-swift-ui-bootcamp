@@ -11,6 +11,7 @@
 | 2026-09-17 | 기본 타입, 정수 overflow와 `&+`, 부동소수점 오차와 `NaN`, `String`/`Character`/`String.Index`, `Substring`, 타입 추론 | 블로그 — 스위프트 원시 타입(Swift Primitive Types) |
 | 2026-09-18 | `Equatable` — `==` 요구사항, struct·class·enum별 자동 합성, 값 동등성과 `===` | 블로그 — 스위프트(Swift) Equatable 프로토콜 |
 | 2026-09-18 | `Comparable` — `<` 요구사항, 전체 순서 규칙, struct·class·enum 채택, `sorted()`/`min()`/`max()`, `Double.nan` | 블로그 — 스위프트(Swift) Comparable 프로토콜 |
+| 2026-09-21 | 비동기 처리 아키텍처 — Task·Job·Executor·스레드 4층, `await` 순서도, 스택 프레임 vs 비동기 프레임, 멀티플렉싱 | 블로그 — 스위프트 비동기 처리 아키텍처 |
 | — | `actor`, 재진입, `@MainActor`, 전역 액터, 격리 도메인, `nonisolated` | [Swift 액터 완전 정복](./153-swift-actor-complete-guide.md) |
 
 `Hashable` 문서 셋([026](./026-hashable-id-and-collisions.md), [027](./027-hash-into-and-java-comparison.md), [028](./028-enum-hashable-conformance.md))은 `Equatable` 부분이 위 글로 빠졌으므로, 이제 `hash(into:)`와 신원(identity) 문제에만 집중해 읽는다.
@@ -175,7 +176,7 @@ SwiftUI의 제네릭 뷰, 식별자, 프로토콜 기반 API를 읽기 위한 �
 - [ ] [5~6단계 — 액터와 전역 액터](./153-swift-actor-complete-guide.md)
 - [ ] [7단계 — `Sendable`과 Swift 6 엄격 검사](./149-sendable-and-strict-concurrency.md)
 - [ ] [8단계 — SwiftUI와 연결하기](./150-swiftui-concurrency-integration.md)
-- [ ] [부록 — 동시성 런타임 아키텍처 (JavaScript 이벤트 루프와 비교)](./151-concurrency-runtime-architecture.md)
+- [ ] [부록 — 동시성 런타임 실측과 JavaScript 대조](./151-concurrency-runtime-architecture.md)
 - [ ] [부록 — 컴파일러가 `async` 함수를 무엇으로 바꾸는가](./152-async-function-compilation-model.md)
 
 ## 8. 네트워크와 외부 데이터

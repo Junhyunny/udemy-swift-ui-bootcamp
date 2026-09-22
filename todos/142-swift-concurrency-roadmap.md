@@ -37,8 +37,8 @@ Swift Concurrency
     ├─ @MainActor + @Observable
     └─ UI 갱신 흐름
 
-  (부록) 런타임 아키텍처 ────────────── 151
-    Task → Job → Executor → 협력 스레드 풀
+  (부록) 런타임 실측 ──────────────── 151
+    스레드 수 / 블로킹 금지 / JS 대조
   (부록) 컴파일 모델 ───────────────── 152
     async 함수 → 코루틴 분할 → 힙 프레임
 ```
@@ -54,7 +54,7 @@ Swift Concurrency
 | 5~6 | 액터, 재진입, `@MainActor`, 전역 액터, 격리 도메인 | [153](./153-swift-actor-complete-guide.md) | — |
 | 7 | `Sendable`과 엄격 검사 | [149](./149-sendable-and-strict-concurrency.md) | — |
 | 8 | SwiftUI와 연결 | [150](./150-swiftui-concurrency-integration.md) | [103](./103-task-modifier-and-async-lifecycle.md), [050](./050-observation-framework-and-observable.md) |
-| 부록 | 런타임 아키텍처 | [151](./151-concurrency-runtime-architecture.md) | [101](./101-swift-async-await-model.md) |
+| 부록 | 런타임 실측과 JS 대조 | [151](./151-concurrency-runtime-architecture.md) | [101](./101-swift-async-await-model.md) |
 | 부록 | 컴파일 모델 | [152](./152-async-function-compilation-model.md) | [143](./143-sync-vs-async-and-suspension.md) |
 
 **5~7단계가 Swift 6에서 특히 중요해졌다.** 예전에는 경고도 없던 코드가 엄격 검사에서 다음 세 가지 에러를 만든다. 셋 다 149에서 읽는 법을 다룬다.
@@ -105,7 +105,7 @@ value of optional type ... (이건 옵셔널 — 141 참조)
 - [ ] 5~6단계 — [Swift 액터 완전 정복](./153-swift-actor-complete-guide.md)
 - [ ] 7단계 — [`Sendable`과 엄격 검사](./149-sendable-and-strict-concurrency.md)
 - [ ] 8단계 — [SwiftUI와 연결](./150-swiftui-concurrency-integration.md)
-- [ ] 부록 — [런타임 아키텍처](./151-concurrency-runtime-architecture.md) (1단계 직후에 읽어도 좋다)
+- [ ] 부록 — [런타임 실측과 JS 대조](./151-concurrency-runtime-architecture.md) (1단계 직후에 읽어도 좋다)
 - [ ] 부록 — [컴파일 모델](./152-async-function-compilation-model.md) (151 을 읽은 뒤)
 - [ ] 마무리 — 작은 예제 앱 하나에 1~8단계를 전부 연결해 본다
 

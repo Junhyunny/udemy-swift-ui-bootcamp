@@ -53,25 +53,9 @@ JavaScript는 단일 스레드 + 이벤트 루프라서 "동시에 실행"은 �
 
 `await`가 없는 곳에서는 절대 중간에 끊기지 않는다. 코드에 적힌 `await`가 곧 "여기서 멈출 수 있음" 표시다.
 
-### 3. "대기 중 스택은 어디에 보관되나" — 스레드 스택이 아니라 별도 저장소
+### 3. 세 언어의 모델 대조
 
-추측하신 두 모델 중 **Python 쪽에 가깝다.** JS처럼 "콜스택에서 빠져나가 외부로 갔다가 큐를 통해 이벤트 루프로 복귀"하는 구조가 아니다.
-
-`await`에서 멈추면 스레드를 붙잡고 있지 않고 놓아준다.
-
-> "This is also called yielding the thread because, behind the scenes, Swift suspends the execution of your code on the current thread and runs some other code on that thread instead."
-
-그럼 지역 변수와 실행 위치는 어디에 남는가. async 함수는 스레드 스택을 쓰지 않고 자기 저장소를 쓴다. async/await 도입 제안(SE-0296)이 이렇게 설명한다.
-
-> "asynchronous functions are able to completely give up that stack and use their own, separate storage"
->
-> "In practice, asynchronous functions are compiled to not depend on the thread during an asynchronous call, so that only the innermost function needs to do any extra work."
-
-그리고 재개될 때 원래 스레드로 돌아온다는 보장도 없다.
-
-> "When control returns to an asynchronous function, it picks up exactly where it was. That doesn't necessarily mean that it'll be running on the exact same thread it was before"
-
-정리하면 **중단된 async 함수의 상태는 힙에 놓인 별도 프레임에 보관되고, 스레드는 풀로 반납되며, 재개 시 아무 스레드에서나 이어서 실행된다.** 그래서 스레드를 블로킹하지 않으면서도 수만 개의 작업을 띄울 수 있다. 세 가지 모델을 비교하면 이렇다.
+중단된 async 함수의 상태가 **힙의 비동기 프레임**에 보관되고 스레드는 풀로 반납된다는 Swift 내부 동작은 블로그 글 「스위프트 비동기 처리 아키텍처」로 정리를 마쳤다. 여기에는 **JavaScript·Python과의 대조**만 남긴다.
 
 | | JavaScript | Python asyncio | Swift |
 | --- | --- | --- | --- |
@@ -79,6 +63,8 @@ JavaScript는 단일 스레드 + 이벤트 루프라서 "동시에 실행"은 �
 | 실제 병렬 실행 | X (단일 스레드) | X (단일 이벤트 루프) | **O** (cooperative pool) |
 | 중단 상태 저장 | 마이크로태스크 큐 | 힙의 frame 객체 | 힙의 별도 async frame |
 | 재개 스레드 | 항상 동일 | 항상 동일 | 달라질 수 있음 |
+
+추측하셨던 두 모델 중 **Python 쪽에 가깝다.** JS처럼 "콜스택에서 빠져나가 외부로 갔다가 큐를 통해 이벤트 루프로 복귀"하는 구조가 아니다. 마지막 줄이 실무에서 가장 자주 발을 잡는다 — **`await` 뒤의 스레드가 앞과 같다고 가정한 코드를 쓰면 안 된다.**
 
 ### 4. 지금 코드에서 벌어지는 일
 
@@ -94,7 +80,6 @@ JavaScript는 단일 스레드 + 이벤트 루프라서 "동시에 실행"은 �
 
 - [ ] `fetchData()`를 두 번 연속 `await` 호출하고 총 소요 시간이 합산되는지 측정한다.
 - [ ] 같은 작업을 `async let` 두 개로 바꿔 시간이 절반 가까이 줄어드는지 비교한다.
-- [ ] `await` 앞뒤에 `print(Thread.current)`를 찍어 재개 후 스레드가 달라질 수 있음을 관찰한다.
 - [ ] `Task { }`로 작업을 띄우고 `await` 없이 다음 줄이 바로 실행되는지 확인한다.
 - [ ] `Task`를 변수에 담아 `cancel()`을 호출해 취소가 전파되는지 본다.
 - [ ] `refreshable` 클로저에서 `await`를 빼면 스피너가 언제 사라지는지 비교한다.
