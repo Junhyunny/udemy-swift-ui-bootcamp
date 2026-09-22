@@ -155,6 +155,7 @@ SwiftUI의 제네릭 뷰, 식별자, 프로토콜 기반 API를 읽기 위한 �
 - [ ] [`.task`는 무엇인가 — 뷰 생명주기와 비동기 작업](./103-task-modifier-and-async-lifecycle.md)
 - [ ] [`TaskPriority` — 우선순위 값들과 실제 동작](./104-task-priority-and-scheduling.md)
 - [ ] [`for await` — 비동기 시퀀스를 반복하기](./105-for-await-async-sequence.md)
+- [ ] [`AsyncStream` — 콜백을 이벤트 스트림으로 바꾸기](./154-async-stream.md)
 - [ ] [Swift 액터 완전 정복 — data race부터 격리 도메인까지](./153-swift-actor-complete-guide.md)
 - [ ] [`NotificationCenter` — 멀리 떨어진 컴포넌트끼리 통신하기](./109-notification-center.md)
 - [ ] [`Timer.publish` + `onReceive` — 주기적·외부 이벤트](./110-timer-publisher-and-onreceive.md)

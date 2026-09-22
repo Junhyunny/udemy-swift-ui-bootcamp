@@ -100,7 +100,7 @@ print(try await fetch())
 
 delegate 콜백, `CLLocationManager`, `CallKit`, WebSocket 이벤트처럼 **콜백으로 설계된 프레임워크를 async 세계로 들여올 때 쓰는 표준 도구**다.
 
-여러 번 값이 오는 API(스트림)는 continuation이 아니라 `AsyncStream`이 맞다. [`for await`와 AsyncSequence](./105-for-await-async-sequence.md) 참조.
+여러 번 값이 오는 API(스트림)는 continuation이 아니라 `AsyncStream`이 맞다. [`AsyncStream` 문서](./154-async-stream.md)와 [`for await`와 AsyncSequence](./105-for-await-async-sequence.md) 참조.
 
 ## 흔한 오해
 

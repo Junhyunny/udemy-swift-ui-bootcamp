@@ -108,7 +108,7 @@ for await notification in center.notifications(named: name) {
 | 직접 만든 스트림 | `AsyncStream`, `AsyncThrowingStream` |
 | Combine publisher | `publisher.values` |
 
-**`AsyncStream`으로 직접 만들 수도 있다.**
+**`AsyncStream`으로 직접 만들 수도 있다.** 콜백을 스트림으로 감싸는 방법과 그 함정은 [`AsyncStream` 문서](./154-async-stream.md)에 따로 정리했다.
 
 ```swift
 let stream = AsyncStream<Int> { continuation in

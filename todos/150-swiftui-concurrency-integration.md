@@ -150,7 +150,7 @@ struct UserView: View {
 6. ViewModel에 `@MainActor`를 붙인다 (6단계)
 7. `SWIFT_VERSION`을 6으로 올려 남은 경고를 없앤다 (7단계)
 
-통신·VoIP 쪽으로 확장한다면 여기에 WebSocket 스트림(`AsyncStream`), CallKit 델리게이트 콜백(continuation), 타이머(`.task` + `Clock`)를 붙이면 실무 구조와 거의 같아진다.
+통신·VoIP 쪽으로 확장한다면 여기에 WebSocket 스트림([`AsyncStream`](./154-async-stream.md)), CallKit 델리게이트 콜백(continuation), 타이머(`.task` + `Clock`)를 붙이면 실무 구조와 거의 같아진다.
 
 ## 학습 체크리스트
 

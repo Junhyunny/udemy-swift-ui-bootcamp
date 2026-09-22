@@ -16,6 +16,10 @@ Swift Concurrency
 │   ├─ cancellation
 │   └─ Task.sleep / Task.yield
 │
+├─ AsyncSequence / AsyncStream ───── 105, 154
+│   ├─ for await
+│   └─ 콜백 → 스트림 브리징
+│
 ├─ Structured Concurrency ─────────── 146
 │   ├─ async let
 │   └─ TaskGroup
@@ -77,6 +81,7 @@ value of optional type ... (이건 옵셔널 — 141 참조)
 | `async` 함수는 어떤 코드로 컴파일되나 | [152](./152-async-function-compilation-model.md) |
 | Combine과는 어떤 관계인가 | [114](./114-combine-vs-async-await.md) |
 | `Timer`·`NotificationCenter`를 async로 받으려면 | [105](./105-for-await-async-sequence.md), [110](./110-timer-publisher-and-onreceive.md) |
+| 콜백·델리게이트를 `for await`로 바꾸려면 | [154](./154-async-stream.md) |
 
 ## 이 저장소의 설정
 
