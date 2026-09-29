@@ -255,7 +255,7 @@ struct NetworkingManager {
         headers?.forEach({ key, value in
             request.setValue(value, forHTTPHeaderField: key)
         })
-        // TODO: [todos/003-if-conditions-and-optional-binding.md](../../todos/003-if-conditions-and-optional-binding.md)
+        // TODO: [todos/158-conditional-statements-complete-guide.md](../../todos/158-conditional-statements-complete-guide.md)
         if let parameters = parameters, method != .get {
             request.httpBody = try JSONSerialization.data(
                 withJSONObject: parameters,
@@ -267,7 +267,7 @@ struct NetworkingManager {
             )
         }
         let (data, response) = try await URLSession.shared.data(for: request)
-        // TODO: [todos/003-if-conditions-and-optional-binding.md](../../todos/003-if-conditions-and-optional-binding.md)
+        // TODO: [todos/158-conditional-statements-complete-guide.md](../../todos/158-conditional-statements-complete-guide.md)
         if let httpResponse = response as? HTTPURLResponse,
             !(200...299).contains(httpResponse.statusCode)
         {
