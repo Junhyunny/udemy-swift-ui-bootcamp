@@ -32,6 +32,7 @@
 - [ ] [Swift의 함수 오버로딩 — argument label이 시그니처의 일부다](./009-swift-function-overloading.md)
 - [ ] [`var x: T { ... }` — 지역 계산 프로퍼티와 즉시 실행 클로저](./010-computed-property-with-closure-body.md)
 - [ ] [`enum Foo: String`은 상속이 아니다 — raw value](./011-enum-raw-values.md)
+- [ ] [패턴 매칭 총정리 — `case .enumCase(let x)`가 쓰이는 모든 자리](./157-pattern-matching-complete-guide.md)
 - [ ] [백틱으로 예약어를 식별자로 쓰기](./012-backtick-reserved-keywords.md)
 - [ ] [`subscript` 키워드 — `[ ]` 표기를 직접 정의하기](./013-subscript-keyword.md)
 - [ ] [`extension` 키워드는 무엇이고 언제 쓰는가](./014-extension-keyword.md)
@@ -158,6 +159,7 @@ SwiftUI의 제네릭 뷰, 식별자, 프로토콜 기반 API를 읽기 위한 �
 - [ ] [`.task`는 무엇인가 — 뷰 생명주기와 비동기 작업](./103-task-modifier-and-async-lifecycle.md)
 - [ ] [`TaskPriority` — 우선순위 값들과 실제 동작](./104-task-priority-and-scheduling.md)
 - [ ] [`for await` — 비동기 시퀀스를 반복하기](./105-for-await-async-sequence.md)
+  - 위 문서의 `for await case ...`에서 `case` 부분은 [패턴 매칭 총정리](./157-pattern-matching-complete-guide.md)에 있다.
 - [ ] [`AsyncStream` — 콜백을 이벤트 스트림으로 바꾸기](./154-async-stream.md)
 - [ ] [Swift 액터 완전 정복 — data race부터 격리 도메인까지](./153-swift-actor-complete-guide.md)
 - [ ] [`NotificationCenter` — 멀리 떨어진 컴포넌트끼리 통신하기](./109-notification-center.md)
