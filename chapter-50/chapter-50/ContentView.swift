@@ -38,7 +38,7 @@ struct ContentView: View {
     func extractFirstURL(from text: String) -> URL? {
         // TODO: [todos/116-ns-prefix-foundation-classes.md](../../todos/116-ns-prefix-foundation-classes.md)
         let types: NSTextCheckingResult.CheckingType = .link
-        // TODO: [todos/004-guard-keyword.md](../../todos/004-guard-keyword.md)
+        // TODO: [todos/158-conditional-statements-complete-guide.md](../../todos/158-conditional-statements-complete-guide.md)
         guard let detector = try? NSDataDetector(types: types.rawValue) else {
             return nil
         }
