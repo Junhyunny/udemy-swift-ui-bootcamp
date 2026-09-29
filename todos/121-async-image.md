@@ -254,7 +254,7 @@ CardView(
 WebView(url: URL(string: url)!)
 ```
 
-`article.url`은 보통 유효하지만, 강제 언래핑은 여전히 위험하다. [guard 문서](./004-guard-keyword.md)에서 다룬 방식으로 처리하는 편이 안전하다.
+`article.url`은 보통 유효하지만, 강제 언래핑은 여전히 위험하다. [guard 문서](./158-conditional-statements-complete-guide.md)에서 다룬 방식으로 처리하는 편이 안전하다.
 
 **placeholder에 대한 참고사항**도 있다.
 

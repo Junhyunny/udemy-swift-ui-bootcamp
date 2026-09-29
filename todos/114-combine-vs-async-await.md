@@ -214,7 +214,7 @@ chapter-61의 async/await 버전은 `guard (200...299).contains(...)`로 검사�
 return urlSession(ExchangeRate.self, with: Endpoint.withSymbols.url!)
 ```
 
-`url`이 `URL?`이므로 `nil`이면 크래시한다. [guard 문서](./004-guard-keyword.md)의 방식으로 처리하는 편이 안전하다.
+`url`이 `URL?`이므로 `nil`이면 크래시한다. [guard 문서](./158-conditional-statements-complete-guide.md)의 방식으로 처리하는 편이 안전하다.
 
 **③ `RunLoop.main`보다 `DispatchQueue.main`**
 

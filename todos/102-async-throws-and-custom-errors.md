@@ -287,7 +287,7 @@ guard let url = URL(string: endpoint) else {
 }
 ```
 
-[`guard` 문서](./004-guard-keyword.md)에서 다룬 대로 `else`에서 탈출해야 하고, `throw`가 그 수단 중 하나다.
+[`guard` 문서](./158-conditional-statements-complete-guide.md)에서 다룬 대로 `else`에서 탈출해야 하고, `throw`가 그 수단 중 하나다.
 
 **조건 검사 후 던지기**
 

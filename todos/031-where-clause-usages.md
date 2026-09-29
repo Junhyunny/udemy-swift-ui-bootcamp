@@ -135,7 +135,7 @@ if case .pressed(let note) = event, note.isBlackKey {
 guard case .pressed(let note) = event else { return }
 ```
 
-`switch`가 아닌 자리에서는 `where` 대신 콤마(`,`)로 조건을 잇는 형태를 더 자주 쓴다. [`guard` 키워드 문서](./004-guard-keyword.md)와 [`if` 조건과 옵셔널 바인딩 문서](./003-if-conditions-and-optional-binding.md)에서 다룬다.
+`switch`가 아닌 자리에서는 `where` 대신 콤마(`,`)로 조건을 잇는 형태를 더 자주 쓴다. [조건문 총정리](./158-conditional-statements-complete-guide.md)에서 다룬다.
 
 ### 4. `catch ... where` — 오류를 조건으로 나누기
 

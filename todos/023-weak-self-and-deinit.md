@@ -85,7 +85,7 @@ ViewModel ──(cancellableSet)──→ AnyCancellable ──→ 클로저 ┄
 }
 ```
 
-[`guard let self`](./004-guard-keyword.md)의 축약 문법이고, 이후에는 옵셔널이 아닌 `self`를 쓸 수 있다.
+[`guard let self`](./158-conditional-statements-complete-guide.md)의 축약 문법이고, 이후에는 옵셔널이 아닌 `self`를 쓸 수 있다.
 
 ### `weak`과 `unowned`
 

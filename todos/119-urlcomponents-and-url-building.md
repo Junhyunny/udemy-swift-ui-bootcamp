@@ -194,7 +194,7 @@ func addingQueries(_ queries: [String: String]) -> URL? {
 }
 ```
 
-[guard 문서](./004-guard-keyword.md)에서 다룬 대로 바인딩이 이후까지 살아남아 `?`가 사라진다.
+[guard 문서](./158-conditional-statements-complete-guide.md)에서 다룬 대로 바인딩이 이후까지 살아남아 `?`가 사라진다.
 
 **② 딕셔너리는 순서가 보장되지 않는다**
 

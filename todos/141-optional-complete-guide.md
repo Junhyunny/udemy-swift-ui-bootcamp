@@ -4,8 +4,7 @@
 
 | 이미 있는 문서 | 다루는 범위 |
 | --- | --- |
-| [`if`의 조건 결합과 옵셔널 바인딩](./003-if-conditions-and-optional-binding.md) | `,`가 AND인 이유, 바인딩 스코프, 단축 평가 |
-| [`guard` 키워드](./004-guard-keyword.md) | 조기 탈출, `else`의 의무, 바인딩이 이후에도 사는 이유 |
+| [조건문 총정리 — `if` / `guard` / `while`의 모든 형태](./158-conditional-statements-complete-guide.md) | 조건절의 모든 형태, `,`가 AND인 이유, 바인딩 스코프, `guard`의 `else` 의무 |
 | [타입에 붙는 `!`](./005-implicitly-unwrapped-optional.md) | 암시적 언래핑 옵셔널(IUO)과 그 위험 |
 | [API 응답 모델에 옵셔널을 써야 하나](./118-optional-in-api-models.md) | 서버 계약과 옵셔널 설계 |
 
@@ -68,7 +67,7 @@ Swift 5.7(SE-0345)부터 같은 이름이면 우변을 생략한다.
 if let name { print(name) }          // if let name = name 과 같다
 ```
 
-조건 결합과 스코프 규칙은 [003 문서](./003-if-conditions-and-optional-binding.md)에 자세하다. 핵심만 옮기면 **`,`는 AND이고, 앞 조건이 실패하면 뒤는 평가되지 않는다.**
+조건 결합과 스코프 규칙은 [조건문 총정리](./158-conditional-statements-complete-guide.md)에 자세하다. 핵심만 옮기면 **`,`는 AND이고, 앞 조건이 실패하면 뒤는 평가되지 않는다.**
 
 ### 2-2. `guard let` — 바인딩이 살아남는다
 
@@ -79,7 +78,7 @@ guard let user else { return }
 // 여기서부터 함수 끝까지 user 를 쓸 수 있다
 ```
 
-`if let`은 블록 안에서만, `guard let`은 이후 전체에서 쓸 수 있다. 그래서 중첩이 사라진다. 자세한 것은 [004 문서](./004-guard-keyword.md)에 있다.
+`if let`은 블록 안에서만, `guard let`은 이후 전체에서 쓸 수 있다. 그래서 중첩이 사라진다. 자세한 것은 [조건문 총정리](./158-conditional-statements-complete-guide.md)에 있다.
 
 `[weak self]` 클로저에서 쓰는 축약도 같은 문법이다.
 

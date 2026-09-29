@@ -1,6 +1,6 @@
 # 타입에 붙는 `!` — 암시적 언래핑 옵셔널
 
-옵셔널 바인딩은 [별도 문서](./003-if-conditions-and-optional-binding.md)에, API 모델의 옵셔널은 [여기](./118-optional-in-api-models.md)에 정리했다. 이 문서는 **`Type!` 선언**을 다룬다.
+옵셔널 바인딩은 [별도 문서](./158-conditional-statements-complete-guide.md)에, API 모델의 옵셔널은 [여기](./118-optional-in-api-models.md)에 정리했다. 이 문서는 **`Type!` 선언**을 다룬다.
 
 ## 질문이 나온 코드
 
@@ -103,7 +103,7 @@ if newValue == .active, let leftTime = viewModel.leftTime {
 }
 ```
 
-[`if` 조건 결합](./003-if-conditions-and-optional-binding.md)에서 다룬 `,` 연결이고, **`!= nil` 검사와 값 사용을 한 번에** 처리한다. 검사를 빠뜨릴 여지가 없어진다.
+[`if` 조건 결합](./158-conditional-statements-complete-guide.md)에서 다룬 `,` 연결이고, **`!= nil` 검사와 값 사용을 한 번에** 처리한다. 검사를 빠뜨릴 여지가 없어진다.
 
 ### IUO가 정당한 경우
 

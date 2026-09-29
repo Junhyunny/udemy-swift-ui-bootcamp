@@ -272,7 +272,7 @@ if let userInfo = notification.userInfo,
 1. `userInfo` 자체가 `[AnyHashable: Any]?` — 없을 수 있다
 2. `userInfo["Course"]`가 `Any?` — 키가 없거나 타입이 다를 수 있다
 
-[`if let`의 조건 결합](./003-if-conditions-and-optional-binding.md)에서 다룬 `,` 연결이고, 앞의 바인딩을 뒤에서 쓰는 구조다.
+[`if let`의 조건 결합](./158-conditional-statements-complete-guide.md)에서 다룬 `,` 연결이고, 앞의 바인딩을 뒤에서 쓰는 구조다.
 
 Apple 문서의 예제도 정확히 같은 형태다.
 

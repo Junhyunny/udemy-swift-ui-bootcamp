@@ -1,6 +1,6 @@
 # Swift의 형변환 — `as?`, `as!`, `as`, `is`
 
-`.self` 메타타입은 [별도 문서](./035-metatype-and-self.md)에, 옵셔널 바인딩은 [여기](./003-if-conditions-and-optional-binding.md)에 정리했다. 이 문서는 **타입 캐스팅**을 다룬다.
+`.self` 메타타입은 [별도 문서](./035-metatype-and-self.md)에, 옵셔널 바인딩은 [여기](./158-conditional-statements-complete-guide.md)에 정리했다. 이 문서는 **타입 캐스팅**을 다룬다.
 
 ## 질문이 나온 코드
 
@@ -135,7 +135,7 @@ if let http = response as? HTTPURLResponse {
 }
 ```
 
-[chapter-61의 상태 코드 검사](./003-if-conditions-and-optional-binding.md)가 이 경우였다.
+[chapter-61의 상태 코드 검사](./158-conditional-statements-complete-guide.md)가 이 경우였다.
 
 **② `Any`/`AnyObject`에서 구체 타입으로 — 이 예제**
 
@@ -209,7 +209,7 @@ guard let course = userInfo["Course"] as? DTCourse else { return }
 // 이후 course를 계속 쓸 수 있다
 ```
 
-[`guard` 문서](./004-guard-keyword.md)에서 다룬 대로 바인딩이 이후 스코프까지 살아남는다.
+[`guard` 문서](./158-conditional-statements-complete-guide.md)에서 다룬 대로 바인딩이 이후 스코프까지 살아남는다.
 
 **② 옵셔널 체이닝과 조합**
 

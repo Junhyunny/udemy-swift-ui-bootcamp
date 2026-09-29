@@ -21,8 +21,7 @@
 다른 모든 주제의 기반이다. 값과 타입, 제어 흐름, 함수, 객체의 수명 순서로 학습한다.
 
 - [ ] [`let`과 `var`](./002-let-vs-var.md)
-- [ ] [`if`의 조건 결합과 옵셔널 바인딩](./003-if-conditions-and-optional-binding.md)
-- [ ] [`guard` 키워드 — 조기 탈출과 그 장점](./004-guard-keyword.md)
+- [ ] [조건문 총정리 — `if` / `guard` / `while`의 모든 형태](./158-conditional-statements-complete-guide.md)
 - [ ] [타입에 붙는 `!` — 암시적 언래핑 옵셔널](./005-implicitly-unwrapped-optional.md)
 - [ ] [옵셔널 총정리 — 선언부터 언래핑, 강제 언래핑까지](./141-optional-complete-guide.md)
 - [ ] [`var posts = [Post]()` — 컬렉션 초기화 표기들](./006-array-literal-and-initialization.md)
