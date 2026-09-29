@@ -175,6 +175,129 @@ for try await line in url.lines {
 
 [`async throws` 문서](./102-async-throws-and-custom-errors.md)에서 다룬 대로 `try`와 `await`이 함께 온다. `NotificationCenter`의 알림 시퀀스는 에러를 던지지 않으므로 이 예제에는 `try`가 없다.
 
+### `for await x in` vs `for x in await ...` — `await`은 무엇에 붙는가
+
+둘 다 실제로 쓰이는 문법이고, 헷갈리기 쉽다. 구분 기준은 하나다. **무엇이 비동기인가.**
+
+| 무엇이 비동기인가 | 문법 | 기다리는 횟수 |
+| --- | --- | --- |
+| **순회 대상**(시퀀스)이 비동기 | `for await n in stream` | 요소마다 매번 |
+| **값을 구하는 호출**이 비동기 | `for n in await fetchArray()` | 처음 한 번 |
+| 둘 다 | `for await n in await makeStream()` | 한 번 + 매번 |
+| 아무것도 아님 | `for n in array` | 안 기다림 |
+
+```swift
+// A. 스트림이 비동기 — 요소가 도착할 때마다 기다린다
+for await n in stream { }
+
+// B. 배열을 "가져오는 일"만 비동기 — 배열을 받고 나면 평범한 순회다
+for n in await fetchArray() { }        // fetchArray() -> [Int]
+
+// C. 스트림을 얻는 것도 비동기, 순회도 비동기
+for await n in await makeStream() { }  // makeStream() -> AsyncStream<Int>
+```
+
+**B의 `await`은 루프와 아무 상관이 없다.** `let arr = await fetchArray()`의 `await`과 완전히 같은 것으로, 그냥 표현식 앞에 붙는 `await`이다. 아래 두 코드는 동일하다.
+
+```swift
+for n in await fetchArray() { print(n) }
+
+let arr = await fetchArray()   // ← 여기의 await 과 같다
+for n in arr { print(n) }
+```
+
+반면 **A의 `await`은 루프 문법의 일부**라 떼어낼 수 없다.
+
+#### 컴파일러의 진짜 판정 기준 — 프로토콜 스위치
+
+메시지를 보면 `await`의 정체가 분명해진다. **`for` 뒤의 `await` 유무가 "어느 프로토콜을 요구할지"를 고른다.**
+
+| 코드 | 결과 |
+| --- | --- |
+| `for n in stream` | ❌ `for-in loop requires 'AsyncStream<Int>' to conform to 'Sequence'` |
+| `for await n in array` | ❌ `for-in loop requires '[Int]' to conform to 'AsyncSequence'` |
+
+즉 이렇게 읽으면 된다.
+
+- `for n in ...` → 대상이 **`Sequence`** 여야 한다
+- `for await n in ...` → 대상이 **`AsyncSequence`** 여야 한다
+
+`fetchArray()`는 `async` 함수지만 **반환 타입은 그냥 `[Int]`** 다. `[Int]`는 `AsyncSequence`가 아니므로 `for await n in fetchArray()`는 실패한다.
+
+```swift
+for await n in fetchArray() { }
+// ❌ for-in loop requires '[Int]' to conform to 'AsyncSequence'
+```
+
+반대로 `await`을 빼면 "호출이 비동기인데 표시가 없다"고 한다.
+
+```swift
+for n in fetchArray() { }
+// ❌ expression is 'async' but is not marked with 'await'
+```
+
+이 둘을 결정적으로 보여주는 예가 `for n in await stream`이다. 오류와 경고가 **함께** 나온다.
+
+```swift
+for n in await stream { }
+// ❌ for-in loop requires 'AsyncStream<Int>' to conform to 'Sequence'
+// ⚠️ no 'async' operations occur within 'await' expression
+```
+
+`await`을 표현식 자리에 놓아 봐야 루프는 여전히 `Sequence`를 요구하고, 표현식 `stream`에는 기다릴 것이 없어 경고까지 붙는다. **두 `await`은 이름만 같지 서로 다른 문법**이라는 증거다.
+
+#### `try`가 붙는 자리도 같은 기준이다
+
+| 무엇이 던지는가 | 문법 |
+| --- | --- |
+| 시퀀스가 순회 중 던짐 | `for try await n in throwingStream` |
+| 값을 구하는 호출이 던짐 | `for n in try await fetchThrows()` |
+| 둘 다 | `for try await n in try await makeStream()` |
+
+`AsyncThrowingStream`을 `try` 없이 돌리면 이렇게 알려준다.
+
+```swift
+for await n in throwingStream { }
+// ❌ for-in loop can throw, but is not marked with 'try'
+```
+
+순서는 **`for try await`로 고정**이다. 바꿔 쓸 수 없다.
+
+```swift
+for await try n in throwingStream { }   // ❌ expected pattern
+```
+
+#### 실전에서 B 형태를 자주 만나는 곳 — 액터
+
+`for x in await ...`가 실제 코드에 가장 많이 등장하는 자리는 액터 프로퍼티 접근이다. 프로퍼티 **읽기 자체가** 비동기일 뿐, 결과는 평범한 배열이다.
+
+```swift
+actor Store {
+    var items: [Int] = [1, 2, 3]
+    var stream: AsyncStream<Int> { ... }
+}
+
+for n in await store.items { }        // 읽기만 비동기, 순회는 동기
+for await n in await store.stream { } // 읽기도 비동기, 순회도 비동기
+```
+
+[액터 문서](./153-swift-actor-complete-guide.md)에서 본 격리 도메인 때문에 `await`이 붙는 것이지, 시퀀스가 비동기라서가 아니다.
+
+#### 판단 순서
+
+낯선 루프를 만나면 이렇게 끊어 읽는다.
+
+1. **`in` 뒤 표현식의 타입이 무엇인가?** `[T]`/`Range` 같은 `Sequence`면 `for x in`, `AsyncStream`/`AsyncSequence`면 `for await x in`
+2. **그 표현식을 구하는 데 `await`이 필요한가?** 필요하면 `in` 뒤에 `await`을 하나 더 붙인다
+3. **1번이 던지면** `for try await`, **2번이 던지면** `in try await`
+
+헷갈리면 **일단 변수로 빼 보는 것**이 가장 빠른 진단법이다.
+
+```swift
+let seq = await makeStream()   // 2번이 여기로 분리된다
+for await n in seq { }         // 남은 await 이 1번이다
+```
+
 ### 루프 없이 값 하나만 얻기
 
 `AsyncSequence`에도 `Sequence`처럼 메서드가 있다.
@@ -256,6 +379,13 @@ AsyncSequence 값이 시간에 따라 도착한다  for await x in
 - [ ] `URL.lines`로 파일을 한 줄씩 읽어 본다 (`for try await` 필요).
 - [ ] Apple 문서의 `Counter` 예제를 그대로 구현해 실행한다.
 - [ ] `map`을 호출만 하고 순회하지 않았을 때 아무 일도 안 일어나는 것을 확인한다.
+- [ ] `async` 함수가 `[Int]`를 반환하게 만들고 `for n in await f()`로 순회한다.
+- [ ] 같은 함수에 `for await n in f()`를 써서 `AsyncSequence` 요구 오류를 본다.
+- [ ] `for n in await stream`을 써서 오류와 `await` 불필요 경고가 함께 나오는 것을 확인한다.
+- [ ] `await makeStream()`을 지역 변수로 분리해 남는 `await`이 무엇인지 확인한다.
+- [ ] `AsyncThrowingStream`을 `try` 없이 순회해 `for-in loop can throw` 메시지를 본다.
+- [ ] `for await try`로 순서를 바꿔 써 보고 컴파일되지 않는 것을 확인한다.
+- [ ] `actor`에 배열 프로퍼티를 두고 `for n in await store.items`를 써 본다.
 
 ## 공식 참고 자료
 
@@ -267,6 +397,8 @@ AsyncSequence 값이 시간에 따라 도착한다  for await x in
 - [Apple: NotificationCenter.Notifications](https://developer.apple.com/documentation/foundation/notificationcenter/notifications-swift.struct)
 - [Apple: URL.lines](https://developer.apple.com/documentation/foundation/url/lines)
 - [Apple: URLSession.bytes(for:delegate:)](https://developer.apple.com/documentation/foundation/urlsession/bytes(for:delegate:))
+- [The Swift Programming Language: Concurrency — Asynchronous Sequences](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/#Asynchronous-Sequences)
+- [The Swift Programming Language: Statements — For-In Statement](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/statements/#For-In-Statement)
 - [Swift 공식 문서: Concurrency](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/)
 - [Swift 공식 문서: Statements — For-In Statement](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/statements/#For-In-Statement)
 - [Apple: Sequence](https://developer.apple.com/documentation/swift/sequence)
