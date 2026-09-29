@@ -17,7 +17,7 @@ struct WebView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: WKWebView, context: Context) {
-        // TODO: [todos/004-guard-keyword.md](../../todos/004-guard-keyword.md)
+        // TODO: [todos/158-conditional-statements-complete-guide.md](../../todos/158-conditional-statements-complete-guide.md)
         guard let urlString, let url = URL(string: urlString) else { return }
         let request = URLRequest(url: url)
         uiView.load(request)
