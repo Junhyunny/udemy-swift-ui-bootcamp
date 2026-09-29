@@ -41,6 +41,8 @@
 - [ ] [`final` 키워드 — 어디에 붙이고 무엇을 막는가](./018-final-keyword.md)
 - [ ] [`struct`와 `class`](./019-struct-vs-class.md)
 - [ ] [Swift의 타입 체계와 상속 구조](./020-swift-type-system-and-inheritance.md)
+- [ ] [`'self' used before 'super.init' call` — Swift의 2단계 초기화](./155-two-phase-initialization-and-super-init.md)
+- [ ] [객체 생성 라이프 사이클과 이니셜라이저 — 선언 방식이 초기화 시점을 정한다](./156-object-lifecycle-and-initializers.md)
 - [ ] [Swift의 형변환 — `as?`, `as!`, `as`, `is`](./021-swift-type-casting.md)
 - [ ] [Swift의 메모리 구조 — JVM과 비교해서](./022-swift-memory-model.md)
 - [ ] [`[weak self]`와 `deinit` — 객체가 언제 사라지나](./023-weak-self-and-deinit.md)
