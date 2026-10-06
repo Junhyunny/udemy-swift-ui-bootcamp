@@ -114,12 +114,6 @@ func transform(_ n: Int, using body: (Int) -> String) -> String {
 transform(3) { "번호 \($0)" }
 ```
 
-**함수가 끝난 뒤에 호출할 클로저라면 `@escaping`이 필요하다.**
-
-> "A closure is said to escape a function when the closure is passed as an argument to the function, but is called after the function returns. When you declare a function that takes a closure as one of its parameters, you can write `@escaping` before the parameter's type to indicate that the closure is allowed to escape."
-
-저장해 뒀다가 나중에 부르거나 비동기로 넘기려면 `@escaping`을 붙인다. 안 붙이면 컴파일 오류다.
-
 ### 4. 여기서 갈린다 — 콜백인 `{ }`와 내용물을 만드는 `{ }`
 
 `Button`의 선언을 보면 두 종류가 한 줄에 같이 있다.
@@ -137,44 +131,7 @@ transform(3) { "번호 \($0)" }
 
 `ForEach(0..<30) { idx in ... }`는 또 조금 다르다. 각 항목마다 뷰를 만들기 위해 **여러 번** 호출되는 클로저다. 콜백처럼 나중에 불리는 게 아니라 목록을 그리는 동안 반복 호출된다.
 
-#### 내 함수에서 콜백을 받아 넘길 때 — `chapter-47`의 사례
-
-`chapter-47/chapter-47/ContentView.swift`는 직접 만든 API에서 `@escaping`이 왜 필요한지 보여 준다.
-
-```swift
-extension View {
-    func measureSzie(perform action: @escaping (CGSize) -> Void) -> some View {
-        modifier(MeasuringSizeModifier())
-            .onPreferenceChange(SizePreferenceKey.self, perform: action)
-    }
-}
-```
-
-호출하는 쪽은 이렇게 쓴다.
-
-```swift
-.measureSzie { size in
-    viewSize = size          // ← 이 클로저가 action
-}
-```
-
-**`action`이 무엇인가**를 정리하면 이렇다.
-
-- 타입은 `(CGSize) -> Void`다. 측정된 크기를 받고 아무것도 돌려주지 않는다.
-- 호출한 쪽이 "크기를 알게 되면 이걸 해 달라"고 건네는 **콜백**이다.
-- `measureSzie`는 이 콜백을 **실행하지 않는다.** 그대로 `onPreferenceChange`에 넘기기만 한다.
-
-**왜 `@escaping`이 필요한가**는 이 마지막 줄에서 나온다. `measureSzie`는 값을 반환하며 즉시 끝나지만, `action`은 그 뒤로도 살아남아 크기가 바뀔 때마다 불려야 한다. 앞서 인용한 정의가 그대로 적용된다 — 함수가 반환된 뒤에 호출되는 클로저이므로 escape한다.
-
-받는 쪽 시그니처를 보면 확인된다.
-
-> `nonisolated func onPreferenceChange<K>(_ key: K.Type = K.self, perform action: @escaping (K.Value) -> Void) -> some View where K : PreferenceKey, K.Value : Equatable`
-
-`onPreferenceChange`가 `@escaping`을 요구하므로, 거기에 클로저를 전달하는 `measureSzie`도 **연쇄적으로** `@escaping`이어야 한다. 붙이지 않으면 `escaping closure` 관련 컴파일 오류가 난다.
-
-`Button`의 `action`과 성격이 같다. 둘 다 "나중에 불릴 동작"이고, 둘 다 `@escaping`이다. 반면 `label`이나 `content`는 즉시 실행되므로 `@escaping`이 아니다. 이 구분이 SwiftUI API를 읽는 기준이 된다.
-
-전체 데이터 흐름은 [PreferenceKey 문서](./067-preference-key-and-onpreferencechange.md)에, `extension View`로 감싸는 이유는 [ViewModifier 문서](./042-view-modifier-protocol.md)에 정리했다.
+`action`을 나중에 실행할 수 있도록 받는 `@escaping`의 규칙과 `chapter-47`의 `measureSzie(perform:)` 사례는 [클로저와 객체 수명](./023-weak-self-and-deinit.md)에 모았다.
 
 ### 5. `{ }` 안에서 `if`와 `for`가 되는 이유 — result builder
 
@@ -207,7 +164,6 @@ VStack {
 | 클로저 (closure) | 이름 없는 함수 조각. `{ }` 자체 |
 | trailing closure | 마지막 클로저 인자를 괄호 밖에 쓰는 **문법** |
 | 콜백 (callback) | 나중에 불리라고 넘기는 클로저. `Button`의 `action` |
-| `@escaping` | 함수가 끝난 뒤에도 호출될 수 있음을 표시 |
 | 고차 함수 | 함수를 인자로 받거나 반환하는 함수 |
 | result builder | `{ }` 안의 나열·`if`·`for`를 하나의 값으로 조립하는 기능 |
 | `@ViewBuilder` / `@ContentBuilder` | SwiftUI가 뷰용으로 정의한 result builder |
@@ -218,7 +174,6 @@ VStack {
 - [ ] `VStack(spacing: 15) { }`를 `VStack(spacing: 15, content: { })`로 바꿔 본다.
 - [ ] 클로저를 마지막이 아닌 파라미터로 받는 함수를 만들고, trailing closure로 호출해 보며 왜 안 되는지 확인한다.
 - [ ] 클로저 두 개를 받는 함수를 만들어 multiple trailing closure 문법으로 호출한다.
-- [ ] 클로저를 배열에 저장하는 함수를 만들고 `@escaping`을 뺐을 때의 오류 메시지를 읽는다.
 - [ ] `Button`의 `action`과 `label`에 각각 `print`를 넣어 호출 시점이 다른 것을 확인한다.
 - [ ] `VStack { }` 안에 `if`를 넣어 조건부 뷰를 만들고, 일반 클로저에서는 왜 안 되는지 설명한다.
 - [ ] `@ViewBuilder`를 붙인 자체 함수를 만들어 여러 뷰를 반환받는다.
@@ -226,10 +181,6 @@ VStack {
 - [ ] `Button(role:) { } label: { }`를 `Button(role:action:label:)` 한 줄 형태로 풀어 써 본다.
 - [ ] 그 상태에서 `action:` 이름을 지우면 어떤 오류가 나는지 확인한다.
 - [ ] `label:`을 첫 trailing closure로 만들 수 있는지 시도해 보고 왜 안 되는지 설명한다.
-- [ ] `measureSzie(perform:)`에서 `@escaping`을 지우고 어떤 오류가 나는지 읽는다.
-- [ ] `action`에 `print`를 넣어 `measureSzie` 호출이 끝난 뒤에 불리는 것을 확인한다.
-- [ ] `action`을 `measureSzie` 안에서 즉시 호출하도록 바꿔 보고 의미가 어떻게 달라지는지 비교한다.
-- [ ] `typealias SizeHandler = (CGSize) -> Void`로 시그니처를 정리해 본다.
 
 ## 참고 자료
 
@@ -241,8 +192,6 @@ VStack {
 - [Apple: ContentBuilder](https://developer.apple.com/documentation/swiftui/contentbuilder)
 - [Apple: VStack.init(alignment:spacing:content:)](https://developer.apple.com/documentation/swiftui/vstack/init(alignment:spacing:content:))
 - [Apple: Button.init(action:label:)](https://developer.apple.com/documentation/swiftui/button/init(action:label:))
-- [The Swift Programming Language: Closures — Escaping Closures](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/#Escaping-Closures)
-- [Apple: view.onPreferenceChange(_:perform:)](https://developer.apple.com/documentation/swiftui/view/onpreferencechange(_:perform:))
 - [Apple: ScrollView](https://developer.apple.com/documentation/swiftui/scrollview)
 - [Apple: ForEach.init(_:content:)](https://developer.apple.com/documentation/swiftui/foreach/init(_:content:))
 - [Apple: Button.init(role:action:label:)](https://developer.apple.com/documentation/swiftui/button/init(role:action:label:))

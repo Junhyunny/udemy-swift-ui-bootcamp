@@ -235,21 +235,6 @@ func measure<T>(_ label: String, _ work: () -> T) -> T {
 let value = measure("계산") { 1 + 2 }
 ```
 
-**클로저를 저장하는 프로퍼티 — `@escaping`**
-
-```swift
-struct CardView: View {
-    let title: String
-    let onTap: () -> Void      // 저장되는 클로저
-
-    var body: some View {
-        Text(title).onTapGesture { onTap() }
-    }
-}
-```
-
-함수 호출이 끝난 뒤에도 살아 있어야 하는 클로저는 파라미터에 `@escaping`이 필요하다. 프로퍼티로 저장하는 경우는 그 자체가 escaping이다.
-
 ### `$0`을 쓰면 안 되는 경우
 
 - **클로저가 중첩될 때.** 안쪽 `$0`이 어느 클로저의 것인지 읽는 사람이 알기 어렵다. 안쪽·바깥쪽 중 하나는 이름을 붙인다.
@@ -305,7 +290,6 @@ Swift가 제공하는 축약 최적화는 공식 문서에 네 가지로 정리�
 - [Swift 공식 문서: Closures — Shorthand Argument Names](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/#Shorthand-Argument-Names)
 - [Swift 공식 문서: Closures — Closure Expression Syntax](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/#Closure-Expression-Syntax)
 - [Swift 공식 문서: Closures — Trailing Closures](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/#Trailing-Closures)
-- [Swift 공식 문서: Closures — Escaping Closures](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/#Escaping-Closures)
 - [Swift 공식 문서: Functions](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/functions/)
 - [Apple: Sequence.map(_:)](https://developer.apple.com/documentation/swift/sequence/map(_:))
 - [Apple: Sequence.reduce(_:_:)](https://developer.apple.com/documentation/swift/sequence/reduce(_:_:))

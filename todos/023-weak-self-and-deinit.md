@@ -1,6 +1,6 @@
-# `[weak self]`와 `deinit` — 객체가 언제 사라지나
+# 클로저의 `@escaping`, `self`, `[weak self]`와 객체 수명
 
-ARC와 순환 참조는 [Swift 메모리 구조](./022-swift-memory-model.md)에 정리했다. 이 문서는 **클로저 캡처와 `deinit`** 을 다룬다.
+ARC와 순환 참조의 기본 원리는 [Swift 메모리 구조](./022-swift-memory-model.md)에 정리했다. 이 문서는 클로저의 수명, `self` 캡처, 객체 해제를 함께 다룬다. 타입 값 `SomeType.self`와 대문자 `Self`는 [메타타입 문서](./035-metatype-and-self.md)의 별개 주제다.
 
 ## 질문이 나온 코드
 
@@ -20,7 +20,58 @@ deinit {
 }
 ```
 
-## 1부 — `[weak self]`
+## 1부 — `@escaping`과 `self`
+
+### `@escaping`은 언제 필요한가
+
+함수의 클로저 파라미터는 기본적으로 함수 호출 안에서만 사용한다. 함수가 반환된 뒤에도 클로저를 저장하거나 다른 escaping 파라미터로 전달하려면 파라미터 타입에 `@escaping`을 붙인다. 클로저를 저장하는 **프로퍼티 선언 자체**에는 붙이지 않는다.
+
+```swift
+final class HandlerStore {
+    var handlers: [() -> Void] = []
+
+    func add(_ handler: @escaping () -> Void) {
+        handlers.append(handler)
+    }
+}
+```
+
+`add`가 끝난 뒤에 `handler`가 실행될 수 있으므로 escaping이다. `@escaping`을 지우면 저장할 수 없다는 컴파일 오류가 난다. 반대로 호출 중에만 실행하는 `func run(_ action: () -> Void) { action() }`에는 필요하지 않다. `@escaping`은 **클로저의 수명에 관한 선언**이며, 그 자체로 순환 참조가 생겼다는 뜻은 아니다.
+
+`chapter-47/chapter-47/ContentView.swift`의 `measureSzie(perform:)`도 받은 `action`을 `onPreferenceChange`의 escaping 파라미터로 넘긴다.
+
+```swift
+func measureSzie(perform action: @escaping (CGSize) -> Void) -> some View {
+    modifier(MeasuringSizeModifier())
+        .onPreferenceChange(SizePreferenceKey.self, perform: action)
+}
+
+// 호출하는 쪽
+.measureSzie { size in viewSize = size }
+```
+
+`measureSzie`는 `action`을 직접 실행하지 않고 `onPreferenceChange`의 escaping 파라미터로 넘긴다. 크기가 바뀔 때 나중에 호출될 수 있으므로 전달하는 쪽에도 `@escaping`이 필요하다. `Button`의 `action` 역시 탭할 때 실행되는 escaping 클로저다. `label`이나 `VStack`의 `content`는 뷰 내용을 구성하는 클로저다. UI의 클로저 문법은 [클로저와 result builder](./040-closures-and-view-builders.md), 크기 전달 흐름은 [PreferenceKey](./067-preference-key-and-onpreferencechange.md)에 정리했다.
+
+### 클로저 안의 `self`
+
+소문자 `self`는 현재 인스턴스를 가리킨다. 클래스의 인스턴스 프로퍼티나 메서드를 일반적인 **escaping 클로저** 안에서 참조할 때는 `self.`를 명시해 캡처를 드러낸다. 비escaping 클로저에서는 암묵적으로 참조할 수 있다.
+
+```swift
+func run(_ action: () -> Void) { action() }
+
+final class Counter {
+    var count = 0
+
+    func update(store: HandlerStore) {
+        store.add { self.count += 1 }  // 강한 캡처
+        run { count += 1 }              // 비escaping: 암묵적 self
+    }
+}
+```
+
+`[self]`를 캡처 리스트에 적으면 클로저 안에서 `self.`를 생략할 수도 있지만 **강한 캡처**라는 점은 같다. `self.`를 쓰거나 `@escaping`을 붙인다고 항상 누수가 나는 것은 아니다. 실제로 누수되는지는 아래처럼 소유 관계가 다시 `self`로 돌아오는지 확인해야 한다.
+
+## 2부 — `[weak self]`
 
 ### 무엇인가 — 캡처 리스트
 
@@ -96,7 +147,7 @@ ViewModel ──(cancellableSet)──→ AnyCancellable ──→ 클로저 ┄
 | 타입 | `Optional` | 비옵셔널 |
 | 쓸 때 | 대상이 먼저 사라질 수 있다 | 대상이 자기보다 오래 산다고 확신 |
 
-**기본은 `weak`이다.** `unowned`가 조금 빠르지만 확신이 틀리면 크래시한다. 네트워크 응답처럼 **언제 올지 모르는 콜백**에는 반드시 `weak`을 쓴다.
+`unowned`는 클로저가 실행될 때 대상이 반드시 살아 있다고 보장할 수 있을 때만 쓴다. 대상이 먼저 사라질 수 있는 콜백이라면 `weak`이 적절하다. 다만 클로저가 `self`를 붙잡아야 작업이 끝나는 경우도 있으므로, 수명과 소유 관계를 확인해 선택한다.
 
 ### 언제 `[weak self]`가 불필요한가
 
@@ -108,7 +159,7 @@ ViewModel ──(cancellableSet)──→ AnyCancellable ──→ 클로저 ┄
 items.map { self.transform($0) }        // 즉시 끝난다 — 불필요
 ```
 
-**② `Task { }` 안 — 대체로 불필요**
+**② 끝나는 `Task { }` 안 — 대체로 불필요**
 
 ```swift
 Task {
@@ -116,11 +167,11 @@ Task {
 }
 ```
 
-`Task`는 작업이 끝나면 `self` 참조를 놓는다. 순환이 남지 않는다. [Combine과 async/await 비교](./114-combine-vs-async-await.md)에서 언급한 async/await의 이점이 이것이다.
+작업이 끝나면 `Task`가 캡처한 참조도 해제된다. 그러나 작업이 오래 실행되거나 끝나지 않는 반복을 포함하면 객체의 수명도 길어진다. 이 경우 작업 취소 시점과 소유 관계를 따로 확인한다. [Combine과 async/await 비교](./114-combine-vs-async-await.md)도 참고한다.
 
 **③ SwiftUI `View`의 클로저**
 
-`View`는 `struct`라 참조 타입이 아니다. 애초에 `self`를 강하게 캡처하는 순환이 생기지 않는다.
+`View` 자체는 `struct`이므로 뷰 값의 `self`를 캡처한다고 클래스 인스턴스 사이의 순환 참조가 생기지는 않는다. 다만 클로저가 별도의 클래스 객체를 캡처한다면 그 객체의 소유 관계는 따로 확인한다.
 
 ```swift
 Button("탭") {
@@ -137,12 +188,14 @@ Button("탭") {
 ```text
 클로저가 저장되는가? (프로퍼티, 컬렉션, 구독)
   ├─ 예 → 그 저장 위치를 self가 소유하는가?
-  │        ├─ 예 → [weak self] 필요       ← 이 예제
+  │        ├─ 예 → 클로저가 self를 강하게 캡처하는가?
+  │        │        ├─ 예 → 순환을 끊거나 캡처 방식을 바꾼다 ← 이 예제
+  │        │        └─ 아니오 → 이 경로의 순환은 없다
   │        └─ 아니오 → 대체로 불필요
   └─ 아니오 (즉시 실행) → 불필요
 ```
 
-## 2부 — `deinit`
+## 3부 — `deinit`
 
 ### 무엇이고 언제 실행되나
 
@@ -220,15 +273,9 @@ deinit {
 
 해제 중인 상태이므로 다른 객체의 상태를 신뢰하기 어렵다.
 
-**② `self`를 escape시키면 안 된다**
+**② `self`를 비동기 작업으로 넘기지 않는다**
 
-```swift
-deinit {
-    Task { await self.cleanup() }      // ⚠️ 위험 — self가 이미 해제 중
-}
-```
-
-비동기 작업에 `self`를 넘기면 해제된 객체를 참조하게 된다.
+`deinit`에서 `self`를 캡처하는 `Task`를 만들면 해제 중인 인스턴스가 `deinit` 밖으로 탈출할 수 있어 컴파일러가 막는다. 비동기 정리가 필요하다면 인스턴스가 살아 있을 때 별도의 종료 메서드에서 수행한다.
 
 **③ 실행 스레드가 보장되지 않는다**
 
@@ -241,11 +288,19 @@ deinit {
 ### 정리
 
 ```text
+@escaping
+  함수 반환 뒤에도 클로저를 사용할 수 있는 파라미터 선언
+  저장되거나 다른 escaping 파라미터로 전달될 때 필요
+
+self
+  현재 인스턴스. escaping 클로저에서 강하게 캡처할 수 있음
+  명시적 self와 [self] 모두 강한 캡처
+
 [weak self]
   클로저가 self를 약하게 캡처 → 순환 참조를 끊는다
   self가 옵셔널이 되어 해제 후에도 안전하다
-  필요한 경우: 클로저가 저장되고, 그 저장 위치를 self가 소유할 때
-  불필요한 경우: 즉시 실행 클로저, Task { }, SwiftUI View(struct)
+  고려할 경우: self가 소유한 저장 클로저가 다시 self를 강하게 캡처할 때
+  대체로 불필요한 경우: 즉시 실행 클로저, 끝나는 Task, SwiftUI View 값 자체
 
 deinit
   인스턴스 해제 직전 호출. class에만 있다
@@ -255,8 +310,105 @@ deinit
   이 코드의 forEach cancel()은 중복 — AnyCancellable이 자동 호출
 ```
 
+## Xcode Playground에서 직접 실행하기
+
+아래 코드 전체를 macOS 또는 iOS의 **Blank Playground**에 붙여 넣고 실행한다. SwiftUI와 Combine을 import하지 않아도 된다. 출력은 오른쪽 결과 표시 영역보다 **콘솔**에서 순서대로 확인하기 쉽다.
+
+```swift
+func performNow(_ action: () -> Void) {
+    action()
+}
+
+final class DeferredActions {
+    private var action: (() -> Void)?
+
+    func save(_ action: @escaping () -> Void) {
+        self.action = action
+    }
+
+    func fire() { action?() }
+    func clear() { action = nil }
+}
+
+// 1. 호출 중 실행하는 클로저와 나중에 실행하는 클로저
+performNow { print("즉시 실행") }
+
+let deferred = DeferredActions()
+deferred.save { print("나중에 실행") }
+print("save 반환")
+deferred.fire()
+
+final class Owner {
+    let name: String
+    let actions = DeferredActions()
+
+    init(_ name: String) { self.name = name }
+    deinit { print("\(name) deinit") }
+
+    func report() { print("\(name) 실행") }
+
+    func startStrong() {
+        actions.save { self.report() }
+    }
+
+    func registerWeak(on store: DeferredActions) {
+        store.save { [weak self] in
+            guard let self else {
+                print("소유자 없음")
+                return
+            }
+            self.report()
+        }
+    }
+}
+
+// 2. Owner → actions → 클로저 → Owner 순환 참조
+weak var strongProbe: Owner?
+do {
+    let owner = Owner("strong")
+    strongProbe = owner
+    owner.startStrong()
+    owner.actions.fire()
+}
+print("strong 살아 있음: \(strongProbe != nil)")
+strongProbe?.actions.clear()  // 순환을 직접 끊는다
+print("strong 해제됨: \(strongProbe == nil)")
+
+// 3. 약한 캡처: 클로저를 Owner가 보관해도 순환이 없다
+weak var weakProbe: Owner?
+do {
+    let owner = Owner("weak")
+    weakProbe = owner
+    owner.registerWeak(on: owner.actions)
+    owner.actions.fire()
+}
+print("weak 해제됨: \(weakProbe == nil)")
+
+// 4. 클로저가 외부에 남아 있어도 해제된 self는 nil이 된다
+let externalStore = DeferredActions()
+do {
+    let owner = Owner("external")
+    owner.registerWeak(on: externalStore)
+    externalStore.fire()
+}
+externalStore.fire()
+```
+
+콘솔에는 `즉시 실행` → `save 반환` → `나중에 실행` 순서가 먼저 나온다. `strong`은 지역 범위를 나간 뒤에도 살아 있어 `strong 살아 있음: true`가 찍힌다. `clear()`로 순환을 끊으면 `strong deinit`이 나온다. `weak`은 범위를 나갈 때 `deinit`이 호출된다. 마지막 `externalStore.fire()`는 해제된 객체를 되살리지 않고 `소유자 없음`을 출력한다.
+
+`startStrong()`의 `self.report()`를 `report()`로 바꾸면 escaping 클로저에서 명시적 `self`가 필요하다는 컴파일 오류를 볼 수 있다. 3번의 약한 캡처를 강한 캡처로 비교하려면 `registerWeak(on:)`에서 `[weak self]`를 `[self]`로 바꾸고 `guard let self else { ... }` 부분을 지운다. 그러면 `weak 해제됨: false`로 달라진다. 이 경우 Playground 실행이 끝나도 순환 참조가 남으므로 비교한 뒤 코드를 원래대로 돌린다.
+
 ## 학습 체크리스트
 
+- [ ] Playground의 `strongProbe`와 `weakProbe` 출력 및 `deinit` 순서를 비교한다.
+- [ ] 외부에 남은 클로저를 호출해 `guard let self`의 `nil` 분기를 확인한다.
+- [ ] 클로저를 배열에 저장하는 함수에서 `@escaping`을 지우고 컴파일 오류를 확인한다.
+- [ ] `measureSzie(perform:)`에서 `@escaping`을 지우고 오류를 확인한다.
+- [ ] `measureSzie(perform:)`의 콜백에 `print`를 넣어 호출 시점을 확인한다.
+- [ ] 콜백을 즉시 실행하는 함수와 저장하는 함수를 만들어 호출 시점을 비교한다.
+- [ ] `typealias SizeHandler = (CGSize) -> Void`로 클로저 타입을 분리해 본다.
+- [ ] escaping 클로저에서 `self.`와 `[self]`를 각각 써 보고 캡처 관계를 설명한다.
+- [ ] 비escaping 클로저에서 인스턴스 멤버를 `self.` 없이 사용한다.
 - [ ] `[weak self]`를 지우고 `deinit`의 `print`가 찍히지 않는 것을 확인한다 (순환 참조).
 - [ ] `[weak self]`를 되살려 `deinit`이 실행되는지 확인한다.
 - [ ] `self?`를 `guard let self else { return }`로 바꿔 본다.
@@ -272,6 +424,8 @@ deinit
 
 ## 공식 참고 자료
 
+- [Swift 공식 문서: Closures — Escaping Closures](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/#Escaping-Closures)
+- [Swift 공식 문서: Attributes — escaping](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/attributes/#escaping)
 - [Swift 공식 문서: Deinitialization](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/deinitialization/)
 - [Swift 공식 문서: ARC — Strong Reference Cycles for Closures](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/#Strong-Reference-Cycles-for-Closures)
 - [Swift 공식 문서: ARC — Resolving Strong Reference Cycles for Closures](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/#Resolving-Strong-Reference-Cycles-for-Closures)

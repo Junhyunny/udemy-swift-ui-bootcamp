@@ -189,7 +189,7 @@ CheckoutView(cart: cart) { success in
 }
 ```
 
-시트 뷰가 완료 콜백을 받는 형태다. [`@escaping` 클로저](./040-closures-and-view-builders.md)와 같은 패턴이다.
+시트 뷰가 완료 콜백을 받는 형태다. [`@escaping` 클로저](./023-weak-self-and-deinit.md)와 같은 패턴이다.
 
 **어느 것을 고르나**
 

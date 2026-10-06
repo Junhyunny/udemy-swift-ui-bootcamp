@@ -144,7 +144,7 @@ nonisolated func onPreferenceChange<K>(
 주목할 제약이 둘 있다.
 
 - **`K.Value : Equatable`** — 값이 실제로 **바뀌었을 때만** 콜백이 불린다. 같은 값이 다시 올라오면 무시된다. `CGSize`는 `Equatable`이라 이 예제가 성립한다.
-- **`@escaping`** — 이 클로저는 `onPreferenceChange` 호출이 끝난 뒤 값이 바뀔 때마다 불린다. 그래서 저장되어야 하고, 저장되는 클로저에는 `@escaping`이 필요하다. 그 결과 `measureSzie(perform:)`의 `action` 파라미터도 `@escaping`이어야 한다. `@escaping`의 의미는 [클로저와 view builder](./040-closures-and-view-builders.md)에서 다뤘다.
+- **`@escaping`** — 크기가 바뀔 때 호출할 `action`을 보관한다. 클로저 수명과 `measureSzie(perform:)`로 전달되는 규칙은 [클로저와 객체 수명](./023-weak-self-and-deinit.md)에 정리했다.
 
 예제에서 `action`이 무엇인지 따라가 보면 이렇다.
 
