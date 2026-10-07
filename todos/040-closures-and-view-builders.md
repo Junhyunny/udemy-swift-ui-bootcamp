@@ -120,8 +120,8 @@ transform(3) { "번호 \($0)" }
 
 > `init(action: @escaping @MainActor () -> Void, @ContentBuilder label: () -> Label)`
 
-- **`action`** — `@escaping`이다. 버튼을 **누를 때** 불린다. 이것이 진짜 콜백이다.
-- **`label`** — `@escaping`이 아니다. 버튼을 만들 때 **즉시** 실행되어 보여줄 내용을 반환한다.
+- **`action`** — 버튼을 **누를 때** 불리는 콜백이다.
+- **`label`** — 버튼의 내용을 구성한다.
 
 `VStack`도 같다.
 
@@ -130,8 +130,6 @@ transform(3) { "번호 \($0)" }
 즉 **`VStack { }`, `ScrollView { }`의 `{ }`는 콜백이 아니라 "내용물을 만들어 돌려주는 클로저"** 다. 이름이 `content`, `label`인 것도 그래서다.
 
 `ForEach(0..<30) { idx in ... }`는 또 조금 다르다. 각 항목마다 뷰를 만들기 위해 **여러 번** 호출되는 클로저다. 콜백처럼 나중에 불리는 게 아니라 목록을 그리는 동안 반복 호출된다.
-
-`action`을 나중에 실행할 수 있도록 받는 `@escaping`의 규칙과 `chapter-47`의 `measureSzie(perform:)` 사례는 [클로저와 객체 수명](./023-weak-self-and-deinit.md)에 모았다.
 
 ### 5. `{ }` 안에서 `if`와 `for`가 되는 이유 — result builder
 

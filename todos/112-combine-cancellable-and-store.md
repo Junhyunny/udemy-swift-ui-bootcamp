@@ -143,7 +143,7 @@ deinit {
 
 **`AnyCancellable`이 해제될 때 자동으로 `cancel()`을 호출하므로 중복이다.** `ViewModel`이 해제되면 `cancellableSet`도 해제되고, 그 안의 `AnyCancellable`들이 각자 `cancel()`을 부른다.
 
-명시적으로 써서 나쁠 것은 없고 의도가 드러나는 장점도 있다. 다만 "이게 없으면 누수된다"고 오해하지 않는 것이 중요하다. `deinit` 자체에 대해서는 [별도 문서](./023-weak-self-and-deinit.md)에서 다룬다.
+명시적으로 써서 나쁠 것은 없고 의도가 드러나는 장점도 있다. 다만 "이게 없으면 누수된다"고 오해하지 않는 것이 중요하다. `deinit` 자체에 대해서는 [별도 문서](./023-strong-and-weak-references.md)에서 다룬다.
 
 **중간에 취소하고 싶을 때**는 명시적 호출이 필요하다.
 

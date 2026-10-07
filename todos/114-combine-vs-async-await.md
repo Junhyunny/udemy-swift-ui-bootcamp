@@ -110,7 +110,6 @@ func fetchRates() async {
 **async/await 쪽에서 사라지는 것들**
 
 - `AnyCancellable`, `cancellableSet`, `store(in:)`
-- `[weak self]` — 클로저를 저장하지 않으므로 순환 참조 걱정이 없다
 - `deinit`의 정리 코드
 - `receive(on:)` — `@MainActor`가 대신한다
 - `eraseToAnyPublisher()` — 반환 타입이 그냥 `T`다
@@ -126,7 +125,6 @@ func fetchRates() async {
 | 장점 | 코드가 위에서 아래로 읽힌다 |
 | | 오류 처리가 언어 문법(`try`/`catch`)이다 |
 | | 취소가 구조적으로 관리된다 ([`.task`](./103-task-modifier-and-async-lifecycle.md)) |
-| | `weak self`가 대체로 불필요 |
 | | 학습 부담이 적다 |
 | | 컴파일러가 데이터 경쟁을 검사한다 |
 | 단점 | 값을 여러 번 받는 흐름에 부적합 (`AsyncSequence`로 일부 보완) |
@@ -231,7 +229,6 @@ return urlSession(ExchangeRate.self, with: Endpoint.withSymbols.url!)
 - [ ] `dataTaskPublisher`의 Output 타입을 확인한다 (`(data:response:)` 튜플).
 - [ ] 같은 요청을 async/await로 다시 구현하고 코드 줄 수를 비교한다.
 - [ ] async/await 버전에서 `AnyCancellable`이 필요 없어지는 것을 확인한다.
-- [ ] `[weak self]`가 async/await 버전에서 불필요한 이유를 설명한다.
 - [ ] `publisher.values`로 Combine을 `AsyncSequence`로 바꿔 `for await`으로 받아 본다.
 - [ ] `.task { await fetchRates() }`로 뷰에서 호출하고 자동 취소를 확인한다.
 - [ ] `debounce` 연산자를 붙여 Combine의 강점을 체감한다.

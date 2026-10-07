@@ -167,8 +167,6 @@ func measureSzie(perform action: @escaping (CGSize) -> Void) -> some View {
 
 `MeasuringSizeModifier`는 값을 **올려 보내는** 일만 하고, extension이 그것을 **받는** 쪽까지 배선한다. 사용하는 사람은 내부에 preference 시스템이 있다는 사실을 몰라도 된다. 이 흐름은 [PreferenceKey 문서](./067-preference-key-and-onpreferencechange.md)에 정리했다.
 
-이 `action`에 `@escaping`을 붙이는 규칙은 [클로저와 객체 수명](./023-weak-self-and-deinit.md)에 정리했다.
-
 ### 언제 쓰는가
 
 **써야 할 때**

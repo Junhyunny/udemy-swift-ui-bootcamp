@@ -349,7 +349,7 @@ func endCall() {
 세 가지가 들어 있다.
 
 - **`signalingTask?.cancel()`를 먼저** — 함정 ①의 이벤트 분할을 막는다
-- **`[weak self]`** — Task가 살아 있는 동안 객체를 붙잡지 않는다([`[weak self]`와 `deinit`](./023-weak-self-and-deinit.md))
+- **`[weak self]`** — Task가 살아 있는 동안 객체를 붙잡지 않는다([강한 참조와 약한 참조](./023-strong-and-weak-references.md))
 - **`nil` 대입** — 끝난 Task를 들고 있지 않는다
 
 SwiftUI 뷰 안에서 소비한다면 `Task { }`를 직접 만들지 말고 `.task`를 쓴다. **뷰 생명주기에 묶여 자동으로 취소된다**([`.task` 문서](./103-task-modifier-and-async-lifecycle.md)).

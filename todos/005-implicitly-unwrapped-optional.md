@@ -135,7 +135,7 @@ class City {
 }
 ```
 
-`City`가 `Country`를 필요로 하고 `Country`가 `City`를 필요로 하는 순환이다. IUO로 초기화 순서 문제를 푼다. [ARC 문서](./022-swift-memory-model.md)에서 다룬 `unowned`와 함께 쓰이는 패턴이다.
+`City`가 `Country`를 필요로 하고 `Country`가 `City`를 필요로 하는 순환이다. IUO로 초기화 순서 문제를 푼다. [강한 참조와 약한 참조](./023-strong-and-weak-references.md)에서 다룬 `unowned`와 함께 쓰이는 패턴이다.
 
 **② `@IBOutlet` — UIKit의 관례**
 

@@ -43,7 +43,7 @@ final class ViewModel {
             // - 개선: sink(receiveCompletion:receiveValue:) 로 실패를 받아 errorMessage 상태에 담고
             //         화면에 재시도 UI 를 노출한다.
             .replaceError(with: ExchangeRate.placeholder)
-            // TODO: [todos/023-weak-self-and-deinit.md](../../../todos/023-weak-self-and-deinit.md)
+            // TODO: [todos/023-strong-and-weak-references.md](../../../todos/023-strong-and-weak-references.md)
             .sink { [weak self] in
                 print($0)
                 self?.exchangeRate = $0
@@ -52,7 +52,7 @@ final class ViewModel {
             .store(in: &cancellableSet)
     }
 
-    // TODO: [todos/023-weak-self-and-deinit.md](../../../todos/023-weak-self-and-deinit.md)
+    // TODO: [todos/023-strong-and-weak-references.md](../../../todos/023-strong-and-weak-references.md)
     deinit {
         cancellableSet.forEach { $0.cancel() }
     }

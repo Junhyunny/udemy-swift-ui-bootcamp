@@ -129,7 +129,7 @@ init(factory: RTCPeerConnectionFactory = DEFAULT_FACTORY) {
 6. 메모리 해제 (dealloc)
 ```
 
-1~3단계가 이 문서의 범위고, 4~6단계는 [`[weak self]`와 `deinit`](./023-weak-self-and-deinit.md)이 다룬다. `deinit`이 **2단계의 역순**(하위 → 상위)이라는 점이 대칭적이라 같이 외워두면 좋다.
+1~3단계가 이 문서의 범위고, 4~6단계는 [강한 참조와 약한 참조](./023-strong-and-weak-references.md)가 다룬다. `deinit`이 **2단계의 역순**(하위 → 상위)이라는 점이 대칭적이라 같이 외워두면 좋다.
 
 Objective-C의 `[[Foo alloc] init]`이 1과 2~3을 한 줄에 쓴 것이고, Swift의 `Foo()`는 같은 일을 문법으로 감쌌다. 차이는 155에서 본 대로 **ObjC는 모두 0/nil로 채우고 시작하지만 Swift는 개발자가 값을 정해야 한다**는 것이다.
 

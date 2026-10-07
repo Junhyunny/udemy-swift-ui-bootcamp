@@ -45,7 +45,7 @@
 - [ ] [객체 생성 라이프 사이클과 이니셜라이저 — 선언 방식이 초기화 시점을 정한다](./156-object-lifecycle-and-initializers.md)
 - [ ] [Swift의 형변환 — `as?`, `as!`, `as`, `is`](./021-swift-type-casting.md)
 - [ ] [Swift의 메모리 구조 — JVM과 비교해서](./022-swift-memory-model.md)
-- [ ] [클로저의 `@escaping`, `self`, `[weak self]`와 객체 수명](./023-weak-self-and-deinit.md)
+- [ ] [Swift의 강한 참조와 약한 참조 — 객체가 사라지지 않는 이유](./023-strong-and-weak-references.md)
 - [ ] [Swift 파일 명명 규칙 — `Type+Feature.swift`](./024-swift-file-naming-conventions.md)
 
 ## 2. 프로토콜, 제네릭과 타입 추상화

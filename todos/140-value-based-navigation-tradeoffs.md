@@ -47,7 +47,7 @@ nonisolated public func navigationDestination<D, C>(
 ) -> some View where D : Hashable, C : View
 ```
 
-`@escaping (D) -> C`이므로 보관됐다가 **실제로 push될 때 호출**된다.
+목적지 뷰를 만드는 클로저는 보관됐다가 **실제로 push될 때 호출**된다.
 
 ### 무엇이 실행되고 무엇이 실행되지 않나
 
@@ -93,7 +93,7 @@ NavigationLink(course.name, value: course)
 
 | 장점 | 근거 |
 | --- | --- |
-| 목적지가 **필요할 때만** 생성 | `Destination == Never` + `@escaping` 클로저 |
+| 목적지가 **필요할 때만** 생성 | `Destination == Never` + 목적지 생성 클로저 |
 | `path`로 **프로그래밍 이동** | 값이 `path`에 쌓인다 |
 | **딥링크·상태 복원** | `path`에 값을 넣으면 화면이 재구성된다 |
 | **목적지 정의가 한 곳** | 같은 화면으로 가는 링크가 여러 개여도 정의는 하나 |

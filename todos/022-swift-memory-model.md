@@ -32,7 +32,7 @@ Swift는 그렇지 않다. Swift 언어 문서 어디에도 "Swift 런타임은 
 | 객체 배치 | 인스턴스는 원칙적으로 힙 | **타입의 성격**과 최적화가 결정 |
 | 메모리 회수 | GC (추적 방식) | **ARC** (참조 카운팅, 컴파일 타임 삽입) |
 | 회수 시점 | 비결정적 | **결정적** (참조가 0이 되는 즉시) |
-| 순환 참조 | GC가 수거함 | **개발자가 끊어야 함** (`weak`/`unowned`) |
+| 순환 참조 | GC가 수거함 | **개발자가 끊어야 함** ([참조와 객체 수명](./023-strong-and-weak-references.md)) |
 | 값 타입 | 원시 타입 8종뿐 | `struct`/`enum` 전부가 값 타입 |
 
 **"Swift 메모리를 JVM처럼 영역으로 나눠 이해한다"는 접근 자체가 Swift에는 잘 맞지 않는다.** Swift에서 실질적으로 중요한 축은 영역 구분이 아니라 **값 타입이냐 참조 타입이냐**, 그리고 **ARC가 언제 해제하느냐**다.
@@ -73,45 +73,7 @@ print(a.width)   // 10 — a는 영향 없음
 
 ### 축 ② ARC — GC가 아니다
 
-이 차이가 JVM 경험자에게 가장 크게 다가오는 지점이다.
-
-> Swift uses *Automatic Reference Counting* (ARC) to track and manage your app's memory usage. In most cases, this means that memory management "just works" in Swift, and you don't need to think about memory management yourself. ARC automatically frees up the memory used by class instances when those instances are no longer needed.
-
-동작 방식은 이렇다.
-
-> To make sure that instances don't disappear while they're still needed, ARC tracks how many properties, constants, and variables are currently referring to each class instance. ARC will not deallocate an instance as long as at least one active reference to that instance still exists.
->
-> To make this possible, whenever you assign a class instance to a property, constant, or variable, that property, constant, or variable makes a *strong reference* to the instance.
-
-**GC와의 결정적 차이 세 가지**
-
-**1. 별도의 수거 스레드가 없다.** 컴파일러가 retain/release 호출을 코드에 끼워 넣는다. 런타임에 힙 전체를 훑는 단계가 없어서 GC pause가 없다. 대신 참조 카운트 증감 비용이 평소에 분산된다.
-
-**2. 해제 시점이 결정적이다.** 참조가 0이 되는 그 순간 `deinit`이 불리고 메모리가 회수된다. JVM의 `finalize`가 언제 불릴지 모르는 것과 정반대다.
-
-```swift
-class Resource {
-    deinit { print("해제됨") }   // 참조가 0이 되는 즉시 호출
-}
-```
-
-**3. 순환 참조를 스스로 못 푼다.** 이게 가장 중요하다. GC는 루트에서 도달 불가능한 객체를 알아서 수거하지만, ARC는 서로를 가리키는 두 객체의 카운트가 각각 1로 남아 영원히 해제되지 않는다.
-
-```swift
-class Parent { var child: Child? }
-class Child { var parent: Parent? }   // ⚠️ 강한 순환 참조
-
-// 해결: 한쪽을 약한 참조로
-class Child { weak var parent: Parent? }
-```
-
-| 키워드 | 카운트 증가 | nil 가능 | 쓰는 경우 |
-| --- | --- | --- | --- |
-| (기본) strong | O | 선택적 | 소유 관계 |
-| `weak` | X | **항상 `Optional`** | 대상이 먼저 사라질 수 있음 |
-| `unowned` | X | 아니오 | 대상이 자기보다 오래 산다고 확신할 때 |
-
-클로저와 `self` 사이의 순환 참조, `[weak self]`, `@escaping`은 [클로저와 객체 수명](./023-weak-self-and-deinit.md)에 정리했다.
+Swift는 클래스 인스턴스의 참조를 세는 ARC를 사용한다. 이 문서의 JVM 비교에서 중요한 차이는 **도달 불가능한 순환 참조를 ARC가 수거하지 않는다는 것**이다. 강한·약한 참조의 원리, 순환 참조 예제와 `deinit`으로 확인하는 방법은 [강한 참조와 약한 참조](./023-strong-and-weak-references.md)에 모았다.
 
 ### 축 ③ 타입 정보는 어디에 있나 — JVM 메서드 영역에 대응하는 것
 
@@ -187,8 +149,6 @@ someFunc(&size, &size)   // ⚠️ 겹치는 접근 — 에러
 | `finalize` | `deinit` | ARC는 시점이 결정적 |
 | 원시 타입 (`int`, `double`) | 모든 `struct`/`enum` | 값 타입의 범위가 훨씬 넓다 |
 | 참조 타입 (모든 객체) | `class`, actor, 클로저 | Swift에서는 오히려 소수파 |
-| `WeakReference` | `weak` | Swift는 언어 키워드 |
-| — | `unowned` | JVM에 대응물 없음 |
 | — | 배타적 접근 (`inout`) | JVM에 대응물 없음 |
 | — | Copy-on-Write | 아래 참조 |
 
@@ -210,7 +170,7 @@ b.append(4)        // 이 순간 복사
 Swift 메모리를 이해하는 순서
 
 1. 이 타입은 값 타입인가 참조 타입인가?   ← 가장 중요
-2. 참조 타입이라면 누가 소유하고, 순환은 없는가?  ← weak / unowned
+2. 참조 타입이라면 누가 소유하고, 순환은 없는가?  ← 참조와 객체 수명 문서
 3. 값 타입이라면 복사 비용은? (CoW가 처리하는가?)
 4. static 멤버와 타입 메타데이터는 타입당 하나
 
@@ -225,10 +185,6 @@ Swift에서는 답이 명세되어 있지 않다.
 - [ ] 같은 프로퍼티를 가진 `struct`와 `class`의 `MemoryLayout.size`를 비교한다 (참조는 8).
 - [ ] `struct`를 복사해 한쪽을 바꾸고 원본이 그대로인지 확인한다.
 - [ ] `class` 인스턴스를 두 변수에 담고 한쪽을 바꿔 양쪽에 반영되는지 확인한다.
-- [ ] `deinit`에 `print`를 넣어 참조가 사라지는 즉시 호출되는 것을 확인한다.
-- [ ] 서로를 강하게 참조하는 두 클래스를 만들어 `deinit`이 불리지 않는 것을 재현한다.
-- [ ] 한쪽을 `weak`으로 바꿔 `deinit`이 다시 불리는 것을 확인한다.
-- [ ] `weak var`가 왜 항상 `Optional`이어야 하는지 설명한다.
 - [ ] 같은 변수를 두 `inout` 자리에 넘겨 배타적 접근 에러를 직접 본다.
 - [ ] 큰 배열을 대입한 뒤 수정 전후로 CoW가 일어나는 시점을 설명한다.
 - [ ] `SizePreferenceKey.defaultValue`가 인스턴스 없이 접근되는 이유를 `static` 관점에서 설명한다.
@@ -236,8 +192,6 @@ Swift에서는 답이 명세되어 있지 않다.
 ## 공식 참고 자료
 
 - [Swift 공식 문서: Automatic Reference Counting](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/)
-- [Swift 공식 문서: ARC — Resolving Strong Reference Cycles Between Class Instances](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/#Resolving-Strong-Reference-Cycles-Between-Class-Instances)
-- [Swift 공식 문서: ARC — Strong Reference Cycles for Closures](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/#Strong-Reference-Cycles-for-Closures)
 - [Swift 공식 문서: Memory Safety](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/memorysafety/)
 - [Swift 공식 문서: Structures and Classes](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures/)
 - [Swift 공식 문서: Structures and Classes — Choosing Between Structures and Classes](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures/#Choosing-Between-Structures-and-Classes)
