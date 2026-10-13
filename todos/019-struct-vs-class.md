@@ -7,9 +7,9 @@
 ## 공부할 내용
 
 - `struct`는 값 타입이다. 대입하거나 함수에 전달하면 독립된 값처럼 동작한다.
-- `class`는 참조 타입이다. 여러 변수가 동일한 인스턴스와 identity를 공유할 수 있고 ARC로 수명을 관리한다.
+- `class`는 참조 타입이다. 여러 변수가 동일한 인스턴스와 identity를 공유할 수 있다.
 - 둘 다 프로퍼티, 메서드, initializer, extension, protocol 채택을 지원한다.
-- class만 상속, type casting, `deinit`, reference counting을 지원한다.
+- class만 상속, type casting, `deinit`을 지원한다.
 - SwiftUI의 `View`는 protocol이며 custom View는 보통 가벼운 값 타입인 struct로 선언한다. View 값은 UI의 영구 객체라기보다 현재 UI 구성을 표현한다.
 - Combine의 `ObservableObject`는 `AnyObject`를 상속하는 class 전용 protocol이다. 공유되는 하나의 상태와 identity를 여러 View가 관찰하는 용도에 참조 타입이 맞는다.
 - 값 동등성(`==`)과 인스턴스 identity(`===`)의 구분은 블로그 글 「스위프트(Swift) Equatable 프로토콜」로 정리를 마쳤다.

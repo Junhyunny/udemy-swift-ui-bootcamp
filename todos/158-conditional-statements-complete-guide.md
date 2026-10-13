@@ -110,12 +110,6 @@ guard let urlString, let url = URL(string: urlString) else { return }
 //        ↑ 이름이 같아 축약      ↑ URL(string:) 의 결과라 이름을 명시
 ```
 
-`self`를 축약할 때는 목적이 조금 다르다. `weak self`를 강한 지역 참조로 바인딩하는 관용구다([강한 참조와 약한 참조](./023-strong-and-weak-references.md)).
-
-```swift
-guard let self else { return }
-```
-
 ### ④ 조건부 캐스팅 — `as?` / `is`
 
 ```swift

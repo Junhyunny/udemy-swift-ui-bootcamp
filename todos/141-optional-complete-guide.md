@@ -80,15 +80,6 @@ guard let user else { return }
 
 `if let`은 블록 안에서만, `guard let`은 이후 전체에서 쓸 수 있다. 그래서 중첩이 사라진다. 자세한 것은 [조건문 총정리](./158-conditional-statements-complete-guide.md)에 있다.
 
-`[weak self]` 클로저에서 쓰는 축약도 같은 문법이다.
-
-```swift
-run { [weak self] in
-    guard let self else { return }
-    if let name { print(name) }      // self.name 의 축약
-}
-```
-
 ### 2-3. `??` — 우결합이고 단축 평가한다
 
 두 가지 성질을 확인했다.

@@ -115,7 +115,7 @@ init(factory: RTCPeerConnectionFactory = DEFAULT_FACTORY) {
 | `static func` + `let` (권장) | 불변, 런타임 위험 없음, 의존성이 인자로 드러남 | `self` 쓰는 로직은 못 옮김 |
 | `var peerConnection: RTCPeerConnection!` | 인스턴스 메서드 그대로 사용 | 실수로 `nil` 접근 시 크래시, 불변성 상실 |
 
-### 객체 생성 라이프 사이클 전체 그림
+### 객체 초기화 단계
 
 지금까지의 규칙이 어디에 놓이는지 정리하면 이렇다.
 
@@ -124,12 +124,7 @@ init(factory: RTCPeerConnectionFactory = DEFAULT_FACTORY) {
 2. 초기화 1단계               — 하위 → 상위, 각자 선언한 저장 프로퍼티를 채움
    └ super.init() ───────────  관문: 여기서 모든 저장 프로퍼티가 값을 가져야 함
 3. 초기화 2단계               — 상위 → 하위, self 사용 가능 (메서드 호출, delegate 등록)
-4. 사용                       — ARC가 참조 카운트 관리
-5. deinit                     — 하위 → 상위 순으로 자동 호출. 옵저버 해제, 리소스 정리
-6. 메모리 해제 (dealloc)
 ```
-
-1~3단계가 이 문서의 범위고, 4~6단계는 [강한 참조와 약한 참조](./023-strong-and-weak-references.md)가 다룬다. `deinit`이 **2단계의 역순**(하위 → 상위)이라는 점이 대칭적이라 같이 외워두면 좋다.
 
 Objective-C의 `[[Foo alloc] init]`이 1과 2~3을 한 줄에 쓴 것이고, Swift의 `Foo()`는 같은 일을 문법으로 감쌌다. 차이는 155에서 본 대로 **ObjC는 모두 0/nil로 채우고 시작하지만 Swift는 개발자가 값을 정해야 한다**는 것이다.
 
@@ -195,7 +190,6 @@ swiftc -typecheck sample.swift               # 초기화 오류는 통과해 버
 - [ ] `lazy var`를 `super.init()` 앞에서 접근해 어떤 메시지가 나오는지 본다.
 - [ ] 상위 클래스에 `var`를 두고 `super.init()` 앞에서 대입해 safety check 2번을 재현한다.
 - [ ] `convenience init`에서 `self.init` 전에 프로퍼티를 대입해 메시지가 다른 것을 확인한다.
-- [ ] 2단계 상속 클래스에 `deinit`을 모두 넣고 호출 순서가 하위 → 상위인지 출력으로 확인한다.
 - [ ] `WebRTCClientImpl`을 `static func` 방식으로 고친 뒤 `peerConnection`을 `let`으로 되돌린다.
 
 ## 참고 자료
@@ -205,7 +199,6 @@ swiftc -typecheck sample.swift               # 초기화 오류는 통과해 버
 - [The Swift Programming Language: Initialization — Initializer Delegation for Class Types](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initializer-Delegation-for-Class-Types)
 - [The Swift Programming Language: Initialization — Failable Initializers](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Failable-Initializers)
 - [The Swift Programming Language: Initialization — Required Initializers](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Required-Initializers)
-- [The Swift Programming Language: Deinitialization](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/deinitialization/)
 - [The Swift Programming Language: Properties — Lazy Stored Properties](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/properties/#Lazy-Stored-Properties)
 - [The Swift Programming Language: Methods — Type Methods](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/methods/#Type-Methods)
 - [Apple: NSCoding](https://developer.apple.com/documentation/foundation/nscoding)

@@ -87,10 +87,10 @@ func fetch<T: Decodable>(_ type: T.Type, from url: URL) async throws -> T {
 
 ```swift
 // Combine
-func fetchRates() {
+func fetchRates(into rates: CurrentValueSubject<ExchangeRate?, Never>) {
     service.getExchangeRate()
         .replaceError(with: ExchangeRate.placeholder)
-        .sink { [weak self] in self?.exchangeRate = $0 }
+        .sink { rate in rates.send(rate) }
         .store(in: &cancellableSet)
 }
 ```

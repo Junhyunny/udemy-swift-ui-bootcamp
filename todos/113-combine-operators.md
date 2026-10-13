@@ -64,8 +64,8 @@ cancellable = fail
 
 ```swift
 .replaceError(with: ExchangeRate.placeholder)
-.sink { [weak self] in           // ← 이게 가능해진 이유
-    self?.exchangeRate = $0
+.sink { rate in                  // ← 인자 하나짜리 sink가 가능해진 이유
+    print(rate)
 }
 ```
 
@@ -124,14 +124,16 @@ enum LoadState {
     case failed(String)
 }
 
+let state = PassthroughSubject<LoadState, Never>()
+
 .sink(
-    receiveCompletion: { [weak self] completion in
+    receiveCompletion: { completion in
         if case .failure(let error) = completion {
-            self?.state = .failed(error.localizedDescription)
+            state.send(.failed(error.localizedDescription))
         }
     },
-    receiveValue: { [weak self] rate in
-        self?.state = .loaded(rate)
+    receiveValue: { rate in
+        state.send(.loaded(rate))
     }
 )
 ```

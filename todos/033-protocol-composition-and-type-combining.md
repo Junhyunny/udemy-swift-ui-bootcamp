@@ -135,10 +135,10 @@ protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
     // 클래스만 채택할 수 있다
 }
 
-func trackWeakly(_ target: AnyObject & Named) { /* ... */ }
+func trackIdentity(_ target: AnyObject & Named) { /* ... */ }
 ```
 
-`weak` 참조를 잡거나 identity 비교(`===`)를 해야 할 때 쓴다. [`struct`와 `class` 문서](./019-struct-vs-class.md), [강한 참조와 약한 참조](./023-strong-and-weak-references.md)와 이어진다.
+identity 비교(`===`)가 필요한 클래스 전용 API를 만들 때 쓴다. [`struct`와 `class` 문서](./019-struct-vs-class.md)와 이어진다.
 
 ### 4. `typealias`로 이름 붙이기
 

@@ -185,7 +185,6 @@ init(...) {
 - [The Swift Programming Language: Initialization — Class Inheritance and Initialization](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Class-Inheritance-and-Initialization)
 - [The Swift Programming Language: Initialization — Initializer Delegation for Class Types](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Initializer-Delegation-for-Class-Types)
 - [The Swift Programming Language: Inheritance](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/inheritance/)
-- [The Swift Programming Language: Automatic Reference Counting](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/)
 - [Apple: NSObject](https://developer.apple.com/documentation/objectivec/nsobject)
 - [Apple: AsyncStream](https://developer.apple.com/documentation/swift/asyncstream)
 - [Apple: AsyncStream.Continuation](https://developer.apple.com/documentation/swift/asyncstream/continuation)

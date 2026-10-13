@@ -120,8 +120,6 @@ func userNotificationCenter(_:didReceive:withCompletionHandler:)     // ← 자�
 
 **`NSObject`를 상속하는 이유**가 여기 있다. `UNUserNotificationCenterDelegate`는 Objective-C 프로토콜이라 채택하는 타입이 `NSObject` 계열이어야 한다. [NS 접두사 문서](./116-ns-prefix-foundation-classes.md)에서 다룬 Objective-C 런타임 의존성이다.
 
-**`delegate`는 `weak` 참조다.** `viewModel`을 다른 곳에서 강하게 붙잡고 있지 않으면 해제되어 알림이 동작하지 않는다. 이 예제는 `chapter_94App`의 `@StateObject`가 붙잡고 있으므로 안전하다.
-
 ## 3부 — 왜 두 함수가 모두 필요했나
 
 ### 질문의 핵심 — Apple 문서에 정확한 답이 있다
@@ -369,22 +367,6 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ c: UNUserNotificationCenter,
                                 didReceive r: UNNotificationResponse) async {
         await onNotificationTapped?()
-    }
-}
-```
-
-```swift
-/// 타이머 상태만 담당
-@Observable
-final class TimerViewModel {
-    var time = 0
-    var selectedTime = 0
-
-    private let notifications: NotificationService
-
-    init(notifications: NotificationService) {
-        self.notifications = notifications
-        notifications.onNotificationTapped = { [weak self] in self?.resetView() }
     }
 }
 ```

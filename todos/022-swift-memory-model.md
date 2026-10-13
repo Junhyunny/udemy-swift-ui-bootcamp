@@ -30,25 +30,17 @@ Swift는 그렇지 않다. Swift 언어 문서 어디에도 "Swift 런타임은 
 | --- | --- | --- |
 | 메모리 영역 | **명세로 규정** | 명세 없음, 구현 세부사항 |
 | 객체 배치 | 인스턴스는 원칙적으로 힙 | **타입의 성격**과 최적화가 결정 |
-| 메모리 회수 | GC (추적 방식) | **ARC** (참조 카운팅, 컴파일 타임 삽입) |
-| 회수 시점 | 비결정적 | **결정적** (참조가 0이 되는 즉시) |
-| 순환 참조 | GC가 수거함 | **개발자가 끊어야 함** ([참조와 객체 수명](./023-strong-and-weak-references.md)) |
 | 값 타입 | 원시 타입 8종뿐 | `struct`/`enum` 전부가 값 타입 |
 
-**"Swift 메모리를 JVM처럼 영역으로 나눠 이해한다"는 접근 자체가 Swift에는 잘 맞지 않는다.** Swift에서 실질적으로 중요한 축은 영역 구분이 아니라 **값 타입이냐 참조 타입이냐**, 그리고 **ARC가 언제 해제하느냐**다.
+**"Swift 메모리를 JVM처럼 영역으로 나눠 이해한다"는 접근 자체가 Swift에는 잘 맞지 않는다.** Swift에서 실질적으로 중요한 축은 영역 구분보다 **값 타입이냐 참조 타입이냐**, 그리고 타입 정보와 값이 어떻게 표현되는가다.
 
 ### 축 ① 값 타입과 참조 타입 — Swift 메모리 이해의 출발점
 
-ARC 문서의 첫 문장이 이 구분을 선언한다.
-
-> Reference counting applies only to instances of classes. Structures and enumerations are value types, not reference types, and aren't stored and passed by reference.
-
-즉 Swift의 타입은 두 부류로 갈리고, 메모리 동작이 완전히 다르다.
+Swift의 값 타입과 참조 타입은 대입했을 때의 동작이 다르다.
 
 **값 타입 (`struct`, `enum`, 튜플)**
 
 - 대입하면 **복사**된다. 원본과 사본이 독립적이다.
-- 참조 카운팅 대상이 아니다. 오버헤드가 없다.
 - 담긴 자리에 그대로 저장된다. 지역 변수면 스택, 클래스 프로퍼티면 그 클래스 인스턴스 안에.
 
 ```swift
@@ -63,19 +55,11 @@ print(a.width)   // 10 — a는 영향 없음
 **참조 타입 (`class`, actor, 클로저)**
 
 - 대입하면 **같은 인스턴스를 가리킨다**. 한쪽을 고치면 다른 쪽에도 보인다.
-- ARC가 참조 개수를 센다.
-
-> Every time you create a new instance of a class, ARC allocates a chunk of memory to store information about that instance. This memory holds information about the type of the instance, together with the values of any stored properties associated with that instance.
-
-인용문에 답이 하나 들어 있다. 클래스 인스턴스 메모리에는 **저장 프로퍼티 값뿐 아니라 타입 정보도 함께** 담긴다. JVM 객체 헤더가 클래스 포인터를 갖는 것과 비슷한 구조다.
+- 인스턴스에는 저장 프로퍼티 값과 타입을 식별하는 정보가 들어간다.
 
 값 타입과 참조 타입의 선택 기준은 [struct와 class](./019-struct-vs-class.md)에 정리했다.
 
-### 축 ② ARC — GC가 아니다
-
-Swift는 클래스 인스턴스의 참조를 세는 ARC를 사용한다. 이 문서의 JVM 비교에서 중요한 차이는 **도달 불가능한 순환 참조를 ARC가 수거하지 않는다는 것**이다. 강한·약한 참조의 원리, 순환 참조 예제와 `deinit`으로 확인하는 방법은 [강한 참조와 약한 참조](./023-strong-and-weak-references.md)에 모았다.
-
-### 축 ③ 타입 정보는 어디에 있나 — JVM 메서드 영역에 대응하는 것
+### 축 ② 타입 정보는 어디에 있나 — JVM 메서드 영역에 대응하는 것
 
 질문의 `SizePreferenceKey.self`와 직접 연결되는 부분이다.
 
@@ -85,7 +69,7 @@ Swift 런타임도 각 타입에 대한 **type metadata**를 갖는다. 크기, 
 
 `static` 멤버도 여기 얹혀 있다. `SizePreferenceKey.defaultValue`는 인스턴스마다가 아니라 **타입당 하나**만 존재한다. JVM의 static 필드와 같은 발상이다. 이 예제의 키 타입이 인스턴스 없이 동작하는 이유이기도 하다.
 
-### 축 ④ 메모리 배치를 직접 들여다보기 — `MemoryLayout`
+### 축 ③ 메모리 배치를 직접 들여다보기 — `MemoryLayout`
 
 추상적으로만 이해하지 말고 숫자로 확인할 수 있다.
 
@@ -115,7 +99,7 @@ struct Point {
 
 클래스에 쓰면 다른 것이 나온다. `MemoryLayout<SomeClass>.size`는 인스턴스 크기가 아니라 **포인터 크기(8)** 다. 변수가 들고 있는 것이 참조이기 때문이다. 값 타입과 참조 타입의 차이를 숫자로 보여 주는 좋은 실험이다.
 
-### 축 ⑤ 메모리 안전성 — 배타적 접근
+### 축 ④ 메모리 안전성 — 배타적 접근
 
 Swift에는 JVM에 없는 규칙이 하나 더 있다.
 
@@ -145,8 +129,6 @@ someFunc(&size, &size)   // ⚠️ 겹치는 접근 — 에러
 | Heap | 클래스 인스턴스가 놓이는 곳 | 명세된 영역이 아니라 구현 |
 | Method Area / Metaspace | type metadata, `static` 멤버 | 상당 부분 실행 파일에 정적 배치 |
 | JVM Stack (프레임, 지역변수) | 함수 호출 프레임, 값 타입 지역 변수 | 최적화로 배치가 달라질 수 있음 |
-| Garbage Collector | **ARC** | 순환 참조를 못 푼다 — 핵심 차이 |
-| `finalize` | `deinit` | ARC는 시점이 결정적 |
 | 원시 타입 (`int`, `double`) | 모든 `struct`/`enum` | 값 타입의 범위가 훨씬 넓다 |
 | 참조 타입 (모든 객체) | `class`, actor, 클로저 | Swift에서는 오히려 소수파 |
 | — | 배타적 접근 (`inout`) | JVM에 대응물 없음 |
@@ -170,9 +152,8 @@ b.append(4)        // 이 순간 복사
 Swift 메모리를 이해하는 순서
 
 1. 이 타입은 값 타입인가 참조 타입인가?   ← 가장 중요
-2. 참조 타입이라면 누가 소유하고, 순환은 없는가?  ← 참조와 객체 수명 문서
-3. 값 타입이라면 복사 비용은? (CoW가 처리하는가?)
-4. static 멤버와 타입 메타데이터는 타입당 하나
+2. 값 타입이라면 복사 비용은? (CoW가 처리하는가?)
+3. static 멤버와 타입 메타데이터는 타입당 하나
 
 "어느 영역에 있는가"를 먼저 묻는 JVM식 접근은
 Swift에서는 답이 명세되어 있지 않다.
@@ -191,7 +172,6 @@ Swift에서는 답이 명세되어 있지 않다.
 
 ## 공식 참고 자료
 
-- [Swift 공식 문서: Automatic Reference Counting](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/)
 - [Swift 공식 문서: Memory Safety](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/memorysafety/)
 - [Swift 공식 문서: Structures and Classes](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures/)
 - [Swift 공식 문서: Structures and Classes — Choosing Between Structures and Classes](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures/#Choosing-Between-Structures-and-Classes)

@@ -111,45 +111,19 @@ if newValue == .active, let leftTime = viewModel.leftTime {
 
 > Implicitly unwrapped optionals are useful when an optional's value is confirmed to exist immediately after the optional is first defined and can definitely be assumed to exist at every point thereafter. **The primary use of implicitly unwrapped optionals in Swift is during class initialization.**
 
-**① 두 객체가 서로를 참조하는 초기화**
+**① `@IBOutlet` — UIKit의 관례**
 
 ```swift
-class Country {
-    let name: String
-    var capitalCity: City!        // init에서 아직 만들 수 없다
-
-    init(name: String, capitalName: String) {
-        self.name = name
-        self.capitalCity = City(name: capitalName, country: self)
-    }
-}
-
-class City {
-    let name: String
-    unowned let country: Country
-
-    init(name: String, country: Country) {
-        self.name = name
-        self.country = country
-    }
-}
-```
-
-`City`가 `Country`를 필요로 하고 `Country`가 `City`를 필요로 하는 순환이다. IUO로 초기화 순서 문제를 푼다. [강한 참조와 약한 참조](./023-strong-and-weak-references.md)에서 다룬 `unowned`와 함께 쓰이는 패턴이다.
-
-**② `@IBOutlet` — UIKit의 관례**
-
-```swift
-@IBOutlet weak var titleLabel: UILabel!
+@IBOutlet var titleLabel: UILabel!
 ```
 
 스토리보드가 로드된 뒤에 연결되므로 `init` 시점에는 `nil`이다. 하지만 뷰가 표시될 때는 항상 있다. **UIKit에서 가장 흔한 IUO 사용처다.**
 
-**③ Objective-C API 브리징**
+**② Objective-C API 브리징**
 
 nullability 표기가 없는 Objective-C API는 Swift에서 IUO로 들어온다. [NS 접두사 문서](./116-ns-prefix-foundation-classes.md)에서 다룬 마찰 중 하나다.
 
-**④ 테스트의 `setUp`**
+**③ 테스트의 `setUp`**
 
 ```swift
 final class MyTests: XCTestCase {
@@ -188,7 +162,7 @@ final class MyTests: XCTestCase {
   아니오 → ②
 
 초기화 직후 반드시 설정되고 이후 항상 존재하는가?
-  예 → Date!  (IUO)  — 초기화 순환, @IBOutlet, 테스트 setUp
+  예 → Date!  (IUO)  — @IBOutlet, 테스트 setUp
   아니오 → Date?
 ```
 
@@ -206,7 +180,6 @@ Type! = 암시적 언래핑 옵셔널 (IUO)
   비옵셔널처럼 보여서 위험이 감춰진다
 
 정당한 용도
-  초기화 순환 (Country ↔ City)
   @IBOutlet
   Objective-C 브리징
   테스트 setUp
@@ -226,7 +199,6 @@ Type! = 암시적 언래핑 옵셔널 (IUO)
 - [ ] `print(type(of: leftTime))`으로 실제 타입을 확인한다 (`Optional<Date>`).
 - [ ] `leftTime == nil` 비교가 되는지 확인한다 (옵셔널이므로 가능하다).
 - [ ] `leftTime?.timeIntervalSince1970`처럼 `?`를 붙여도 되는지 확인한다.
-- [ ] `Country` ↔ `City` 초기화 순환 예제를 직접 작성해 IUO가 필요한 이유를 체감한다.
 - [ ] 테스트 클래스에서 `var sut: MyService!` 패턴을 써 본다.
 - [ ] `Date!`와 `Date?`를 함수 파라미터에 넘길 때의 차이를 확인한다.
 
@@ -235,7 +207,6 @@ Type! = 암시적 언래핑 옵셔널 (IUO)
 - [Swift 공식 문서: The Basics — Implicitly Unwrapped Optionals](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/#Implicitly-Unwrapped-Optionals)
 - [Swift 공식 문서: The Basics — Optionals](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/#Optionals)
 - [Swift 공식 문서: The Basics — Optional Binding](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/#Optional-Binding)
-- [Swift 공식 문서: ARC — Unowned References and Implicitly Unwrapped Optional Properties](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/#Unowned-References-and-Implicitly-Unwrapped-Optional-Properties)
 - [Swift 공식 문서: Types — Optional Type](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/types/#Optional-Type)
 - [Swift 공식 문서: Types — Implicitly Unwrapped Optional Type](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/types/#Implicitly-Unwrapped-Optional-Type)
 - [Apple: Optional](https://developer.apple.com/documentation/swift/optional)

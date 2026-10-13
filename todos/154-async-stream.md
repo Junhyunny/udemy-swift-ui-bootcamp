@@ -325,32 +325,7 @@ let stream = AsyncStream<Notification> { continuation in
 
 ### 구독 `Task`를 관리한다
 
-`Task { }`를 변수에 담지 않으면 취소할 방법이 없다. 질문 코드가 그 상태다.
-
-```swift
-private var signalingTask: Task<Void, Never>?
-
-private func observeSignaling() {
-    signalingTask?.cancel()              // ← 중복 구독 방지
-    signalingTask = Task { [weak self] in
-        guard let self else { return }
-        for await event in signalingClient.events {
-            handle(event)
-        }
-    }
-}
-
-func endCall() {
-    signalingTask?.cancel()
-    signalingTask = nil
-}
-```
-
-세 가지가 들어 있다.
-
-- **`signalingTask?.cancel()`를 먼저** — 함정 ①의 이벤트 분할을 막는다
-- **`[weak self]`** — Task가 살아 있는 동안 객체를 붙잡지 않는다([강한 참조와 약한 참조](./023-strong-and-weak-references.md))
-- **`nil` 대입** — 끝난 Task를 들고 있지 않는다
+`Task { }`로 시작한 구독은 종료 시점에 취소할 수 있도록 작업 핸들을 보관한다. 같은 이벤트를 중복으로 소비하지 않으려면 새 구독을 시작하기 전에 이전 작업을 취소하고, 통화가 끝날 때 저장한 작업을 취소한다.
 
 SwiftUI 뷰 안에서 소비한다면 `Task { }`를 직접 만들지 말고 `.task`를 쓴다. **뷰 생명주기에 묶여 자동으로 취소된다**([`.task` 문서](./103-task-modifier-and-async-lifecycle.md)).
 
