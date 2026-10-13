@@ -79,7 +79,7 @@ struct TodoListApp: View {
             }
             .navigationTitle(Text("Todo List"))
         }
-        // TODO: [todos/051-view-lifecycle-hooks.md](../../todos/051-view-lifecycle-hooks.md)
+        // TODO: [todos/159-swiftui-view-and-task-lifecycle.md](../../todos/159-swiftui-view-and-task-lifecycle.md)
         .onAppear {
             print("rendering first time")
         }
