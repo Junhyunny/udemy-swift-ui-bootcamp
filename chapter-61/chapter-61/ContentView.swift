@@ -76,7 +76,7 @@ struct ContentView: View {
                 }
             )
         }
-        // TODO: [todos/103-task-modifier-and-async-lifecycle.md](../../todos/103-task-modifier-and-async-lifecycle.md)
+        // TODO: [todos/159-swiftui-view-and-task-lifecycle.md](../../todos/159-swiftui-view-and-task-lifecycle.md)
         .task {
             print("fetching news")
             // print(await News.fetchNews())
@@ -85,7 +85,7 @@ struct ContentView: View {
     }
 
     func fetchNews() {
-        // TODO: [todos/103-task-modifier-and-async-lifecycle.md](../../todos/103-task-modifier-and-async-lifecycle.md)
+        // TODO: [todos/159-swiftui-view-and-task-lifecycle.md](../../todos/159-swiftui-view-and-task-lifecycle.md)
         Task {
             news =
                 await News.fetchNews()
