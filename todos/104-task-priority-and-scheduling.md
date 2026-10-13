@@ -1,6 +1,6 @@
 # `TaskPriority` — 우선순위 값들과 실제 동작
 
-`Task { }`와 `.task { }`의 구분은 [별도 문서](./103-task-modifier-and-async-lifecycle.md)에 정리했다. 이 문서는 **`priority` 파라미터**를 파고든다.
+`Task { }`와 `.task { }`의 구분은 [별도 문서](./159-swiftui-view-and-task-lifecycle.md)에 정리했다. 이 문서는 **`priority` 파라미터**를 파고든다.
 
 ## 질문이 나온 코드
 
@@ -146,7 +146,7 @@ init() {
 }
 ```
 
-[`.task` 문서](./103-task-modifier-and-async-lifecycle.md)에서 다룬 대로 `.task`의 기본값은 `.userInitiated`이고, 뷰 생명주기에 묶여 자동 취소된다는 이점도 함께 얻는다.
+[화면 생명주기 문서](./159-swiftui-view-and-task-lifecycle.md)에서 다룬 대로 `.task`의 기본값은 `.userInitiated`이고, 뷰에서 사라진 미완료 작업에 SwiftUI가 취소를 요청할 수 있다.
 
 ### `.background`가 실제로 유용한 경우
 

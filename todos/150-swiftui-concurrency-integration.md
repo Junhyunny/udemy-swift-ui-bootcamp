@@ -2,7 +2,7 @@
 
 [로드맵](./142-swift-concurrency-roadmap.md)의 마지막 단계다. 1~7단계를 실제 화면에 연결한다.
 
-관련 기존 문서: [`.task` modifier와 비동기 생명주기](./103-task-modifier-and-async-lifecycle.md), [`Observation` 모듈과 `@Observable`](./050-observation-framework-and-observable.md), [상태 관리 래퍼 총정리](./049-state-wrapper-decision-guide.md)
+관련 문서: [SwiftUI 화면 생명주기와 `.task`](./159-swiftui-view-and-task-lifecycle.md), [`Observation` 모듈과 `@Observable`](./050-observation-framework-and-observable.md), [상태 관리 래퍼 총정리](./049-state-wrapper-decision-guide.md)
 
 ## 전체 흐름
 
@@ -30,45 +30,6 @@ View 다시 렌더링
 ```
 
 **이 그림의 각 화살표가 앞 단계들에서 배운 개념이다.**
-
-## `.task`는 왜 `onAppear`보다 나은가
-
-```swift
-.task { await viewModel.load() }          // ✅
-.onAppear { Task { await viewModel.load() } }   // ❌
-```
-
-| | `.onAppear` + `Task { }` | `.task { }` |
-| --- | --- | --- |
-| 뷰가 사라질 때 | 아무 일도 없음 | **자동 취소** |
-| 중복 실행 | 직접 막아야 함 | 재등장 시 새로 시작 |
-| 핸들 관리 | 직접 보관·취소 | 불필요 |
-| 액터 컨텍스트 | 상속 | 상속 |
-
-`.onAppear`는 최초 1회 보장이 아니다. 네비게이션 복귀, 탭 전환마다 다시 불리므로 `Task`가 계속 쌓인다. **`.task`는 뷰 수명에 묶인 구조적 동시성에 가깝다.** 자세한 것은 [103 문서](./103-task-modifier-and-async-lifecycle.md)에 있다.
-
-### `.task(id:)` — 값이 바뀌면 다시 실행
-
-```swift
-.task(id: userID) { await viewModel.load(userID) }
-```
-
-`userID`가 바뀌면 **기존 작업을 취소하고 새로 시작**한다. 검색어 입력, 상세 화면 전환처럼 파라미터가 바뀌는 화면에서 필수다. 직접 구현하면 3단계의 핸들 보관·취소 코드를 매번 써야 한다.
-
-### 취소가 실제로 동작하려면
-
-`.task`가 취소 신호를 보내도 **받는 쪽이 협조해야** 한다(3단계).
-
-```swift
-func load() async {
-    for page in 1...100 {
-        if Task.isCancelled { return }        // 확인하지 않으면 계속 돈다
-        items += await fetchPage(page)
-    }
-}
-```
-
-`try?`로 `Task.sleep`을 감싸면 취소가 사라져 busy loop가 된다는 점도 3단계와 같다.
 
 ## ViewModel에 `@MainActor`를 붙인다
 
@@ -126,7 +87,7 @@ struct UserView: View {
 
 **③ `@Observable`인데 `@MainActor`를 빼기** — 백그라운드에서 상태가 바뀌면 SwiftUI 갱신이 깨진다. Swift 6에서는 컴파일 에러가 된다.
 
-**④ `.task` 대신 `Task { }` 직접 생성** — 뷰가 사라져도 작업이 남는다. 이 저장소의 `chapter-65`가 `init`에서 끝나지 않는 `Task`를 띄우는 사례다.
+**④ `Task { }`를 무심코 시작** — 작업을 만든 곳과 취소 관계를 확인해야 한다. `chapter-65`의 `init`에서 끝나지 않는 작업을 시작하는 사례는 [화면 생명주기 문서](./159-swiftui-view-and-task-lifecycle.md)의 비교와 함께 본다.
 
 ## 이 저장소에서 확인할 수 있는 사례
 
@@ -154,16 +115,10 @@ struct UserView: View {
 
 ## 학습 체크리스트
 
-- [ ] `.onAppear { Task { } }`와 `.task { }`를 각각 만들고 뷰를 떠날 때 작업이 취소되는지 비교한다.
-- [ ] `.onAppear`에 `print`를 넣어 네비게이션을 오갈 때 여러 번 호출되는 것을 확인한다.
-- [ ] `.task(id:)`로 파라미터가 바뀔 때 기존 작업이 취소되는지 확인한다.
-- [ ] `load()` 안에서 `Task.isCancelled`를 확인하지 않는 긴 루프를 만들고 취소가 안 되는 것을 본다.
 - [ ] ViewModel에서 `@MainActor`를 떼고 백그라운드에서 상태를 바꿔 본다.
 - [ ] `Task.detached` 안에서 ViewModel 상태를 바꿔 에러를 확인한다.
 - [ ] `init`에서 네트워크를 호출하는 ViewModel을 프리뷰에 띄워 실제 요청이 나가는지 확인한다.
-- [ ] 같은 ViewModel을 `.task` 호출 방식으로 바꾼다.
 - [ ] 목록 두 개를 순차 `await`와 `async let`으로 각각 불러와 체감 속도를 비교한다.
-- [ ] `chapter-65`의 `SystemNotificationExample`을 `.task` 기반으로 고친다.
 - [ ] 위 마무리 과제 7단계를 하나의 예제 앱으로 연결한다.
 
 ## 공식 참고 자료

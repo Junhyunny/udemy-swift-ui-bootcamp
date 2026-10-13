@@ -146,18 +146,7 @@ SwiftUI: "이 뷰는 이미 State 저장소가 있네"
 
 > A `State` property always instantiates its default value when SwiftUI instantiates the view. For this reason, avoid side effects and performance-intensive work when initializing the default value.
 
-`OnboardingViewModel`의 `init`은 배열과 클로저를 저장만 하므로 지금은 문제가 없다. 하지만 여기서 네트워크 호출이나 파일 읽기를 했다면 **화면이 갱신될 때마다 그 작업이 실행된다.** 그런 경우 문서가 제시하는 대안은 옵셔널로 두고 `.task`에서 만드는 방식이다.
-
-```swift
-@State private var library: Library?
-
-var body: some View {
-    LibraryView(library: library)
-        .task { library = Library() }   // 뷰가 처음 나타날 때 한 번
-}
-```
-
-[`.task` 문서](./103-task-modifier-and-async-lifecycle.md)와 이어진다.
+`OnboardingViewModel`의 `init`은 배열과 클로저를 저장만 하므로 지금은 문제가 없다. 하지만 여기서 네트워크 호출이나 파일 읽기를 했다면 **뷰 값이 다시 만들어질 때마다 그 작업이 실행될 수 있다.** 화면 등장에 맞춘 비동기 작업은 [SwiftUI 화면 생명주기와 `.task`](./159-swiftui-view-and-task-lifecycle.md)에 정리했다.
 
 ### `@Observable` 클래스를 `@State`에 담는 것이 맞나
 

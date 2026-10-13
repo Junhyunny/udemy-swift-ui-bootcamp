@@ -49,11 +49,11 @@ Swift Concurrency
 | --- | --- | --- | --- |
 | 1 | 동기 vs 비동기, 중단(suspension) | [143](./143-sync-vs-async-and-suspension.md) | [101](./101-swift-async-await-model.md) |
 | 2 | `async` / `await` / `try await` | [144](./144-async-await-basics.md) | [102](./102-async-throws-and-custom-errors.md), [105](./105-for-await-async-sequence.md) |
-| 3 | `Task`와 취소 | [145](./145-task-basics-and-cancellation.md) | [103](./103-task-modifier-and-async-lifecycle.md), [104](./104-task-priority-and-scheduling.md) |
+| 3 | `Task`와 취소 | [145](./145-task-basics-and-cancellation.md) | [159](./159-swiftui-view-and-task-lifecycle.md), [104](./104-task-priority-and-scheduling.md) |
 | 4 | 구조적 동시성 | [146](./146-structured-concurrency.md) | — |
 | 5~6 | 액터, 재진입, `@MainActor`, 전역 액터, 격리 도메인 | [153](./153-swift-actor-complete-guide.md) | — |
 | 7 | `Sendable`과 엄격 검사 | [149](./149-sendable-and-strict-concurrency.md) | — |
-| 8 | SwiftUI와 연결 | [150](./150-swiftui-concurrency-integration.md) | [103](./103-task-modifier-and-async-lifecycle.md), [050](./050-observation-framework-and-observable.md) |
+| 8 | SwiftUI와 연결 | [150](./150-swiftui-concurrency-integration.md) | [159](./159-swiftui-view-and-task-lifecycle.md), [050](./050-observation-framework-and-observable.md) |
 | 부록 | 런타임 실측과 JS 대조 | [151](./151-concurrency-runtime-architecture.md) | [101](./101-swift-async-await-model.md) |
 | 부록 | 컴파일 모델 | [152](./152-async-function-compilation-model.md) | [143](./143-sync-vs-async-and-suspension.md) |
 

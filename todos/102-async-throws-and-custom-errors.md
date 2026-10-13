@@ -148,7 +148,7 @@ static func fetchNews() async throws -> News {
 }
 ```
 
-`do-catch`가 사라져 코드도 짧아진다. 오류 처리는 UI를 아는 뷰에서 하는 것이 맞다. [.task 문서](./103-task-modifier-and-async-lifecycle.md)에 관련 내용이 있다.
+`do-catch`가 사라져 코드도 짧아진다. 오류 처리는 UI를 아는 뷰에서 하는 것이 맞다. [.task 문서](./159-swiftui-view-and-task-lifecycle.md)에 관련 내용이 있다.
 
 ### `rethrows` — 참고
 

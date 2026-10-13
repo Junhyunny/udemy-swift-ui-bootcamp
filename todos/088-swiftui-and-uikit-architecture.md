@@ -1020,35 +1020,7 @@ viewWillDisappear
 viewDidDisappear
 ```
 
-SwiftUI에서는 [`onAppear(perform:)`](https://developer.apple.com/documentation/swiftui/view/onappear(perform:)), [`task(id:...)`](https://developer.apple.com/documentation/swiftui/view/task(id:name:executorpreference:priority:file:line:_:)), [`onDisappear(perform:)`](https://developer.apple.com/documentation/swiftui/view/ondisappear(perform:)) 같은 View modifier와 상태 중심으로 필요한 작업을 선언한다.
-
-```swift
-struct ContentView: View {
-    var body: some View {
-        Text("Hello")
-            .onAppear {
-                print("appear")
-            }
-            .task {
-                await loadData()
-            }
-            .onDisappear {
-                print("disappear")
-            }
-    }
-}
-```
-
-`body`는 상태 변화에 따라 여러 번 평가될 수 있다. 따라서 중요한 side effect를 `body` 계산 자체에 넣으면 안 된다.
-
-```swift
-var body: some View {
-    print("render!") // body 평가 횟수를 생명주기로 오해하면 안 된다.
-    return Text("Hello")
-}
-```
-
-`body`는 **UI description을 계산하는 곳이지 생명주기 callback이 아니다.** 데이터 로딩 등은 `.task`, 이벤트 처리는 적절한 modifier나 모델 계층에서 수행한다.
+SwiftUI에서는 화면 등장·퇴장과 비동기 작업을 View modifier로 다룬다. `body` 재평가와 화면 재등장은 다른 사건이다. 각 modifier의 시점과 취소 동작은 [SwiftUI 화면 생명주기와 `.task`](./159-swiftui-view-and-task-lifecycle.md)에 모았다.
 
 ### 12.2 레이아웃
 
@@ -1541,7 +1513,7 @@ Massive View Controller, MVVM, VIPER, Coordinator, TCA는 Apple 공식 문서가
 
 - [`UIViewRepresentable`과 `UI` 접두사 — UIKit 컴포넌트를 SwiftUI로 가져오기](./087-uiviewrepresentable-and-uikit-bridge.md)
 - [SwiftUI 애플리케이션 아키텍처 — `App`, `Scene`, `WindowGroup`, `DocumentGroup`](./039-swiftui-application-architecture.md)
-- [SwiftUI의 생명주기 — App, Scene, View](./051-view-lifecycle-hooks.md)
+- [SwiftUI 화면 생명주기와 `.task`](./159-swiftui-view-and-task-lifecycle.md)
 - [`NavigationStack`은 언제 등장했고 `NavigationView`와 무엇이 다른가](./073-navigation-stack-vs-navigation-view.md)
 - [상태 관리 래퍼 총정리 — 왜 이렇게 종류가 많은가](./049-state-wrapper-decision-guide.md)
 - [`Observation` 모듈과 `@Observable` 매크로](./050-observation-framework-and-observable.md)

@@ -153,15 +153,7 @@ Task(priority: .background) {
 }
 ```
 
-`Task`가 취소되면 `await` 지점에서 루프가 종료된다. 다만 **이 예제는 `Task`를 변수에 담지 않아 취소할 수단이 없다.** [`.task` 문서](./103-task-modifier-and-async-lifecycle.md)에서 다룬 문제다.
-
-`.task`를 쓰면 뷰가 사라질 때 자동으로 취소된다.
-
-```swift
-.task {
-    await receiveNotifications()      // 뷰가 사라지면 자동 취소
-}
-```
+시퀀스가 취소에 반응하면 `Task` 취소 뒤 `await` 지점에서 루프를 종료할 수 있다. 뷰와 함께 구독을 관리하는 방법은 [화면 생명주기 문서](./159-swiftui-view-and-task-lifecycle.md)에 정리했다.
 
 ### 에러가 날 수 있으면 `try`
 

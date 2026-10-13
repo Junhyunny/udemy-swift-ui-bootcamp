@@ -220,14 +220,7 @@ CheckoutView(cart: cart) { success in
 - 분석 이벤트 기록
 - 임시 상태 정리
 
-**시트가 열릴 때 실행할 곳은 따로 없다.** `content` 안의 뷰에서 `.onAppear`나 [`.task`](./103-task-modifier-and-async-lifecycle.md)를 쓴다.
-
-```swift
-content: {
-    CheckoutView(cart: cart)
-        .onAppear { /* 열릴 때 */ }
-}
-```
+시트가 열릴 때의 View 작업은 [화면 생명주기 문서](./159-swiftui-view-and-task-lifecycle.md)에 정리했다.
 
 ### `content` 클로저의 평가 시점
 
@@ -287,7 +280,7 @@ onDismiss는 파라미터가 없다
   ③ enum 결과 타입
   ④ 콜백 클로저
 
-열릴 때 실행하려면 content 안에서 onAppear / .task
+열릴 때 실행하는 작업은 content의 View 생명주기에 둔다
 ```
 
 ## 학습 체크리스트
@@ -298,7 +291,6 @@ onDismiss는 파라미터가 없다
 - [ ] `@State didCheckout` + `@Binding`으로 성공 여부를 전달해 본다.
 - [ ] `CheckoutView` 안에서 `cart.courses = []`를 직접 실행하도록 바꿔 본다.
 - [ ] `onDismiss`와 `content`의 라벨을 명시적으로 써서 가독성을 비교한다.
-- [ ] `content` 안의 뷰에 `.onAppear`를 넣어 열릴 때 실행되는지 확인한다.
 - [ ] `onDismiss`를 생략하고 `sheet(isPresented:content:)`만 써 본다.
 - [ ] `sheet(item:)` 방식으로 바꿔 옵셔널 값으로 제어해 본다.
 - [ ] `enum CheckoutResult`를 만들어 여러 결과를 구분해 본다.

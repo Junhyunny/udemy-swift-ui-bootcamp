@@ -2,7 +2,7 @@
 
 [로드맵](./142-swift-concurrency-roadmap.md)의 3단계다. `async` 함수를 **실제로 실행시키는 단위**가 `Task`다.
 
-관련 기존 문서: [`.task` modifier와 비동기 생명주기](./103-task-modifier-and-async-lifecycle.md), [`TaskPriority`](./104-task-priority-and-scheduling.md)
+관련 문서: [SwiftUI 화면 생명주기와 `.task`](./159-swiftui-view-and-task-lifecycle.md), [`TaskPriority`](./104-task-priority-and-scheduling.md)
 
 ## `Task`는 비동기 세계로 들어가는 문이다
 

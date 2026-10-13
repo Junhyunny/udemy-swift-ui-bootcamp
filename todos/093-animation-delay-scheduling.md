@@ -231,16 +231,7 @@ DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
 }
 ```
 
-`delay`는 애니메이션 곡선에만 영향을 주므로, **상태 자체를 나중에 바꿔야 하면** 스케줄링이 필요하다. 다만 현대적인 방법은 `Task`다.
-
-```swift
-.task {
-    try? await Task.sleep(for: .seconds(3))
-    isPresented = false
-}
-```
-
-[`.task`](./103-task-modifier-and-async-lifecycle.md)를 쓰면 뷰가 사라질 때 자동 취소되므로 `DispatchQueue`보다 안전하다.
+`delay`는 애니메이션 곡선에만 영향을 주므로, **상태 자체를 나중에 바꿔야 하면** 스케줄링이 필요하다. 뷰에 연결된 지연 작업의 취소 처리는 [화면 생명주기 문서](./159-swiftui-view-and-task-lifecycle.md)에 정리했다.
 
 **판단 기준**
 
@@ -271,7 +262,7 @@ asyncAfter와의 차이
   .delay()    상태 즉시 변경, 렌더링이 대기       ← 더 안전하다
   asyncAfter  상태도 나중에 변경, 큐가 대기
 
-상태 자체를 미뤄야 하면 Task.sleep (뷰 생명주기에 묶인다)
+상태 자체를 미뤄야 하면 Task.sleep 등의 별도 스케줄링이 필요하다
 단계가 많아지면 phaseAnimator
 ```
 

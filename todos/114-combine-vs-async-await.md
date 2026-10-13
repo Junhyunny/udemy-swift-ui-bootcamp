@@ -124,7 +124,7 @@ func fetchRates() async {
 | --- | --- |
 | 장점 | 코드가 위에서 아래로 읽힌다 |
 | | 오류 처리가 언어 문법(`try`/`catch`)이다 |
-| | 취소가 구조적으로 관리된다 ([`.task`](./103-task-modifier-and-async-lifecycle.md)) |
+| | 취소가 구조적으로 관리된다 ([`.task`](./159-swiftui-view-and-task-lifecycle.md)) |
 | | 학습 부담이 적다 |
 | | 컴파일러가 데이터 경쟁을 검사한다 |
 | 단점 | 값을 여러 번 받는 흐름에 부적합 (`AsyncSequence`로 일부 보완) |

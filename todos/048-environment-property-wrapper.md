@@ -152,7 +152,7 @@ struct ExternalLink: View {
 | `\.isPresented` | 현재 표시 중인지 |
 | `\.isFocused` | 포커스 여부 |
 
-`\.scenePhase`는 [생명주기 문서](./051-view-lifecycle-hooks.md)에서 다룬 앱 상태 전환과 직결된다.
+`\.scenePhase`는 [생명주기 문서](./159-swiftui-view-and-task-lifecycle.md)에서 다룬 앱 상태 전환과 직결된다.
 
 **⑤ Global objects — 시스템 객체**
 

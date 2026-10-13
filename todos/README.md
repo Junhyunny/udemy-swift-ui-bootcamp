@@ -82,8 +82,8 @@ SwiftUI의 제네릭 뷰, 식별자, 프로토콜 기반 API를 읽기 위한 �
 - [ ] [`@Environment` — 언제 쓰고, 무엇을 받을 수 있는가](./048-environment-property-wrapper.md)
 - [ ] [상태 관리 래퍼 총정리 — 왜 종류가 많은가](./049-state-wrapper-decision-guide.md)
 - [ ] [`Observation` 모듈과 `@Observable` 매크로](./050-observation-framework-and-observable.md)
-- [ ] [SwiftUI의 생명주기 — App, Scene, View](./051-view-lifecycle-hooks.md)
 - [ ] [`onChange`의 `oldValue`, `newValue`](./052-onchange-old-new-value.md)
+- [ ] [SwiftUI 화면은 언제 살아 있고, `.task`는 언제 끝날까?](./159-swiftui-view-and-task-lifecycle.md)
 
 ## 4. View, 컬렉션과 레이아웃
 
@@ -154,7 +154,6 @@ SwiftUI의 제네릭 뷰, 식별자, 프로토콜 기반 API를 읽기 위한 �
 
 - [ ] [Swift의 오류 처리 방식들 — `try`, `try?`, `try!`, `do-catch`, `defer`](./100-swift-error-handling-forms.md)
 - [ ] [`async throws`와 커스텀 에러](./102-async-throws-and-custom-errors.md)
-- [ ] [`.task`는 무엇인가 — 뷰 생명주기와 비동기 작업](./103-task-modifier-and-async-lifecycle.md)
 - [ ] [`TaskPriority` — 우선순위 값들과 실제 동작](./104-task-priority-and-scheduling.md)
 - [ ] [`for await` — 비동기 시퀀스를 반복하기](./105-for-await-async-sequence.md)
   - 위 문서의 `for await case ...`에서 `case` 부분은 [패턴 매칭 총정리](./157-pattern-matching-complete-guide.md)에 있다.

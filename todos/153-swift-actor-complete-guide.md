@@ -745,17 +745,11 @@ private func receiveNotifications() async {
 
 `MainActor.run` 두 개가 사라진다. **"메인 액터에서 도는데 UI가 멈추지 않나?"** 걱정할 수 있지만 아니다. `for await`은 값을 기다리는 동안 **실행을 중단하고 스레드를 놓아준다**([for await 문서](./105-for-await-async-sequence.md)).
 
-**② `.task`로 뷰 생명주기에 묶는다**
-
-```swift
-.task { await receiveNotifications() }    // 자동 취소
-```
-
-**③ `onReceive`에 맡긴다** — 메인 스레드를 보장하므로 `MainActor` 코드가 전부 사라진다([NotificationCenter 문서](./109-notification-center.md)).
+**② `onReceive`에 맡긴다** — 메인 스레드를 보장하므로 `MainActor` 코드가 전부 사라진다([NotificationCenter 문서](./109-notification-center.md)). 비동기 구독을 뷰와 함께 관리하는 방법은 [화면 생명주기 문서](./159-swiftui-view-and-task-lifecycle.md)에 모았다.
 
 참고로 `Task(priority: .background)`는 **의도는 이해되지만 실효가 없다.** 결국 `MainActor.run`으로 메인에 넘기므로 백그라운드에서 하는 일이 없고, 알림 대기는 CPU를 쓰지 않아 우선순위가 의미를 갖지 않는다([TaskPriority 문서](./104-task-priority-and-scheduling.md)).
 
-## 4.4 사례 ② — `Task { @MainActor in }`이 만든 세 가지 문제
+## 4.4 사례 ② — `Task { @MainActor in }`이 만든 문제
 
 `chapter-88/chapter-88/Services/NetworkManager.swift`
 
@@ -782,9 +776,7 @@ do {
 }
 ```
 
-**② 취소가 연결되지 않는다.** `.task { await networkManager.fetchPosts() }`로 호출하므로 뷰가 사라지면 `fetchPosts`는 취소된다. 하지만 **안에서 만든 `Task`는 별개**라 계속 실행된다.
-
-**③ 디코딩을 메인 액터에서 한다.** `decode`는 CPU 작업이다. 항목이 많으면 메인 스레드를 점유해 UI가 멈춘다.
+**② 디코딩을 메인 액터에서 한다.** `decode`는 CPU 작업이다. 항목이 많으면 메인 스레드를 점유해 UI가 멈춘다. 중첩된 `Task`의 취소 관계는 [화면 생명주기 문서](./159-swiftui-view-and-task-lifecycle.md)에 정리했다.
 
 ### 권장하는 형태
 

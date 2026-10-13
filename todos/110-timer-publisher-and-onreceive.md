@@ -174,18 +174,7 @@ TimelineView(.periodic(from: .now, by: 1)) { context in
 }
 ```
 
-**`.task`로 async 루프를 쓰는 방법**도 있다.
-
-```swift
-.task {
-    while !Task.isCancelled {
-        try? await Task.sleep(for: .seconds(1))
-        timerProgress(geo)
-    }
-}
-```
-
-[`.task`](./103-task-modifier-and-async-lifecycle.md)가 뷰 생명주기에 묶이므로 취소가 자동이다. Combine 의존이 사라지는 것도 이점이다.
+비동기 반복 작업을 `.task`로 실행할 수도 있다. 취소를 확인하는 루프와 `Task.sleep`의 취소 처리는 [화면 생명주기 문서](./159-swiftui-view-and-task-lifecycle.md)에 모았다.
 
 ## 실무에서 자주 쓰는 `onReceive` 사례
 
@@ -306,7 +295,7 @@ TextField("검색", text: $searchText)
 | --- | --- |
 | 앱 상태 변화 | [`@Environment(\.scenePhase)`](./048-environment-property-wrapper.md) |
 | 값 변화 감지 | [`onChange(of:)`](./052-onchange-old-new-value.md) |
-| 비동기 작업 | [`.task`](./103-task-modifier-and-async-lifecycle.md) |
+| 비동기 작업 | [`.task`](./159-swiftui-view-and-task-lifecycle.md) |
 | 주기적 화면 갱신 | `TimelineView` |
 | `@Observable` 객체 관찰 | 그냥 프로퍼티를 읽으면 된다 |
 

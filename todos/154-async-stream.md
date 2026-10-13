@@ -327,13 +327,7 @@ let stream = AsyncStream<Notification> { continuation in
 
 `Task { }`로 시작한 구독은 종료 시점에 취소할 수 있도록 작업 핸들을 보관한다. 같은 이벤트를 중복으로 소비하지 않으려면 새 구독을 시작하기 전에 이전 작업을 취소하고, 통화가 끝날 때 저장한 작업을 취소한다.
 
-SwiftUI 뷰 안에서 소비한다면 `Task { }`를 직접 만들지 말고 `.task`를 쓴다. **뷰 생명주기에 묶여 자동으로 취소된다**([`.task` 문서](./103-task-modifier-and-async-lifecycle.md)).
-
-```swift
-.task {
-    for await event in client.events { handle(event) }
-}
-```
+SwiftUI 뷰에서 소비하는 구독의 수명과 취소는 [화면 생명주기 문서](./159-swiftui-view-and-task-lifecycle.md)에 정리했다.
 
 ### 에러가 날 수 있으면 `AsyncThrowingStream`
 
