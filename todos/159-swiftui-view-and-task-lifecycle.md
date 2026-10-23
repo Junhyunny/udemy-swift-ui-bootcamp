@@ -23,6 +23,60 @@ App (@main)
 | 뷰의 식별성이 바뀜 | 그 뷰에 연결된 `@State` 등이 초기화될 수 있음 |
 | 뷰가 나타나거나 사라짐 | `onAppear`·`onDisappear`와 `.task`의 실행·취소에 관계됨 |
 
+### UIKit의 객체와 달리 SwiftUI 뷰는 왜 값 타입일까?
+
+UIKit의 `UIView`와 `UIViewController`는 **참조 타입인 클래스**다. 코드가 특정 화면 객체를 참조해 `label.text = ...`처럼 속성을 바꾸고, 객체의 참조가 그 객체의 정체성이 된다. SwiftUI에서는 보통 **`View` 프로토콜을 따르는 구조체**가 현재 상태에서 화면이 *어떻게 보여야 하는지* 설명한다. 입력이 바뀌면 SwiftUI는 이 설명값과 `body`를 다시 만들 수 있다. 이것은 화면의 실제 표시 요소를 매번 새로 생성한다는 뜻이 아니다([Apple: SwiftUI Essentials](https://developer.apple.com/videos/play/wwdc2019/216/), [Demystify SwiftUI](https://developer.apple.com/videos/play/wwdc2021/10022/)).
+
+| | UIKit | SwiftUI |
+| --- | --- | --- |
+| 화면을 작성하는 주된 방식 | 살아 있는 뷰 객체의 속성을 직접 변경 | 현재 데이터로 `View` 값을 선언 |
+| 뷰의 표현 | `UIView` 클래스 인스턴스 | 보통 `View` 구조체 값 |
+| 동일한 뷰를 알아보는 기준 | 객체 참조 | 뷰 계층의 위치·타입에 따른 구조적 식별성, 필요할 때 명시적 ID |
+| 화면을 갱신하는 방식 | 개발자가 객체를 찾아 속성을 갱신 | SwiftUI가 새 설명을 바탕으로 필요한 UI를 갱신 |
+
+값 타입을 쓰는 이유는 **화면 설명을 작고 쉽게 다시 만들 수 있게 하려는 설계**에 있다. 각 뷰는 필요한 입력만 저장하고, 공통 모양이나 동작은 상속된 거대한 기반 객체 대신 modifier와 작은 뷰의 조합으로 표현한다. SwiftUI는 값의 변경과 의존성을 추적해 필요한 부분을 갱신할 수 있다. Apple은 이 방식을 가벼운 뷰 구성과 재사용의 근거로 설명한다([SwiftUI Essentials](https://developer.apple.com/videos/play/wwdc2019/216/), [Data Flow Through SwiftUI](https://developer.apple.com/videos/play/wwdc2019/226/)).
+
+값 타입이라는 말은 **앱의 모든 데이터가 구조체여야 한다**는 뜻이 아니다. SwiftUI 뷰는 `@Observable` 클래스 모델이나 UIKit 객체를 참조할 수도 있다. 또한 `@State`는 구조체 값 안에 영구 보관되는 일반 저장 프로퍼티가 아니다. SwiftUI가 뷰의 식별성에 연결해 상태를 관리하므로, 뷰 구조체 값이 새로 만들어져도 같은 식별성이면 상태가 이어질 수 있다. 구조체 값 자체에는 UIKit 객체처럼 지속적인 참조 정체성이 없기에, 아래의 `.id`나 계층 위치 변화가 상태 수명에 중요하다([Demystify SwiftUI](https://developer.apple.com/videos/play/wwdc2021/10022/)).
+
+### React의 rerender에 해당하는 일은 언제 일어날까?
+
+React의 “state나 props가 바뀌면 렌더 함수가 다시 실행된다”에 가장 가까운 SwiftUI 개념은 **뷰가 의존하는 데이터가 바뀌면 SwiftUI가 필요한 `body`를 다시 평가한다**는 것이다. 다만 SwiftUI의 `View`는 화면 객체가 아니라 UI를 설명하는 값이다. 여기서 “다시 렌더링”이라고 말할 때는 우선 `body` 재평가를 뜻하며, 실제 픽셀을 전부 다시 그리거나 뷰가 사라졌다 다시 나타난다는 뜻은 아니다. SwiftUI는 새 UI 설명을 기존 계층과 비교해 필요한 부분을 갱신한다. [Apple의 성능 설명](https://developer.apple.com/documentation/xcode/understanding-and-improving-swiftui-performance)도 상태, 환경, 관찰 가능한 모델 데이터를 뷰 업데이트의 주요 의존성으로 든다.
+
+| React에서 떠올릴 개념 | SwiftUI에서 확인할 것 | 변경 시 |
+| --- | --- | --- |
+| 컴포넌트 자신의 state | 뷰가 소유하는 `@State` | 그 값을 사용하는 뷰 계층을 갱신 |
+| 자식에게 전달하는 props | 부모가 자식 `View`에 전달하는 일반 프로퍼티 또는 `@Binding` | 부모의 입력이 바뀌면 자식의 UI도 갱신될 수 있음. `@Binding`은 자식이 원본 값을 수정할 수도 있음 |
+| context | `@Environment`로 읽는 값 | 읽는 환경값이 바뀌면 의존하는 부분을 갱신 |
+| 외부 상태 저장소 | `@Observable` 모델, 기존 방식의 `ObservableObject` | 관찰 중인 모델의 변경에 반응 |
+
+```swift
+struct CounterView: View {
+    @State private var count = 0
+
+    var body: some View {
+        VStack {
+            Text("횟수: \(count)")
+            Button("증가") { count += 1 }
+            CountLabel(count: count) // 자식에게 입력값 전달
+        }
+    }
+}
+
+struct CountLabel: View {
+    let count: Int
+
+    var body: some View { Text(count.isMultiple(of: 2) ? "짝수" : "홀수") }
+}
+```
+
+버튼을 누르면 `@State`가 바뀌고 `CounterView`는 새 `count`로 UI를 계산한다. 자식의 `count`는 React의 읽기 전용 prop과 비슷한 **입력값**이다. 자식도 값을 바꿔야 한다면 `@Binding var count: Int`를 선언하고 부모에서 `$count`를 전달한다. `@Binding` 자체가 별도 상태 저장소는 아니다. [State](https://developer.apple.com/documentation/swiftui/state)와 [Binding](https://developer.apple.com/documentation/swiftui/binding) 문서가 이 소유·전달 관계를 설명한다.
+
+`@Observable` 모델은 더 세밀하다. 뷰의 `body`가 `book.title`을 읽었다면 `title` 변경을 추적하지만, 읽지 않은 `book.author` 변경만으로는 그 뷰를 갱신하지 않는다. 반면 예전의 `ObservableObject` 방식은 `@StateObject`·`@ObservedObject`·`@EnvironmentObject` 등으로 관찰하며, `@Published` 변경 알림을 이용한다. 두 방식을 단순히 같은 “모델 prop”으로 취급하지 않는다([Apple의 Observation 설명](https://developer.apple.com/documentation/swiftui/managing-model-data-in-your-app), [StateObject](https://developer.apple.com/documentation/swiftui/stateobject)).
+
+일반 `var`나 `let`이 **혼자서** 변경 감지를 제공하는 것은 아니다. 예를 들어 뷰가 읽는 일반 클래스의 프로퍼티를 바꿔도 그 클래스가 관찰 가능한 모델이 아니고 다른 업데이트 계기도 없다면, SwiftUI가 그 변경을 알 방법이 없다. 반대로 부모의 상태 변경으로 자식에게 전달한 입력이 달라지면 자식은 새 입력을 받는다. 정확히 어느 `body`가 몇 번 계산되는지는 SwiftUI의 갱신과 최적화에 맡겨야 하므로, “상태 변경 1회 = 모든 자식 `body` 실행 1회”처럼 세지 않는다.
+
+마지막으로 **`body` 재평가 ≠ `onAppear` 재호출 ≠ `.task` 재시작**이다. 같은 식별성의 뷰가 화면에 계속 있는 동안 `count`가 바뀌어도 `body`는 다시 평가될 수 있지만 등장 이벤트가 다시 발생한 것은 아니다. 값 변경마다 비동기 작업을 다시 시작해야 한다면 `.task(id: count)`처럼 작업의 `id`를 지정한다.
+
 `@State`는 View 구조체의 한 인스턴스에 단순히 저장되는 값이 아니다. SwiftUI가 뷰의 식별성에 연결해 관리한다. 그래서 같은 식별성이 유지되면 View 값이 다시 만들어져도 상태는 이어질 수 있다. 반대로 `.id(value)`의 값이 바뀌면 뷰의 식별성과 상태가 초기화된다. `@StateObject`도 자신을 소유한 뷰의 식별성이 바뀌면 다시 생성될 수 있다.
 
 ```swift
@@ -358,6 +412,8 @@ var body: some View {
 
 ### 직접 확인할 실험
 
+- [ ] `CounterView`의 `body`와 `onAppear`에 각각 로그를 찍고 버튼을 여러 번 누른다. 두 로그가 같은 사건을 세는지 비교한다.
+- [ ] `@Observable` 모델에서 `body`가 읽는 프로퍼티와 읽지 않는 프로퍼티를 각각 바꾸고 갱신 차이를 관찰한다.
 - [ ] 같은 뷰에 `onAppear`, `onDisappear`, `.task` 로그를 붙이고 재등장과 탭 전환을 기록한다. 특정 순서를 정답으로 가정하지 않는다.
 - [ ] `body` 평가, View 생성, `@State` 유지 여부를 기기 회전·iPad 창 크기 변경 때 각각 기록한다. 조건부 레이아웃과 `.id` 변경도 비교한다.
 - [ ] 상세 화면에서 뒤로 가기 스와이프를 절반만 한 뒤 취소하고, 다시 완료한다. 콜백 로그와 탐색 경로를 따로 기록한다.
@@ -372,6 +428,15 @@ var body: some View {
 
 ## 공식 참고 자료
 
+- [Apple: SwiftUI Essentials (WWDC19)](https://developer.apple.com/videos/play/wwdc2019/216/)
+- [Apple: Data Flow Through SwiftUI (WWDC19)](https://developer.apple.com/videos/play/wwdc2019/226/)
+- [Apple: Demystify SwiftUI (WWDC21)](https://developer.apple.com/videos/play/wwdc2021/10022/)
+- [Apple: Declaring a custom view](https://developer.apple.com/documentation/swiftui/declaring-a-custom-view)
+- [Apple: Understanding and improving SwiftUI performance](https://developer.apple.com/documentation/xcode/understanding-and-improving-swiftui-performance)
+- [Apple: State](https://developer.apple.com/documentation/swiftui/state)
+- [Apple: Binding](https://developer.apple.com/documentation/swiftui/binding)
+- [Apple: Environment](https://developer.apple.com/documentation/swiftui/environment)
+- [Apple: Managing model data in your app](https://developer.apple.com/documentation/swiftui/managing-model-data-in-your-app)
 - [Apple: View 생명주기 API 분류](https://developer.apple.com/documentation/SwiftUI/View-Input-and-Events)
 - [Apple: View.onAppear(perform:)](https://developer.apple.com/documentation/swiftui/view/onappear(perform:))
 - [Apple: View.onDisappear(perform:)](https://developer.apple.com/documentation/swiftui/view/ondisappear(perform:))
